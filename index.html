@@ -28,5 +28,5 @@ p{margin:0;color:var(--d)}
 <a class="k" href="emilie.html"><b>Detektiv Emilie</b><span>4. klasse</span></a>
 <a class="k" href="camille.html"><b>Detektiv Camille</b><span>2. klasse</span></a>
 <p class="fod">Åbn dit eget spil og vælg "Føj til hjemmeskærm". Så virker det også uden net.</p>
-</div><script>if('serviceWorker' in navigator){addEventListener('load',()=>{navigator.serviceWorker.register('sw.js').catch(()=>{})});let _ny=false;navigator.serviceWorker.addEventListener('controllerchange',()=>{if(_ny)return;_ny=true;const s=window.S;if(!s||s.screen==='hjem'||s.screen==='gangevalg'||s.screen==='intro')location.reload()})}</script></body>
+</div><script>if('serviceWorker' in navigator){addEventListener('load',()=>{navigator.serviceWorker.register('sw.js').then(r=>{r.update().catch(()=>{});document.addEventListener('visibilitychange',()=>{if(document.visibilityState==='visible')r.update().catch(()=>{})})}).catch(()=>{})});let _ny=false;navigator.serviceWorker.addEventListener('controllerchange',()=>{if(_ny)return;_ny=true;const s=window.S;if(!s||s.screen==='hjem'||s.screen==='gangevalg'||s.screen==='intro')location.reload()})}</script></body>
 </html>
