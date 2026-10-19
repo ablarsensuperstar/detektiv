@@ -1,0 +1,111 @@
+<!doctype html>
+<html lang="da">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex">
+<title>Detektivbureauet – forældre</title>
+<link rel="stylesheet" href="fonts/fonts.css">
+<style>
+:root{--bg:#e7eaf0;--paper:#faf8f1;--paper2:#f1eee3;--ink:#1b2236;--muted:#5d6579;--line:#cdd3de;--brass:#a8771f;--ok:#2f8a4a;--pink:#d6468f;--brun:#8b5a2b;--shadow:0 6px 18px rgba(27,34,54,.12)}
+@media(prefers-color-scheme:dark){:root{--bg:#111624;--paper:#1b2234;--paper2:#222b40;--ink:#ebe6d8;--muted:#a4aabb;--line:#303a52;--brass:#d3a44c;--ok:#5cc07a;--pink:#ef7ab5;--brun:#c08a5a;--shadow:0 6px 18px rgba(0,0,0,.45)}}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--ink);font:16px/1.5 "Nunito","Segoe UI",system-ui,sans-serif;padding:20px 16px 40px}
+.w{max-width:760px;margin:0 auto;display:flex;flex-direction:column;gap:16px}
+h1{font:400 1.8rem/1.2 "Special Elite","Courier New",monospace;margin:0}
+h2{font:400 1.35rem/1.2 "Special Elite","Courier New",monospace;margin:0}
+h3{font-size:1rem;margin:0;color:var(--muted);font-weight:800;text-transform:uppercase;letter-spacing:.06em}
+p{margin:0}
+.top{display:flex;justify-content:space-between;align-items:baseline;gap:12px;flex-wrap:wrap}
+.top small{color:var(--muted)}
+button{font:inherit;color:inherit;cursor:pointer;border:1px solid var(--line);background:var(--paper);border-radius:10px;padding:8px 14px;font-weight:700}
+input{font:inherit;padding:8px 12px;border-radius:10px;border:1px solid var(--line);background:var(--paper);color:var(--ink);min-width:0}
+.kort{background:var(--paper);border:1px solid var(--line);border-left:8px solid var(--farve);border-radius:14px;padding:18px;box-shadow:var(--shadow);display:flex;flex-direction:column;gap:14px}
+.hoved{display:flex;justify-content:space-between;align-items:baseline;gap:10px;flex-wrap:wrap}
+.hoved .sidst{color:var(--muted);font-size:.95rem}
+.tal{display:grid;grid-template-columns:repeat(auto-fit,minmax(130px,1fr));gap:10px}
+.tal div{background:var(--paper2);border-radius:10px;padding:10px 12px}
+.tal b{display:block;font-size:1.5rem;font-variant-numeric:tabular-nums;color:var(--farve)}
+.tal span{color:var(--muted);font-size:.85rem}
+.sager{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:6px 14px}
+.sager div{display:flex;justify-content:space-between;gap:8px;padding:4px 0;border-bottom:1px dashed var(--line);font-size:.95rem}
+.stj{color:var(--brass);letter-spacing:.05em;white-space:nowrap}
+.graf{display:flex;align-items:flex-end;gap:4px;height:110px;padding-top:6px}
+.graf div{flex:1;display:flex;flex-direction:column;justify-content:flex-end;align-items:center;gap:3px;min-width:0}
+.graf i{display:block;width:100%;background:var(--line);border-radius:4px 4px 0 0;position:relative;min-height:2px}
+.graf i b{position:absolute;left:0;right:0;bottom:0;background:var(--farve);border-radius:4px 4px 0 0}
+.graf small{font-size:.65rem;color:var(--muted);white-space:nowrap}
+.rek{display:flex;flex-wrap:wrap;gap:6px}
+.rek span{background:var(--paper2);border-radius:999px;padding:3px 10px;font-size:.85rem}
+.tom{color:var(--muted)}
+.opsaet{background:var(--paper);border:1px solid var(--line);border-radius:14px;padding:18px;display:flex;flex-direction:column;gap:10px}
+.opsaet form{display:flex;gap:8px;flex-wrap:wrap}
+.fejl{color:#c23b2f}
+</style>
+</head>
+<body>
+<div class="w">
+ <div class="top"><h1>Detektivbureauet · forældre</h1><div><small id="status">Henter …</small> <button id="opdater">Opdater</button></div></div>
+ <div id="opsaet" class="opsaet" hidden>
+  <h2>Forbind til databasen</h2>
+  <p>Indtast adressen på Firebase-databasen og familiekoden. Begge dele gemmes kun i denne browser.</p>
+  <form id="form"><input id="url" placeholder="https://….firebasedatabase.app" size="38"><input id="kode" placeholder="familiekode" size="18"><button type="submit">Gem</button></form>
+ </div>
+ <div id="indhold"></div>
+</div>
+<script>window.DETEKTIV_SYNC={"url": "https://detektiv-db53f-default-rtdb.europe-west1.firebasedatabase.app", "kode": "fam-k7v2m9qx4tzb"};</script>
+<script>
+'use strict';
+const ESC=s=>String(s).replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
+const FARVE={emilie:'var(--pink)',camille:'var(--brun)'};
+let CFG=window.DETEKTIV_SYNC||null;
+try{if(!CFG){const g=JSON.parse(localStorage.getItem('detektiv_foraeldre')||'null');if(g&&g.url&&g.kode)CFG=g}}catch(e){}
+const $=id=>document.getElementById(id);
+function stjerner(n){return '★'.repeat(n)+'☆'.repeat(Math.max(0,3-n))}
+function siden(iso){if(!iso)return 'aldrig';const ms=Date.now()-new Date(iso).getTime();const m=Math.round(ms/60000);
+  if(m<2)return 'lige nu';if(m<60)return `for ${m} min. siden`;const t=Math.round(m/60);if(t<24)return `for ${t} time${t>1?'r':''} siden`;
+  const d=Math.round(t/24);return d===1?'i går':`for ${d} dage siden`}
+function dato(d){const [y,m,dd]=d.split('-');return `${+dd}/${+m}`}
+function sidste14(){const r=[];for(let i=13;i>=0;i--){const d=new Date();d.setDate(d.getDate()-i);r.push(d.toISOString().slice(0,10))}return r}
+function barn(slug,b){
+  const dage=sidste14();const brug=b.brug||{};const max=Math.max(1,...dage.map(d=>(brug[d]||{}).spm||0));
+  const graf=dage.map(d=>{const u=brug[d]||{spm:0,rigtige:0};const h=Math.round(u.spm/max*90);const ok=u.spm?Math.round(u.rigtige/u.spm*h):0;
+    return `<div title="${dato(d)}: ${u.spm} opgaver, ${u.rigtige} rigtige i første forsøg${u.sek?', '+Math.round(u.sek/60)+' min.':''}"><i style="height:${h}px"><b style="height:${ok}px"></b></i><small>${dato(d)}</small></div>`}).join('');
+  const ugeSpm=dage.slice(7).reduce((a,d)=>a+((brug[d]||{}).spm||0),0);const ugeRigt=dage.slice(7).reduce((a,d)=>a+((brug[d]||{}).rigtige||0),0);
+  const ugeMin=Math.round(dage.slice(7).reduce((a,d)=>a+((brug[d]||{}).sek||0),0)/60);
+  const titler=b.titler||{};const sager=Object.keys(titler).map(id=>{const s=(b.sager||{})[id]||{};
+    return `<div><span>${ESC(titler[id])}</span><span class="stj">${s.done?stjerner(s.stars||0):(s.igang?'i gang':'–')}</span></div>`}).join('');
+  const rek=Object.entries(b.gange||{}).map(([t,r])=>`<span>${t==='bland'?'Blandet':(isNaN(t)?ESC(t):t+'-tabel')}: ${(r.ms/1000).toFixed(1).replace('.',',')} s · ${r.fejl} fejl</span>`).join('')||'<span class="tom">ingen endnu</span>';
+  const niv=['','Detektivlærling','Detektiv','Mesterdetektiv'][b.niveau||1]||'';
+  return `<section class="kort" style="--farve:${FARVE[slug]||'var(--brass)'}">
+   <div class="hoved"><h2>Detektiv ${ESC(b.navn||slug)}</h2><span class="sidst">Sidst spillet ${siden(b.opdateret)}</span></div>
+   <div class="tal">
+    <div><b>${b.stjerner||0}</b><span>stjerner af ${(b.antalSager||0)*3}</span></div>
+    <div><b>${b.loeste||0}/${b.antalSager||0}</b><span>sager løst</span></div>
+    <div><b>${b.niveau||1}</b><span>${niv}</span></div>
+    <div><b>${(b.dage||[]).length}</b><span>dage spillet</span></div>
+    <div><b>${b.spm?Math.round((b.rigtige||0)/b.spm*100):0} %</b><span>rigtige i første forsøg (${b.spm||0} opgaver i alt)</span></div>
+   </div>
+   <div><h3>Sidste 14 dage · ${ugeSpm} opgaver den seneste uge, ${ugeRigt} rigtige, ca. ${ugeMin} min.</h3><div class="graf">${graf}</div></div>
+   <div><h3>Sager</h3><div class="sager">${sager||'<p class="tom">ingen data endnu</p>'}</div></div>
+   <div><h3>Rekorder i regnejagten</h3><div class="rek">${rek}</div></div>
+  </section>`;
+}
+async function hent(){
+  if(!CFG){$('opsaet').hidden=false;$('status').textContent='';return}
+  $('opsaet').hidden=true;$('status').textContent='Henter …';
+  try{const r=await fetch(CFG.url.replace(/\/$/,'')+'/familier/'+CFG.kode+'.json?nocache='+Date.now());
+    if(!r.ok)throw new Error('HTTP '+r.status);const data=await r.json();
+    if(!data){$('indhold').innerHTML='<p class="tom">Ingen data endnu. Åbn spillene på telefonerne med net, så dukker de op her.</p>';$('status').textContent='Forbundet';return}
+    const slugs=['emilie','camille'].filter(k=>data[k]);
+    if(!slugs.length){$('indhold').innerHTML='<p class="tom">Ingen data endnu. Åbn spillene på telefonerne med net, så dukker de op her.</p>';$('status').textContent='Forbundet';return}
+    $('indhold').innerHTML=slugs.map(k=>barn(k,data[k])).join('');
+    $('status').textContent='Opdateret '+new Date().toLocaleTimeString('da-DK',{hour:'2-digit',minute:'2-digit'});
+  }catch(e){$('status').innerHTML='<span class="fejl">Kunne ikke hente: '+ESC(e.message)+'</span>';$('opsaet').hidden=false}
+}
+$('form').onsubmit=e=>{e.preventDefault();CFG={url:$('url').value.trim(),kode:$('kode').value.trim()};try{localStorage.setItem('detektiv_foraeldre',JSON.stringify(CFG))}catch(x){}hent()};
+$('opdater').onclick=hent;
+hent();setInterval(hent,60000);
+</script>
+</body>
+</html>

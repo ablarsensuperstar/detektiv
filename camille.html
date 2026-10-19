@@ -165,6 +165,7 @@ canvas.konf{position:fixed;inset:0;pointer-events:none;width:100%;height:100%}
 </style>
 </head>
 <body>
+<script>window.DETEKTIV_SYNC={"url": "https://detektiv-db53f-default-rtdb.europe-west1.firebasedatabase.app", "kode": "fam-k7v2m9qx4tzb", "barn": "camille"};</script>
 <div class="wrap" id="app"></div>
 
 <script>
@@ -590,11 +591,46 @@ const MAT3=[
  ()=>{const p=rnd(12,48),k=rnd(2,4);return{q:`${k} is koster ${p} kr. hver. Hvad koster de tilsammen?`,s:p*k}}
 ];
 
+
+// ---------- Forældre-sync ----------
+// Kun i GitHub-udgaven: byg.py sætter window.DETEKTIV_SYNC={url,kode,barn} før dette script.
+// Hvad der sendes: stjerner pr. sag, niveau, rekorder, dage, og brug pr. dag (opgaver, rigtige,
+// sekunder). Aldrig svar eller tekster. Sendes samlet (hele billedet) højst hvert 2. sekund, og
+// kun når der er net - ellers venter det til næste gang.
+const SYNC=window.DETEKTIV_SYNC||null;
+let _syncTimer=null;
+function brugNoter(rigtigt){try{const d=new Date().toISOString().slice(0,10);P.brug=P.brug||{};
+  const b=P.brug[d]||(P.brug[d]={spm:0,rigtige:0,sek:0});b.spm++;if(rigtigt)b.rigtige++;
+  if(S.t0){b.sek+=Math.min(300,Math.round((Date.now()-S.t0)/1000));S.t0=Date.now()}}catch(e){}}
+function sync(){if(!SYNC)return;clearTimeout(_syncTimer);_syncTimer=setTimeout(()=>{
+  if(!navigator.onLine)return;
+  const titler={};SAGER.forEach(x=>titler[x.id]=x.titel);
+  const data={navn:NAVN,opdateret:new Date().toISOString(),niveau:niveau(),
+    stjerner:Object.values(P.sager).reduce((a,x)=>a+(x.stars||0),0),loeste:Object.values(P.sager).filter(x=>x.done).length,
+    antalSager:SAGER.length,sager:P.sager,titler,gange:P.gange||{},dage:P.dage||[],brug:P.brug||{},spm:P.spm||0,rigtige:P.rigtige||0};
+  fetch(SYNC.url.replace(/\/$/,'')+'/familier/'+SYNC.kode+'/'+SYNC.barn+'.json',{method:'PUT',body:JSON.stringify(data)}).catch(()=>{})},2000)}
+window.addEventListener('online',()=>sync());
+// Gendan fra databasen, hvis der ingen lokal fremgang er (nyt ikon / ny telefon). Lokal fremgang
+// vinder altid - vi overskriver aldrig noget, barnet har lavet på denne telefon.
+function gendan(){if(!SYNC||!navigator.onLine)return;
+  const tom=!Object.keys(P.sager).length&&!(P.dage||[]).length&&!Object.keys(P.gange||{}).length;
+  if(!tom)return;
+  fetch(SYNC.url.replace(/\/$/,'')+'/familier/'+SYNC.kode+'/'+SYNC.barn+'.json?nocache='+Date.now())
+   .then(r=>r.ok?r.json():null).then(d=>{if(!d||!d.sager)return;
+     const stadigTom=!Object.keys(P.sager).length&&!(P.dage||[]).length;if(!stadigTom)return;
+     P.sager=d.sager||{};P.gange=d.gange||{};P.dage=d.dage||[];P.brug=d.brug||{};P.spm=d.spm||0;P.rigtige=d.rigtige||0;
+     try{localStorage.setItem(LS,JSON.stringify(P))}catch(e){}
+     if(S.screen==='hjem')render();
+     const fb=document.createElement('div');fb.className='fb ok';fb.style.cssText='position:fixed;left:16px;right:16px;bottom:16px;z-index:9;box-shadow:var(--shadow)';
+     fb.innerHTML='<div class="t">Dine stjerner er hentet tilbage!</div>';document.body.appendChild(fb);setTimeout(()=>fb.remove(),4000);
+   }).catch(()=>{})}
+
+
 // ---------- Gemt fremgang ----------
 let P;
 function load(){try{P=JSON.parse(localStorage.getItem(LS))||{}}catch(e){P={}}
   P.sager=P.sager||{};P.set=P.set||{dansk:[],eng:[]};P.rigtige=P.rigtige||0;P.spm=P.spm||0;P.gange=P.gange||{};P.dage=P.dage||[];}
-function save(){try{localStorage.setItem(LS,JSON.stringify(P))}catch(e){}}
+function save(){try{localStorage.setItem(LS,JSON.stringify(P))}catch(e){}sync()}
 function noterDag(){const d=new Date().toISOString().slice(0,10);if(!P.dage.includes(d)){P.dage.push(d);save()}}
 function pickItem(fag){
   const bank=fag==='dansk'?DANSK:ENGELSK;let seen=P.set[fag];
@@ -682,10 +718,10 @@ function startSag(id){const sag=SAGER.find(s=>s.id===id);noterDag();
   const fag=shuffle(FAGMIX);
   S={screen:'q',mode:'sag',sag,qs:fag,i:0,fejl:0,forsog:0};nyt();}
 function startTraen(fag){noterDag();S={screen:'q',mode:'traen',fag,qs:Array(N_TRAEN).fill(fag),i:0,fejl:0,forsog:0};nyt();}
-function nyt(){S.fag=S.qs[S.i];S.item=lavSpm(S.fag);S.forsog=0;S.screen='q';render();const inp=document.getElementById('ans');if(inp)inp.focus();}
+function nyt(){S.fag=S.qs[S.i];S.item=lavSpm(S.fag);S.forsog=0;S.screen='q';S.t0=Date.now();render();const inp=document.getElementById('ans');if(inp)inp.focus();}
 function norm(v){return String(v).trim().toLowerCase().replace(/\s+/g,'').replace(/\./g,'').replace(',','.')}
 function tjek(svar){const it=S.item;const rigtigt=norm(svar)===norm(it.svar);
-  P.spm++;if(rigtigt&&S.forsog===0)P.rigtige++;save();
+  P.spm++;if(rigtigt&&S.forsog===0)P.rigtige++;if(rigtigt||S.forsog>=1)brugNoter(rigtigt&&S.forsog===0);save();
   if(rigtigt){vis(true,svar);return}
   S.forsog++;if(S.forsog===1){S.fejl++;visPrøvIgen(svar)}else vis(false,svar);}
 function visPrøvIgen(svar){const fb=document.getElementById('fb');
@@ -752,6 +788,7 @@ function gTjek(){if(!S.inp)return;const q=S.qs[S.i];const ok=+S.inp===q.s;const 
   else{S.fejl++;gq.classList.add('bad');document.getElementById('gsvar').textContent=S.inp+' ✗';
     setTimeout(()=>{S.i++;S.inp='';S.laast=false;if(S.i>=S.qs.length)gSlut();else render()},1400)}}
 function gSlut(){clearInterval(gTimer);const ms=Date.now()-S.start+S.fejl*3000;const b=P.gange[S.tab];
+  try{const d=new Date().toISOString().slice(0,10);P.brug=P.brug||{};const u=P.brug[d]||(P.brug[d]={spm:0,rigtige:0,sek:0});u.spm+=S.qs.length;u.rigtige+=S.qs.length-S.fejl;u.sek+=Math.round((Date.now()-S.start)/1000)}catch(e){}
   S.ms=ms;S.ny=!b||ms<b.ms;if(S.ny)P.gange[S.tab]={ms,fejl:S.fejl};save();S.screen='gangeslut';render();if(S.ny&&S.fejl===0)konfetti();}
 function rGangeSlut(){return `
   <div class="opk" style="border-top:6px solid var(--gange)"><h2>${jagtNavn(S.tab)}</h2>
@@ -783,7 +820,7 @@ function bind(){
 app.addEventListener('click',e=>{if(e.target.id==='naeste')naeste()});
 document.addEventListener('keydown',e=>{if(S.screen!=='gange')return;if(/^[0-9]$/.test(e.key))gTast(e.key);else if(e.key==='Backspace')gTast('slet');else if(e.key==='Enter')gTast('ok')});
 
-load();genoptag();render();
+load();genoptag();render();gendan();sync();
 </script>
 <script>if('serviceWorker' in navigator){addEventListener('load',()=>{navigator.serviceWorker.register('sw.js').then(r=>{r.update().catch(()=>{});document.addEventListener('visibilitychange',()=>{if(document.visibilityState==='visible')r.update().catch(()=>{})})}).catch(()=>{})});let _ny=false;navigator.serviceWorker.addEventListener('controllerchange',()=>{if(_ny)return;_ny=true;const s=window.S;if(!s||s.screen==='hjem'||s.screen==='gangevalg'||s.screen==='intro')location.reload()})}</script>
 
