@@ -309,15 +309,15 @@ const SAGER=[
  labels:{sted:'Er mest',spor:'Efterlader',vane:'Vane'},
  mist:[
   {navn:'Lillebror Malte',rolle:'5 år og bygger huler af alt',t:{sted:'i hulen i stuen',spor:'klistrede fingermærker',vane:'samler på alt blødt'}},
-  {navn:'Hunden Pelle',rolle:'ser altid uskyldig ud',t:{sted:'i haven',spor:'poteaftryk og bidemærker',vane:'gemmer ting'}},
+  {navn:'Hunden Bella',rolle:'ser altid uskyldig ud',t:{sted:'i haven',spor:'poteaftryk og bidemærker',vane:'gemmer ting'}},
   {navn:'Morfar Finn Drost',rolle:'sorterer vasketøjet og glemmer, hvor han lagde det',t:{sted:'i bryggerset',spor:'ryddelige bunker',vane:'lægger ting på "sikre steder"'}},
   {navn:'Skaden i birketræet',rolle:'en nysgerrig fugl',t:{sted:'i haven',spor:'fjer og kviste',vane:'stjæler blanke ting'}}],
  spor:[
   {tekst:'Et spor af sokkefnug fører fra bryggerset ud i haven.',n:'sted',v:'i haven'},
   {tekst:'Under hækken ligger en sok med små huller, som fra tænder.',n:'spor',v:'poteaftryk og bidemærker'},
   {tekst:'Sokkerne er ikke blanke. De er bløde og dufter af hund.',n:'vane',v:'gemmer ting'}],
- skyldig:'Hunden Pelle',
- loesning:'Under terrassen fandt du Pelles hemmelige rede: elleve sokker, en vante og en halv tennisbold. Pelle logrede stolt. Nu har han fået sin egen gamle sok, som han må beholde.',
+ skyldig:'Hunden Bella',
+ loesning:'Under terrassen fandt du Bellas hemmelige rede: elleve sokker, en vante og en halv tennisbold. Bella logrede stolt. Nu har hun fået sin egen gamle sok, som hun må beholde.',
  hist:[
   'Du laver en liste over alle de forsvundne sokker. Elleve i alt. Det er mange sokker.',
   'Morfar Finn siger, at sokkerne forsvinder mellem vaskemaskinen og tørresnoren i haven.',
@@ -325,10 +325,124 @@ const SAGER=[
   'Malte viser stolt sin hule frem. Der er puder, bamser og tæpper, men ingen sokker.',
   'Skaden skræpper fra birketræet. I reden glimter noget. Det er en teske.',
   'Du kravler ind under hækken, hvor græsset er trådt ned.',
-  'Pelle kommer løbende og vil lege. Han ser meget uskyldig ud. Lidt for uskyldig.',
-  'Du samler de fundne sokker op og undersøger dem nøje.']}
+  'Bella kommer løbende og vil lege. Hun ser meget uskyldig ud. Lidt for uskyldig.',
+  'Du samler de fundne sokker op og undersøger dem nøje.']},
+{id:'pizza',titel:'Pizzaen der forsvandt',sted:'Fru Wongs pizzeria',
+ intro:'Familien har bestilt en kæmpe familiepizza hos Fru Wong. Hun er sur som altid og smækker den på disken. Da I vender jer om, er pizzaen væk. Fru Wong bliver endnu mere sur.',
+ labels:{sted:'Var',ting:'Spor på sig',spor:'Fodtøj'},
+ mist:[
+  {navn:'Fru Wong',rolle:'ejer pizzeriaet og er altid sur',t:{sted:'bag disken',ting:'mel på hænderne',spor:'træsko'}},
+  {navn:'Marcus',rolle:'tabte sin telefon under bordet',t:{sted:'under bordet',ting:'tomatsauce på trøjen',spor:'sneakers'}},
+  {navn:'Morfar Finn Drost',rolle:'stod og læste menukortet',t:{sted:'ved døren',ting:'rene hænder',spor:'brune sko'}},
+  {navn:'Hunden Bella',rolle:'elsker ost over alt på jorden',t:{sted:'under bordet',ting:'ost i skægget',spor:'poter'}}],
+ spor:[
+  {tekst:'Pizzaen er trukket ned under bordet – der ligger krummer i en lang stribe.',n:'sted',v:'under bordet'},
+  {tekst:'På gulvet ligger en tot hundehår med smeltet ost i.',n:'ting',v:'ost i skægget'},
+  {tekst:'Aftrykkene i det spildte mel er poter.',n:'spor',v:'poter'}],
+ skyldig:'Hunden Bella',
+ loesning:'Bella havde trukket hele pizzaen ned under bordet, mens Marcus ledte efter sin telefon. Fru Wong knurrede … og bagte så en ny pizza gratis. Hun smilede næsten.',
+ hist:[
+  'Du tager din notesbog frem. Fru Wong stirrer på dig. "Hvem har taget min pizza?!"',
+  'Disken er tom. Kun en lille klat tomatsauce og en stribe mel er tilbage.',
+  'Marcus kravler op fra gulvet med sin telefon. "Jeg så ingenting!"',
+  'Du følger striben af krummer med lommelygten.',
+  'Morfar Finn står ved døren og læser menukortet højt. "Pizza nummer 7 lyder godt."',
+  'Fru Wong banker en træsko i gulvet. "Jeg bager ikke en ny!"',
+  'Du kigger under bordet. Der ligger noget blødt og gult.',
+  'Bella logrer og kigger den anden vej.',
+  'Du lugter til hundehårene. Ost. Helt sikkert ost.',
+  'Du undersøger det spildte mel på gulvet helt tæt på.']},
+{id:'klasse',titel:'Viskelæderne der forsvandt',sted:'Klasselokalet',
+ intro:'Mandag morgen er alle viskelædere i klassen væk. Alle sammen! Læreren tror, det er en joke. Du tror, det er en sag.',
+ labels:{plads:'Var i frikvarteret',spor:'Spor',ting:'Havde med'},
+ mist:[
+  {navn:'Emilie Krüger',rolle:'elsker glimmer og hemmeligheder',t:{plads:'ved vinduet',spor:'glimmer på fingrene',ting:'en blå rygsæk'}},
+  {navn:'Ayesha',rolle:'tegner med glimmerpen',t:{plads:'ved døren',spor:'glimmer på fingrene',ting:'en rød rygsæk'}},
+  {navn:'Morfar Finn Drost',rolle:'var til skole-hjem-samtale',t:{plads:'ved tavlen',spor:'kridt på ærmet',ting:'en brun mappe'}},
+  {navn:'Pedel Berg',rolle:'rasler altid med nøgler',t:{plads:'ved tavlen',spor:'olie på fingrene',ting:'en grøn værktøjstaske'}}],
+ spor:[
+  {tekst:'Der er glimmer på hylden, hvor viskelæderne lå.',n:'spor',v:'glimmer på fingrene'},
+  {tekst:'Viceværten så nogen sidde ved vinduet i frikvarteret.',n:'plads',v:'ved vinduet'},
+  {tekst:'En blå rygsæk bulner mærkeligt.',n:'ting',v:'en blå rygsæk'}],
+ skyldig:'Emilie Krüger',
+ loesning:'Emilie Krüger tilstod med et grin. Hun havde samlet alle viskelæderne for at bygge et viskelæder-tårn til klassens konkurrence. Tårnet blev 48 viskelædere højt, og alle fik deres tilbage.',
+ hist:[
+  'Du kigger på den tomme hylde. 24 viskelædere forsvinder ikke bare.',
+  'Læreren ryster på hovedet. "Det må være sket i frikvarteret."',
+  'Ayesha viser sine hænder frem. De er fulde af glimmer fra en tegning.',
+  'Du lyser med lommelygten hen over hylden.',
+  'Morfar Finn kommer forbi fra skole-hjem-samtalen med kridt på ærmet. "Jeg har kun rørt tavlen!"',
+  'Pedel Berg rasler med sine nøgler. "Jeg reparerer vinduer, jeg stjæler ikke viskelædere."',
+  'Du spørger viceværten, om han så nogen i frikvarteret.',
+  'Emilie Krüger rødmer lidt og kigger ud ad vinduet.',
+  'Du tæller rygsækkene på knagerækken. En af dem ser tung ud.',
+  'Du åbner forsigtigt lynlåsen på den blå rygsæk.']},
+{id:'flaske',titel:'Flaskeposten',sted:'Stranden ved sommerhuset',
+ intro:'Viga og Matilte finder en flaske i vandkanten. Inde i den ligger et brev: "Følg stjernerne til den store sten." Hvem har skrevet det, og hvad ligger ved stenen?',
+ labels:{pen:'Skriver med',papir:'Papir',tegn:'Kendetegn'},
+ mist:[
+  {navn:'Viga',rolle:'elsker gåder',t:{pen:'lilla tusch',papir:'tegnepapir',tegn:'tegner stjerner'}},
+  {navn:'Matilte',rolle:'tegner altid katte',t:{pen:'lilla tusch',papir:'tegnepapir',tegn:'tegner katte'}},
+  {navn:'Morfar Finn Drost',rolle:'løser kryds og tværs',t:{pen:'fyldepen',papir:'avispapir',tegn:'skriver med store bogstaver'}},
+  {navn:'Fru Wong',rolle:'sur pizzabager på ferie',t:{pen:'rød kuglepen',papir:'pizzabakke',tegn:'skriver med udråbstegn'}}],
+ spor:[
+  {tekst:'Skriften er lilla tusch.',n:'pen',v:'lilla tusch'},
+  {tekst:'Papiret er tykt tegnepapir.',n:'papir',v:'tegnepapir'},
+  {tekst:'I hjørnet af brevet er der tegnet en lille kat.',n:'tegn',v:'tegner katte'}],
+ skyldig:'Matilte',
+ loesning:'Det var Matilte! Hun havde lavet en skattejagt til Emilie og Viga. Ved den store sten lå en dåse med tre venskabsarmbånd og en pose vingummi.',
+ hist:[
+  'Du tørrer brevet forsigtigt og lægger det i din notesbog.',
+  'Viga læser højt: "Følg stjernerne til den store sten."',
+  'Fru Wong sidder i en strandstol og brokker sig over sandet. "Breve? Jeg skriver kun regninger!"',
+  'Du holder brevet op mod solen og ser på farven.',
+  'Morfar Finn løser kryds og tværs i avisen. "Jeg skriver kun med STORE bogstaver."',
+  'Matilte tegner i sandet med en pind. Det ligner en kat.',
+  'Du mærker på papiret. Det er tykt og lidt ru.',
+  'Viga siger: "Jeg tegner altid stjerner, ikke katte."',
+  'I kigger alle sammen hen mod den store sten.',
+  'Du undersøger hjørnet af brevet med din lup.']},
+{id:'tog',titel:'Den ombyttede kuffert',sted:'Toget til Odense',
+ intro:'Da I står af toget, er jeres sorte kuffert væk. I stedet står der en anden sort kuffert, der ligner på en prik. Nogen har byttet kuffert. Men hvem?',
+ labels:{bagage:'Bagage',station:'Stod af',duft:'Dufter af'},
+ mist:[
+  {navn:'Fru Wong',rolle:'sur og i fuld fart',t:{bagage:'sort kuffert',station:'i Odense',duft:'pizza'}},
+  {navn:'Konduktøren',rolle:'kører hele vejen til Aarhus',t:{bagage:'blå taske',station:'ingen steder',duft:'kaffe'}},
+  {navn:'Morfar Finn Drost',rolle:'sad og sov med avisen',t:{bagage:'sort kuffert',station:'i Odense',duft:'pibetobak'}},
+  {navn:'Marcus',rolle:'skulle besøge sin fætter',t:{bagage:'rygsæk',station:'i Nyborg',duft:'tyggegummi'}}],
+ spor:[
+  {tekst:'Den fremmede kuffert er sort og magen til jeres.',n:'bagage',v:'sort kuffert'},
+  {tekst:'Der sidder en Odense-billet i kuffertens lomme.',n:'station',v:'i Odense'},
+  {tekst:'Kufferten dufter kraftigt af pizza.',n:'duft',v:'pizza'}],
+ skyldig:'Fru Wong',
+ loesning:'Fru Wong havde taget jeres kuffert ved en fejl, og hun var MEGET sur over, at I havde hendes. I hendes kuffert lå 40 pizzaopskrifter. I byttede tilbage, og hun gav jer en pizza. Uden at smile.',
+ hist:[
+  'Du ser på den fremmede kuffert. Samme farve, samme hjul, men en anden lugt.',
+  'Konduktøren kigger i sin blå taske. "Jeg står først af i Aarhus."',
+  'Marcus vinker fra perronen i Nyborg med sin rygsæk.',
+  'Du sammenligner kufferterne. Den fremmede er lidt tungere.',
+  'Morfar Finn vågner. "Har nogen set min avis?" Hans kuffert står stadig ved hans fødder.',
+  'Du åbner den lille lomme på den fremmede kuffert.',
+  'En lille billet falder ud. Du læser stationens navn.',
+  'Fru Wong ringer til stationen og råber: "Hvem har taget min kuffert?!"',
+  'Du snuser til kufferten. Der er en duft, du kender fra et pizzeria …',
+  'Du lægger alle ledetrådene ved siden af hinanden i notesbogen.']}
 ];
-const SPOR_VED=[2,5,7]; // efter spørgsmål nr. 3, 6 og 8 afsløres en ledetråd
+const SPOR_VED=[3,6,9]; // efter spørgsmål 4, 7 og 10 afsløres en ledetråd
+const FAGMIX=['mat','mat','mat','mat','dansk','dansk','dansk','eng','eng','eng'];
+const N_SPM=FAGMIX.length;
+// 19-10-2026: sagerne fik 10 opgaver i stedet for 8. De gamle sager får to ekstra historielinjer,
+// sat ind på plads 2 og 8, så ledetrådene stadig afsløres ved opgave 4, 7 og 10.
+const EKSTRA_HIST={
+ kage:['Bella snuser rundt om køleskabet og ser skuffet ud. Hun har heller ikke fået kage.','Bedste siger, at hun så en skygge gå forbi vinduet lige før klokken fire.'],
+ sand:['En lille dreng fortæller, at han så lys på stranden i nat. "Det var nok et spøgelse."','Du tegner stranden i din notesbog og sætter kryds, hvor sporene er.'],
+ brev:['En ældre dame hvisker: "Sedler i bøger? Det gjorde man i min ungdom."','Du tjekker udlånslisten. Kogebogen har været lånt ud tre gange i denne uge.'],
+ hotel:['Receptionisten viser dig gæstelisten. Kun fire personer bor på 3. sal.','Du mærker på gulvtæppet. Det er helt tørt, så ingen er kommet udefra.'],
+ cykel:['En gæst fortæller, at hun hørte en cykelklokke ringe ved otte-tiden.','Du finder cykelsporet i gruset. Det drejer mod porten, ikke mod stranden.'],
+ sok:['Far griner: "Måske er der et sokke-monster." Du skriver det ned alligevel.','Du lægger de forsvundne sokkers par på række. Alle er bløde uldsokker.']
+};
+for(const s of SAGER){const e=EKSTRA_HIST[s.id];if(e){s.hist.splice(2,0,e[0]);s.hist.splice(8,0,e[1])}}
+ // efter spørgsmål nr. 3, 6 og 8 afsløres en ledetråd
 
 // ---------- Dansk (første svarmulighed er altid den rigtige; blandes ved visning) ----------
 const DANSK=[
@@ -388,7 +502,68 @@ const DANSK=[
  {q:'Hvilket ord skal skrives med stort?',o:['danmark','hund','sommer','strand'],f:'Lande og navne skrives med stort: Danmark.'},
  {q:'Hvilket ord er et stedord?',o:['hun','løber','hus','gul'],f:'Stedord står i stedet for et navn: hun, han, den, det.'},
  {q:'Hvad er det modsatte af "tyk"?',o:['tynd','høj','lille','let']},
- {q:'Hvilket ord betyder det samme som "spise"?',o:['æde','drikke','sove','købe']}
+ {q:'Hvilket ord betyder det samme som "spise"?',o:['æde','drikke','sove','købe']},
+ {q:'Hvilket ord er stavet rigtigt?',o:['selvfølgelig','selvfølgelik','selfølgelig','selvføgelig'],n:2},
+ {q:'Hvilket ord er stavet rigtigt?',o:['forskellig','forskelig','forskjellig','forskællig'],n:2},
+ {q:'Hvilket ord er stavet rigtigt?',o:['interessant','interesant','intressant','interresant'],n:3},
+ {q:'Hvilket ord er stavet rigtigt?',o:['hemmelighed','hemlighed','hemmelighet','hemmeliged'],n:2},
+ {q:'Hvilket ord er stavet rigtigt?',o:['undskyld','unskyld','undskyl','undskylld']},
+ {q:'Hvilket ord er stavet rigtigt?',o:['lørdag','lørda','lørrdag','lørdaq']},
+ {q:'Hvilket ord er stavet rigtigt?',o:['værelse','værelsse','verelse','værrelse']},
+ {q:'Hvilket ord er stavet rigtigt?',o:['spørgsmål','spørsmål','spørgsmaal','spørgsmåll'],n:2},
+ {q:'Hvilket ord er stavet rigtigt?',o:['øjeblik','øjebllik','øjebligk','øjeblick'],n:2},
+ {q:'Hvilket ord er stavet rigtigt?',o:['tandlæge','tandlege','tanlæge','tandlæje']},
+ {q:'Hvilket ord er stavet rigtigt?',o:['hyggelig','hygelig','hyggeli','hyggelik']},
+ {q:'Hvilket ord er stavet rigtigt?',o:['nysgerrig','nysgerig','nysgærrig','nyskerrig'],n:2},
+ {q:'Hvilket ord er stavet rigtigt?',o:['pyjamas','pyjamaas','pajamas','pyjammas'],n:3},
+ {q:'Hvilket ord er stavet rigtigt?',o:['egentlig','egenlig','egentli','ejentlig'],n:3},
+ {q:'Hvilket ord er stavet rigtigt?',o:['ambulance','ambulanse','ambulence','ambolance'],n:2},
+ {q:'Hvilket ord er stavet rigtigt?',o:['fjernsyn','fjernsyyn','fjærnsyn','fjernsyhn']},
+ {q:'Hvilket ord er stavet FORKERT?',o:['skolle','skole','bus','hund'],f:'Det hedder skole med ét l.'},
+ {q:'Hvilket ord er stavet FORKERT?',o:['sjovv','sjovt','sjove','sjovere'],f:'Det hedder sjov.',n:2},
+ {q:'Hvad er flertal af "et barn"?',o:['børn','barne','barner','børne'],f:'Et barn, mange børn.'},
+ {q:'Hvad er flertal af "en fod"?',o:['fødder','foder','føder','fodder'],f:'En fod, to fødder.'},
+ {q:'Hvad er flertal af "en bog"?',o:['bøger','boger','bøge','bogger']},
+ {q:'Hvad er flertal af "en tand"?',o:['tænder','tander','tænde','tandere']},
+ {q:'Hvad er flertal af "en ko"?',o:['køer','koer','kør','koe'],n:2},
+ {q:'Hvad er bestemt flertal af "en hund"?',o:['hundene','hunde','hunden','hundes'],f:'Hundene = de bestemte hunde.',n:2},
+ {q:'Hvad er datid af "at spise"?',o:['spiste','spisede','spist','spiser']},
+ {q:'Hvad er datid af "at drikke"?',o:['drak','drikkede','drukket','drikker'],n:2},
+ {q:'Hvad er datid af "at skrive"?',o:['skrev','skrivede','skrevet','skriver'],n:2},
+ {q:'Hvad er datid af "at synge"?',o:['sang','syngede','sunget','synger'],n:2},
+ {q:'Hun har ___ hele bogen. Hvilket ord mangler?',o:['læst','læste','læser','læse'],f:'"Har læst" er førnutid.',n:2},
+ {q:'De har ___ til stranden. Hvilket ord mangler?',o:['gået','gik','går','gå'],n:2},
+ {q:'Hvilket ord er et biord (fortæller hvordan/hvornår)?',o:['hurtigt','hurtig','hund','løbe'],f:'Hun løber hurtigt – "hurtigt" fortæller, hvordan hun løber.',n:3},
+ {q:'Hvilket ord er et forholdsord?',o:['under','bord','ligger','kat'],f:'Forholdsord fortæller hvor: under, på, i, ved.',n:3},
+ {q:'Hvilket ord er et egennavn?',o:['Odense','by','hus','pige'],f:'Egennavne er navne og skrives med stort.',n:2},
+ {q:'Hvilket ord betyder det samme som "begynde"?',o:['starte','slutte','stoppe','vente']},
+ {q:'Hvilket ord betyder det samme som "glad"?',o:['lykkelig','sur','træt','bange']},
+ {q:'Hvilket ord betyder det samme som "stille"?',o:['rolig','larmende','høj','vild']},
+ {q:'Hvilket ord betyder det samme som "forsvinde"?',o:['blive væk','komme frem','råbe','lede'],n:2},
+ {q:'Hvad er det modsatte af "tyk"?',o:['tynd','høj','lille','let']},
+ {q:'Hvad er det modsatte af "først"?',o:['sidst','næst','bagved','altid']},
+ {q:'Hvad er det modsatte af "modig"?',o:['bange','stærk','stor','klog'],n:2},
+ {q:'Hvad betyder talemåden "at have sommerfugle i maven"?',o:['at være nervøs','at være sulten','at have ondt i maven','at være glad'],n:3},
+ {q:'Hvad betyder talemåden "at tage benene på nakken"?',o:['at løbe væk','at stå på hovedet','at gå i seng','at blive træt'],n:3},
+ {q:'Hvad betyder talemåden "at gå i hundene"?',o:['at få det dårligt','at lufte hunden','at blive bidt','at løbe'],n:3},
+ {q:'Hvilket ord er sat sammen af to ord?',o:['regnjakke','regner','jakke','våd']},
+ {q:'Hvilket ord er sat sammen af to ord?',o:['fodbold','fødder','bolden','spille']},
+ {q:'"tand" + "børste" bliver til …',o:['tandbørste','børstetand','tandbørst','tand-børste']},
+ {q:'Hvor mange stavelser er der i "elefant"?',o:['3','2','4','5'],f:'e-le-fant.'},
+ {q:'Hvor mange stavelser er der i "sommerferie"?',o:['5','3','4','6'],f:'som-mer-fe-ri-e.',n:2},
+ {q:'Hvor skal der komma? "Da det blev mørkt ___ tændte vi lommelygten."',o:['efter "mørkt"','efter "Da"','efter "tændte"','ingen steder'],f:'Der sættes komma mellem to sætninger: "Da det blev mørkt, tændte vi lommelygten."',n:3},
+ {q:'Hvilken sætning har kommaet det rigtige sted?',o:['Hvis du vil, kan vi gå nu.','Hvis, du vil kan vi gå nu.','Hvis du, vil kan vi gå nu.','Hvis du vil kan vi, gå nu.'],n:3},
+ {q:'Hvilket tegn viser, at nogen siger noget?',o:['anførselstegn " "','punktum .','komma ,','spørgsmålstegn ?'],n:2},
+ {t:'Detektiven listede ned ad den knirkende trappe. Nederst stod en dør på klem, og et svagt lys flakkede bag den. Hun holdt vejret og lyttede. Ingenting. Så hørte hun en lille klirren, som af nøgler.',q:'Hvad hørte detektiven til sidst?',o:['en klirren af nøgler','en dør der smækkede','et skrig','en hund der gøede'],n:2},
+ {t:'Detektiven listede ned ad den knirkende trappe. Nederst stod en dør på klem, og et svagt lys flakkede bag den. Hun holdt vejret og lyttede. Ingenting. Så hørte hun en lille klirren, som af nøgler.',q:'Hvorfor holdt hun vejret?',o:['for at kunne lytte bedre','fordi der lugtede dårligt','fordi hun løb','fordi hun var under vand'],n:2},
+ {t:'Fru Wong smækkede pizzaen på disken. "Ingen rabat!" sagde hun. Men da den lille dreng tabte sin is på gulvet, gav hun ham en ny uden at sige et ord.',q:'Hvad fortæller teksten om Fru Wong?',o:['Hun er sur udenpå, men venlig indeni','Hun kan ikke lide børn','Hun elsker rabatter','Hun kan ikke lide is'],n:3},
+ {t:'Fru Wong smækkede pizzaen på disken. "Ingen rabat!" sagde hun. Men da den lille dreng tabte sin is på gulvet, gav hun ham en ny uden at sige et ord.',q:'Hvad tabte drengen?',o:['sin is','sin pizza','sine penge','sin hat']},
+ {t:'Morfar Finn påstod, at han havde fanget en gedde på 12 kilo. Men på billedet var fisken mindre end hans sko.',q:'Hvad kan man regne ud af teksten?',o:['Fisken var ikke så stor, som Morfar sagde','Morfar har store sko','Gedder vejer altid 12 kilo','Morfar fangede ingen fisk'],n:3},
+ {q:'Hvilket ord rimer på "sag"?',o:['dag','sang','sø','søg']},
+ {q:'Hvilket ord rimer på "lup"?',o:['kup','lap','lys','lugt']},
+ {q:'Hvilket ord kommer SIDST i alfabetet?',o:['ugle','abe','hund','kat'],n:2},
+ {q:'Hvilket ord kommer først i ordbogen: "bil" eller "bagage"?',o:['bagage','bil','de står samme sted','det kan man ikke vide'],f:'Efter b kommer a før i: ba… før bi…',n:3}
+
 ];
 
 // ---------- Engelsk ----------
@@ -428,7 +603,60 @@ const ENGELSK=[
  {q:'Hvad hedder "Hvad er klokken?" på engelsk?',o:['What time is it?','What is the clock?','How late is it?','Where is the time?']},
  {q:'Can you ___ me find the key?',o:['help','helps','helping','helped']},
  {q:'Hvad hedder "venstre" på engelsk?',o:['left','right','straight','back']},
- {q:'Hvad hedder "vinter" på engelsk?',o:['winter','window','summer','autumn']}
+ {q:'Hvad hedder "vinter" på engelsk?',o:['winter','window','summer','autumn']},
+ ...[['elefant','elephant','lion','monkey','tiger'],['løve','lion','bear','wolf','fox'],['abe','monkey','donkey','mouse','bird'],['sommerfugl','butterfly','bee','spider','ant'],['edderkop','spider','snake','frog','fly'],['kanin','rabbit','rat','hamster','cat'],['får','sheep','goat','cow','pig'],['and','duck','chicken','goose','swan'],['ben','leg','arm','knee','toe'],['øje','eye','ear','nose','mouth'],['næse','nose','neck','nail','knee'],['tand','tooth','tongue','toe','thumb'],['brød','bread','butter','cheese','cake'],['ost','cheese','chicken','cherry','chips'],['kartoffel','potato','tomato','carrot','pea'],['gulerod','carrot','cucumber','corn','cabbage'],['kage','cake','cookie','candy','cream'],['vand','water','wine','milk','juice'],['stue','living room','kitchen','bathroom','bedroom'],['køkken','kitchen','garden','garage','hall'],['have','garden','garage','gate','grass'],['træ','tree','three','tea','tray'],['blomst','flower','flour','leaf','grass'],['sne','snow','rain','ice','wind'],['vind','wind','window','winter','wing'],['varm','hot','cold','wet','dry'],['kold','cold','cool','hot','cloud'],['glad','happy','sad','angry','tired'],['træt','tired','tried','tall','thin'],['sulten','hungry','angry','thirsty','hurry'],['tørstig','thirsty','thirty','hungry','dirty'],['lille','small','smell','tall','short'],['stor','big','bag','bug','beg'],['ny','new','now','knew','no'],['gammel','old','owl','gold','cold'],['løbe','run','ran','rain','ring'],['hoppe','jump','jam','jog','joke'],['svømme','swim','swing','sweep','sweet'],['læse','read','red','ride','road'],['skrive','write','white','right','ride'],['tegne','draw','drew','drop','dream'],['synge','sing','sink','song','sin'],['danse','dance','dash','dark','date'],['sove','sleep','slip','slide','slow'],['lytte','listen','lesson','light','little'],['tirsdag','Tuesday','Thursday','Sunday','Monday'],['torsdag','Thursday','Tuesday','Saturday','Friday'],['lørdag','Saturday','Sunday','Monday','Wednesday'],['søndag','Sunday','Monday','Saturday','Friday'],['januar','January','June','July','Jury'],['oktober','October','August','September','November']]
+   .map(([da,...o])=>({q:`Hvad hedder "${da}" på engelsk?`,o})),
+ ...[['suspect','mistænkt','sur','sukker','suppe'],['mystery','mysterium','mus','myre','mester'],['magnifying glass','lup','maling','glas','maske'],['torch','lommelygte','tørklæde','torsk','tårn'],['key','nøgle','ko','kø','kage'],['secret door','hemmelig dør','sikker dør','stor dør','hemmeligt rum'],['witness','vidne','vind','vinter','vittighed'],['evidence','bevis','elev','event','eventyr'],['hide','gemme sig','hjem','hest','høj'],['follow','følge efter','falde','fylde','fodre'],['quiet','stille','hurtig','sjov','søvnig'],['scared','bange','skarp','sur','sjov'],['brave','modig','bred','brun','brav'],['again','igen','aldrig','altid','af og til'],['never','aldrig','nær','ny','næsten'],['always','altid','alle','også','allerede']]
+   .map(([en,...o])=>({q:`Hvad betyder "${en}" på dansk?`,o,n:2})),
+ {q:'Hvilket tal er "eleven"?',o:['11','7','12','1']},
+ {q:'Hvilket tal er "fifteen"?',o:['15','50','5','14']},
+ {q:'Hvilket tal er "eighteen"?',o:['18','80','8','13']},
+ {q:'Hvilket tal er "forty-five"?',o:['45','54','40','415'],n:2},
+ {q:'Hvilket tal er "seventy-three"?',o:['73','37','70','17'],n:2},
+ {q:'Hvad hedder 19 på engelsk?',o:['nineteen','ninety','nine','ninth']},
+ {q:'Hvad hedder 60 på engelsk?',o:['sixty','sixteen','six','sixth'],n:2},
+ {q:'Hvad hedder 1000 på engelsk?',o:['one thousand','one hundred','ten hundred','thousand one'],n:2},
+ {q:'One child, two ___.',o:['children','childs','childrens','child'],n:2},
+ {q:'One foot, two ___.',o:['feet','foots','feets','foot'],n:2},
+ {q:'One tooth, two ___.',o:['teeth','tooths','teeths','tooth'],n:3},
+ {q:'He ___ football every Saturday.',o:['plays','play','playing','played'],f:'Efter he/she/it får udsagnsordet -s.',n:2},
+ {q:'My sister ___ a red bike.',o:['has','have','having','had'],n:2},
+ {q:'We ___ to school by bus.',o:['go','goes','going','gone'],n:2},
+ {q:'Yesterday I ___ to the beach.',o:['went','go','goes','going'],f:'"Yesterday" = datid: went.',n:3},
+ {q:'Last night she ___ a ghost!',o:['saw','see','sees','seen'],n:3},
+ {q:'The cat is ___ the table.',o:['under','in','at','of'],f:'Under bordet = under the table.'},
+ {q:'The book is ___ the bag.',o:['in','on','under','at']},
+ {q:'The key is ___ the chair.',o:['on','in','to','of'],f:'På stolen = on the chair.'},
+ {q:'___ is your name?',o:['What','Where','When','Who']},
+ {q:'___ do you live?',o:['Where','What','Who','Why']},
+ {q:'___ old are you?',o:['How','What','Where','Who']},
+ {q:'___ is your birthday?',o:['When','What','Where','Which'],n:2},
+ {q:'___ is that boy?',o:['Who','What','When','How'],n:2},
+ {q:'Hvad betyder "I am thirsty"?',o:['Jeg er tørstig','Jeg er sulten','Jeg er træt','Jeg er glad']},
+ {q:'Hvad betyder "Can I have an ice cream, please?"',o:['Må jeg få en is?','Kan jeg få en kage?','Har du en is?','Jeg vil ikke have is']},
+ {q:'Hvad betyder "See you tomorrow"?',o:['Vi ses i morgen','Vi ses i dag','Farvel for altid','Jeg ser dig']},
+ {q:'Hvad betyder "Hurry up!"?',o:['Skynd dig!','Stop!','Sæt dig ned!','Vent lidt!'],n:2},
+ {q:'Hvad betyder "Be careful!"?',o:['Pas på!','Vær stille!','Skynd dig!','Kom her!'],n:2},
+ {q:'Hvad betyder "Whose footprints are these?"',o:['Hvis fodspor er det her?','Hvor er fodsporene?','Hvad er fodspor?','Hvem har fødder?'],n:3},
+ {q:'Hvad hedder "Jeg kan godt lide hunde" på engelsk?',o:['I like dogs','I am dogs','I have dogs','I love dog'],n:2},
+ {q:'Hvad hedder "Hvad er klokken?" på engelsk?',o:['What time is it?','What is the clock?','How late is it?','When is time?']},
+ {q:'"It is half past two" betyder klokken er …',o:['14:30','14:00','13:30','02:02'],f:'Half past two = en halv time efter to.',n:3},
+ {q:'"It is quarter to five" betyder klokken er …',o:['16:45','17:15','16:15','05:45'],f:'Quarter to five = et kvarter i fem.',n:3},
+ {q:'What colour do you get when you mix blue and yellow?',o:['green','purple','orange','brown'],n:2},
+ {q:'Which animal says "moo"?',o:['a cow','a cat','a dog','a duck']},
+ {q:'Which animal has a long neck?',o:['a giraffe','a cat','a pig','a sheep'],n:2},
+ {q:'How many days are there in a week?',o:['seven','six','five','ten']},
+ {q:'How many months are there in a year?',o:['twelve','ten','eleven','twenty'],n:2},
+ {q:'What is the opposite of "fast"?',o:['slow','quick','low','last']},
+ {q:'What is the opposite of "day"?',o:['night','light','dark','evening']},
+ {q:'What is the opposite of "open"?',o:['closed','opened','shut up','locked'],n:2},
+ {t:'Detective Emilie has a brown dog called Bella. Bella loves cheese. One day, the cheese is gone and Bella is hiding under the bed.',q:'What does Bella love?',o:['cheese','bread','bones','cake']},
+ {t:'Detective Emilie has a brown dog called Bella. Bella loves cheese. One day, the cheese is gone and Bella is hiding under the bed.',q:'Where is Bella hiding?',o:['under the bed','in the garden','behind the door','in the kitchen']},
+ {t:'Mrs Wong sells pizza. She is always angry, but her pizza is the best in town. Every Friday, Marcus buys a pizza with extra cheese.',q:'When does Marcus buy pizza?',o:['every Friday','every Monday','every day','never'],n:2},
+ {t:'Mrs Wong sells pizza. She is always angry, but her pizza is the best in town. Every Friday, Marcus buys a pizza with extra cheese.',q:'What is Mrs Wong like?',o:['always angry','always happy','very quiet','very old'],n:2},
+ {t:'Grandpa Finn lost his glasses. He looked in the kitchen, in the garden and in the car. Then Emilie laughed: the glasses were on his head!',q:'Where were the glasses?',o:['on his head','in the car','in the kitchen','in the garden'],n:2},
+ {t:'Grandpa Finn lost his glasses. He looked in the kitchen, in the garden and in the car. Then Emilie laughed: the glasses were on his head!',q:'How many places did Grandpa look?',o:['three','two','four','one'],n:3}
+
 ];
 
 // ---------- Matematik (generatorer) ----------
@@ -477,6 +705,48 @@ const MAT=[
  ()=>{const n=rnd(3,9),r=rnd(1,n-1),q=rnd(3,9);const t=n*q+r;return{q:`${t} ledetråde skal deles ligeligt i ${n} æsker. Hvor mange bliver der til overs?`,s:r,f:`${n} · ${q} = ${n*q}, og ${t} − ${n*q} = ${r} til overs.`}}
 ];
 
+
+// Sværhedsgrad (19-10-2026): jo flere stjerner, jo sværere opgaver. Niveau 1: 0-5 stjerner,
+// niveau 2: 6-14, niveau 3: 15+. Dansk/engelsk-opgaver med n:2/n:3 kommer først med på de niveauer,
+// og matematikken får flere generatorer (MAT2, MAT3).
+const NIVEAU_NAVN=['','Detektivlærling','Detektiv','Mesterdetektiv'];
+function niveau(){const st=Object.values(P.sager).reduce((a,x)=>a+(x.stars||0),0);return st>=15?3:(st>=6?2:1)}
+
+
+// Niveau 2+: 11- og 12-tabel, decimaltal med én decimal, brøker, store plus/minus, 2-cifret · 1-cifret
+const MAT2=[
+ ()=>{const a=pick([11,12]),b=rnd(2,10);return{q:`Hvad er ${a} · ${b}?`,s:a*b,f:`${a} · ${b} = ${a*b}`}},
+ ()=>{const a=pick([11,12]),b=rnd(2,10);return{q:`Hvad er ${a*b} : ${a}?`,s:b}},
+ ()=>{const a=rnd(12,48),b=rnd(2,9);return{q:`Hvad er ${a} · ${b}?`,s:a*b,f:`${Math.floor(a/10)*10} · ${b} = ${Math.floor(a/10)*10*b}, og ${a%10} · ${b} = ${(a%10)*b}. Tilsammen ${a*b}.`}},
+ ()=>{const a=rnd(11,89)/10,b=rnd(11,89)/10;const s=Math.round((a+b)*10)/10;return{q:`Hvad er ${dk(a)} + ${dk(b)}? (skriv med komma, fx 4,5)`,s:dk(s),type:'dec'}},
+ ()=>{const a=rnd(31,99)/10,b=rnd(10,30)/10;const s=Math.round((a-b)*10)/10;return{q:`Hvad er ${dk(a)} − ${dk(b)}? (skriv med komma, fx 4,5)`,s:dk(s),type:'dec'}},
+ ()=>{const kr=rnd(12,89),ore=pick([25,50,75]);return{q:`En is koster ${kr},${ore} kr. Hvad koster to is? (skriv fx 24,50)`,s:dk(2*(kr+ore/100)),type:'dec'}},
+ ()=>{const n=pick([2,3,4,5,10]),k=rnd(2,9);const t=n*k;return{q:`Hvad er 1/${n} af ${t}?`,s:k,f:`${t} : ${n} = ${k}`}},
+ ()=>{const n=pick([4,5,6,8,10]),a=rnd(1,n-2),b=rnd(1,n-a-1);return{q:`Hvad er ${a}/${n} + ${b}/${n}? Skriv kun tælleren (tallet over brøkstregen) – nævneren er stadig ${n}.`,s:a+b,f:`${a}/${n} + ${b}/${n} = ${a+b}/${n}`}},
+ ()=>{const l=[[1,2],[1,3],[1,4],[3,4],[2,3],[1,5]];const [a,b]=pick(l);const [c,d]=pick(l.filter(x=>x[0]/x[1]!==a/b));const stor=a/b>c/d?`${a}/${b}`:`${c}/${d}`;const lille=stor===`${a}/${b}`?`${c}/${d}`:`${a}/${b}`;return{q:'Hvilken brøk er størst?',o:[stor,lille,'de er lige store','det kan man ikke vide'],mc:true,f:`${stor} er størst.`}},
+ ()=>{const a=rnd(1200,7800),b=rnd(1100,9999-a);return{q:`Hvad er ${a} + ${b}?`,s:a+b}},
+ ()=>{const a=rnd(3000,9999),b=rnd(1000,a-500);return{q:`Hvad er ${a} − ${b}?`,s:a-b}},
+ ()=>{const a=rnd(2,9),b=rnd(2,9),c=rnd(1,Math.min(9,a*b-1));return{q:`Hvad er ${a} · ${b} − ${c}?`,s:a*b-c,f:`Gange først: ${a} · ${b} = ${a*b}, og ${a*b} − ${c} = ${a*b-c}.`}},
+ ()=>{const l=rnd(10,40),b=rnd(5,20);return{q:`En have er ${l} m lang og ${b} m bred. Hvor mange meter hegn skal der til hele vejen rundt?`,s:2*(l+b)}},
+ ()=>{const km=rnd(2,9),m=pick([250,500,750]);return{q:`Hvor mange meter er ${km} km og ${m} m?`,s:km*1000+m}},
+ ()=>{const n=rnd(4,9),r=rnd(1,3);const t=n*rnd(3,9)+r;return{q:`${t} elever deles i hold af ${n}. Hvor mange bliver til overs?`,s:r,f:`${n} går op i ${t-r}, og så er der ${r} til overs.`}},
+ ()=>{const t=rnd(2,5),m=pick([15,30,45]);return{q:`Hvor mange minutter er ${t} timer og ${m} minutter?`,s:t*60+m}}
+];
+// Niveau 3: gange med 2 decimaler i penge, division med rest, procent-forsmag, større brøkdele, negative temperaturer
+const MAT3=[
+ ()=>{const a=rnd(102,398),b=rnd(2,9);return{q:`Hvad er ${a} · ${b}?`,s:a*b}},
+ ()=>{const b=rnd(3,9),k=rnd(12,99);return{q:`Hvad er ${b*k} : ${b}?`,s:k}},
+ ()=>{const n=rnd(3,9),k=rnd(4,12),r=rnd(1,n-1);return{q:`Hvad er ${n*k+r} : ${n}? Skriv kun hele tal – hvor mange hele gange går ${n} op?`,s:k,f:`${n} · ${k} = ${n*k}, rest ${r}.`}},
+ ()=>{const t=pick([20,40,60,80,100,200]);const p=pick([10,25,50]);return{q:`Hvad er ${p} % af ${t}?`,s:t*p/100,f:`${p} % betyder ${p} ud af 100.`}},
+ ()=>{const a=rnd(-9,-1),b=rnd(3,12);return{q:`Om natten var der ${a} grader. Om dagen steg temperaturen ${b} grader. Hvor mange grader blev det?`,s:a+b}},
+ ()=>{const n=pick([3,4,5,8]),k=rnd(3,12),a=rnd(2,n-1);return{q:`Hvad er ${a}/${n} af ${n*k}?`,s:a*k,f:`1/${n} af ${n*k} er ${k}, så ${a}/${n} er ${a*k}.`}},
+ ()=>{const a=rnd(105,995)/100,b=rnd(105,995)/100;return{q:`Hvad er ${dk(a)} + ${dk(b)} kr.? (skriv fx 12,45)`,s:dk(Math.round((a+b)*100)/100),type:'dec'}},
+ ()=>{const p=rnd(15,45),k=rnd(3,6);return{q:`${k} venner deler en regning på ${p*k} kr. ligeligt. Hvor meget betaler hver?`,s:p}},
+ ()=>{const a=rnd(2,9),b=rnd(2,9),c=rnd(2,9),d=rnd(1,9);return{q:`Hvad er ${a} · ${b} + ${c} · ${d}?`,s:a*b+c*d,f:`${a} · ${b} = ${a*b} og ${c} · ${d} = ${c*d}.`}},
+ ()=>{const s=pick([[1,10],[25,100],[5,10],[75,100],[3,4]]);const o={'1/10':'0,1','25/100':'0,25','5/10':'0,5','75/100':'0,75','3/4':'0,75'};const br=`${s[0]}/${s[1]}`;return{q:`Skriv brøken ${br} som decimaltal (fx 0,5).`,s:o[br],type:'dec'}}
+];
+const dk=x=>String(x).replace('.',',');
+
 // ---------- Gemt fremgang ----------
 let P;
 function load(){try{P=JSON.parse(localStorage.getItem(LS))||{}}catch(e){P={}}
@@ -486,14 +756,16 @@ function noterDag(){const d=new Date().toISOString().slice(0,10);if(!P.dage.incl
 
 function pickItem(fag){
   const bank=fag==='dansk'?DANSK:ENGELSK;let seen=P.set[fag];
-  let kand=bank.map((_,i)=>i).filter(i=>!seen.includes(i));
-  if(!kand.length){seen=P.set[fag]=[];kand=bank.map((_,i)=>i)}
+  const niv=niveau();const ok=i=>(bank[i].n||1)<=niv;
+  let kand=bank.map((_,i)=>i).filter(i=>ok(i)&&!seen.includes(i));
+  if(!kand.length){seen=P.set[fag]=[];kand=bank.map((_,i)=>i).filter(ok)}
   const i=pick(kand);seen.push(i);save();
   const it=bank[i];return{type:'mc',q:it.q,t:it.t,svar:it.o[0],opts:shuffle(it.o),f:it.f};
 }
-function lavMat(){const it=pick(MAT)();
+function lavMat(){const niv=niveau();const pool=MAT.concat(niv>=2?MAT2:[],niv>=3?MAT3:[]);const it=pick(pool)();
   if(it.mc)return{type:'mc',q:it.q,svar:it.o[0],opts:shuffle(it.o),f:it.f};
   return{type:it.type||'tal',q:it.q,svar:String(it.s),f:it.f};}
+// 'dec' = decimaltal (skrives med komma); 'tid' = klokkeslæt; 'tal' = heltal
 function lavSpm(fag){return fag==='mat'?lavMat():pickItem(fag)}
 
 // ---------- Tilstand og rendering ----------
@@ -506,7 +778,7 @@ function render(){
 }
 // Gem hvor hun er naaet til (sag eller traening), saa appen kan lukkes og aabnes igen
 function gemS(){try{if(S.screen==='q'||S.screen==='deduk'){const g=Object.assign({},S,{sag:S.sag?S.sag.id:undefined});localStorage.setItem(LS+'_s',JSON.stringify(g))}else localStorage.removeItem(LS+'_s')}catch(e){}}
-function genoptag(){try{const g=JSON.parse(localStorage.getItem(LS+'_s')||'null');if(!g||!g.screen)return;if(g.sag){g.sag=SAGER.find(s=>s.id===g.sag);if(!g.sag)return}if(g.mode==='sag'&&!g.sag)return;S=g}catch(e){}}
+function genoptag(){try{const g=JSON.parse(localStorage.getItem(LS+'_s')||'null');if(!g||!g.screen)return;if(g.sag){g.sag=SAGER.find(s=>s.id===g.sag);if(!g.sag)return}if(g.mode==='sag'&&!g.sag)return;if(g.mode==='sag'&&g.qs.length!==N_SPM)return;S=g}catch(e){}}
 function stjerner(n){return '★'.repeat(n)+'☆'.repeat(3-n)}
 
 function rHjem(){
@@ -514,8 +786,8 @@ function rHjem(){
   const st=Object.values(P.sager).reduce((a,x)=>a+(x.stars||0),0);
   return `
   <header class="brand"><h1>Detektiv Emilie</h1><small>Detektivbureauet · 4. klasse</small></header>
-  <div class="stats"><div class="stat">Opklarede sager <b>${done}/${SAGER.length}</b></div><div class="stat">Stjerner <b>${st}</b></div><div class="stat">Dage på sagen <b>${P.dage.length}</b></div></div>
-  <section class="sektion"><div class="sektion-h"><h2>Sagsmapper</h2><span>8 opgaver pr. sag</span></div>
+  <div class="stats"><div class="stat">Opklarede sager <b>${done}/${SAGER.length}</b></div><div class="stat">Stjerner <b>${st}</b></div><div class="stat">Dage på sagen <b>${P.dage.length}</b></div><div class="stat">Niveau <b>${niveau()}</b> ${NIVEAU_NAVN[niveau()]}</div></div>
+  <section class="sektion"><div class="sektion-h"><h2>Sagsmapper</h2><span>${N_SPM} opgaver pr. sag</span></div>
   ${SAGER.map((s,i)=>{const p=P.sager[s.id]||{};const kl=p.done?'done':(p.igang?'igang':'');
     const status=p.done?`<span class="stjerner">${stjerner(p.stars)}</span>`:(p.igang?'I gang':'Ny sag');
     return `<button class="mappe ${kl}" data-sag="${s.id}" data-nr="Sag nr. ${i+1}"><h3>${esc(s.titel)}</h3><div class="sted">${esc(s.sted)}</div><div class="status">${status}</div></button>`}).join('')}
@@ -532,14 +804,14 @@ function rIntro(){const s=S.sag;return `
   <header class="top"><button class="lnk" data-go="hjem">← Sagsmapper</button></header>
   <div class="intro"><div class="sted">${esc(s.sted)}</div><h2>${esc(s.titel)}</h2><p class="hist">${esc(s.intro)}</p>
    <div><b>De mistænkte:</b> ${s.mist.map(m=>esc(m.navn)).join(', ')}.</div>
-   <p>Løs 8 opgaver for at samle 3 ledetråde. Så kan du afsløre, hvem det var.</p>
+   <p>Løs ${N_SPM} opgaver for at samle 3 ledetråde. Så kan du afsløre, hvem det var.</p>
    <div class="rad"><button class="knap brass" data-start="${s.id}">Start efterforskningen</button></div></div>`;}
 
 function rQ(){const it=S.item,f=FAG[S.fag];const n=S.qs.length;
   const prog=`<div class="prog">${Array.from({length:n},(_,i)=>`<i class="${i<S.i?'d':(i===S.i?'n':'')}"></i>`).join('')}</div>`;
   let svar;
   if(it.type==='mc')svar=`<div class="opts">${it.opts.map((o,i)=>`<button class="opt" data-opt="${esc(o)}" id="opt${i}"><span class="b">${'ABCD'[i]}</span><span>${esc(o)}</span></button>`).join('')}</div>`;
-  else svar=`<form class="ans" id="ansform"><input id="ans" ${it.type==='tal'?'inputmode="numeric"':''} autocomplete="off" placeholder="${it.type==='tid'?'fx 14:35':'Dit svar'}" aria-label="Dit svar"><button class="knap" type="submit">Tjek</button></form>`;
+  else svar=`<form class="ans" id="ansform"><input id="ans" ${it.type==='tal'?'inputmode="numeric"':(it.type==='dec'?'inputmode="decimal"':'')} autocomplete="off" placeholder="${it.type==='tid'?'fx 14:35':(it.type==='dec'?'fx 4,5':'Dit svar')}" aria-label="Dit svar"><button class="knap" type="submit">Tjek</button></form>`;
   return `<header class="top"><button class="lnk" data-go="hjem">← ${S.mode==='sag'?'Sagen':'Træning'}</button>${prog}</header>
    <span class="fag" style="--f:${f.farve}">${f.navn}</span>
    <div class="side"><div class="qtext">${it.t?`<span class="tekst">${esc(it.t)}</span>`:''}${esc(it.q)}</div>${svar}</div>
@@ -571,13 +843,14 @@ function rTraenSlut(){const f=FAG[S.fag];const r=S.qs.length-S.fejl;return `
 // ---------- Opgave-flow ----------
 function startSag(id){const sag=SAGER.find(s=>s.id===id);noterDag();
   P.sager[id]=P.sager[id]||{};P.sager[id].igang=true;save();
-  const fag=shuffle(['mat','mat','mat','dansk','dansk','dansk','eng','eng']);
+  const fag=shuffle(FAGMIX);
   S={screen:'q',mode:'sag',sag,qs:fag,i:0,fejl:0,forsog:0};nyt();}
 function startTraen(fag){noterDag();S={screen:'q',mode:'traen',fag,qs:Array(10).fill(fag),i:0,fejl:0,forsog:0};nyt();}
 function nyt(){S.fag=S.qs[S.i];S.item=lavSpm(S.fag);S.forsog=0;S.screen='q';render();const inp=document.getElementById('ans');if(inp)inp.focus();}
 
 function norm(v,type){v=String(v).trim().toLowerCase().replace(/\s+/g,'');
   if(type==='tid'){const m=v.match(/^(\d{1,2})[.:,]?(\d{2})$/);return m?tid(+m[1],+m[2]):v}
+  if(type==='dec'){const t=parseFloat(v.replace(',','.'));return isNaN(t)?v:String(Math.round(t*100)/100)}
   return v.replace(/\./g,'').replace(',','.')}
 function tjek(svar){const it=S.item;const rigtigt=norm(svar,it.type)===norm(it.svar,it.type);
   P.spm++;if(rigtigt&&S.forsog===0)P.rigtige++;save();
@@ -616,16 +889,16 @@ function anklag(i){const s=S.sag,m=s.mist[i],fb=document.getElementById('fb');
   document.getElementById('fb').scrollIntoView({behavior:'smooth',block:'nearest'});}
 
 // ---------- Gangejagten ----------
-const TABELLER=[2,3,4,5,6,7,8,9,10];
+const TABELLER=[2,3,4,5,6,7,8,9,10,11,12];
 function rGangeValg(){return `
   <header class="top"><button class="lnk" data-go="hjem">← Hjem</button></header>
   <div class="intro" style="border-left:6px solid var(--gange)"><h2>Gangejagten</h2><p>Vælg en tabel. Du får 15 gangestykker, og uret kører. Slå din egen bedste tid!</p></div>
   <div class="tabeller">${TABELLER.map(t=>{const b=P.gange[t];return `<button class="tab" data-tab="${t}">${t}-tabel<small>${b?`bedst ${fmt(b.ms)} · ${b.fejl} fejl`:'ny'}</small></button>`}).join('')}
-   <button class="tab bland" data-tab="bland">Blandet 2–10<small>${P.gange.bland?`bedst ${fmt(P.gange.bland.ms)} · ${P.gange.bland.fejl} fejl`:'ny'}</small></button></div>`;}
+   <button class="tab bland" data-tab="bland">Blandet 2–12<small>${P.gange.bland?`bedst ${fmt(P.gange.bland.ms)} · ${P.gange.bland.fejl} fejl`:'ny'}</small></button></div>`;}
 function fmt(ms){const s=Math.round(ms/100)/10;return s.toFixed(1).replace('.',',')+' s'}
 let gTimer=null;
 function startGange(tab){noterDag();const n=15;const qs=[];
-  for(let i=0;i<n;i++){const a=tab==='bland'?rnd(2,10):+tab,b=rnd(2,10);qs.push(Math.random()<.5?[a,b]:[b,a])}
+  for(let i=0;i<n;i++){const a=tab==='bland'?rnd(2,12):+tab,b=rnd(2,10);qs.push(Math.random()<.5?[a,b]:[b,a])}
   S={screen:'gange',tab,qs,i:0,fejl:0,inp:'',start:Date.now(),laast:false};render();
   clearInterval(gTimer);gTimer=setInterval(()=>{const e=document.getElementById('tid');if(e)e.textContent=fmt(Date.now()-S.start);else clearInterval(gTimer)},100);}
 function rGange(){const [a,b]=S.qs[S.i];return `

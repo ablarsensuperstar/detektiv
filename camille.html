@@ -176,7 +176,8 @@ const esc=s=>String(s).replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;',
 const LS='detektiv_camille_v1';
 const NAVN='Camille';
 const FAG={dansk:{navn:'Dansk',farve:'var(--dansk)'},mat:{navn:'Matematik',farve:'var(--mat)'},eng:{navn:'Engelsk',farve:'var(--eng)'}};
-const N_SPM=6, SPOR_VED=[1,3,5], N_TRAEN=8, N_JAGT=12;
+const FAGMIX=['mat','mat','mat','mat','dansk','dansk','dansk','eng'];
+const N_SPM=FAGMIX.length, SPOR_VED=[2,5,7], N_TRAEN=8, N_JAGT=12; // 19-10-2026: 8 opgaver, ledetråd efter 3, 6 og 8
 
 // ---------- Sagerne (2. klasse: korte sætninger, tre mistænkte) ----------
 const SAGER=[
@@ -184,15 +185,15 @@ const SAGER=[
  intro:'Bamsen Bjørn sover altid i Camilles seng. Men i dag er han væk! Hvem har taget ham?',
  labels:{fod:'Fodspor',sted:'Var',ting:'Har'},
  mist:[
-  {navn:'Hunden Pelle',rolle:'elsker bløde ting',t:{fod:'poter',sted:'i haven',ting:'mudder på poterne'}},
+  {navn:'Hunden Bella',rolle:'elsker bløde ting',t:{fod:'poter',sted:'i haven',ting:'mudder på poterne'}},
   {navn:'Morfar Finn Drost',rolle:'læser avis i stuen',t:{fod:'hjemmesko',sted:'i stuen',ting:'avisen'}},
   {navn:'Nabopigen Olivia',rolle:'leger tit i haven',t:{fod:'gummistøvler',sted:'i haven',ting:'en spand'}}],
  spor:[
   {tekst:'Sporet går ud i haven.',n:'sted',v:'i haven'},
   {tekst:'Der er mudder på gulvet.',n:'ting',v:'mudder på poterne'},
   {tekst:'Aftrykkene på gulvet er fra poter.',n:'fod',v:'poter'}],
- skyldig:'Hunden Pelle',
- loesning:'Pelle havde lagt Bjørn i sin hundekurv. Han ville bare sove med ham. Nu har Pelle fået sin egen bamse.',
+ skyldig:'Hunden Bella',
+ loesning:'Bella havde lagt Bjørn i sin hundekurv. Hun ville bare sove med ham. Nu har Bella fået sin egen bamse.',
  hist:['Du tager din lup frem. Nu er du detektiv!','Sengen er tom. Men dynen er krøllet.','Du kigger på gulvet med lommelygten.','Morfar Finn siger: "Jeg har ikke set Bjørn."','Olivia siger: "Jeg har kun leget med min spand."','Du går ud i haven og kigger dig omkring.']},
 {id:'jordbaer',titel:'Hvem spiste jordbærrene?',sted:'Haven',
  intro:'Morfar har plukket en stor skål jordbær. Nu er skålen tom! Hvem har spist dem?',
@@ -228,14 +229,14 @@ const SAGER=[
  mist:[
   {navn:'Morfar Finn Drost',rolle:'elsker chokolade',t:{fod:'store fødder',sted:'på terrassen',ting:'chokolade på skjorten'}},
   {navn:'Kusine Alma',rolle:'elsker jordbær',t:{fod:'store fødder',sted:'i køkkenet',ting:'jordbærsaft på kjolen'}},
-  {navn:'Hunden Pelle',rolle:'snuser altid ved fryseren',t:{fod:'poter',sted:'i haven',ting:'ingenting'}}],
+  {navn:'Hunden Bella',rolle:'snuser altid ved fryseren',t:{fod:'poter',sted:'i haven',ting:'ingenting'}}],
  spor:[
   {tekst:'Store fodspor går væk fra fryseren.',n:'fod',v:'store fødder'},
   {tekst:'Der er chokolade på fryserens låge.',n:'ting',v:'chokolade på skjorten'},
   {tekst:'En ispind ligger på terrassen.',n:'sted',v:'på terrassen'}],
  skyldig:'Morfar Finn Drost',
  loesning:'Morfar Finn blev helt rød i hovedet. "Jeg var så varm!" sagde han. Han købte nye is til alle.',
- hist:['Fryseren står på klem. Der drypper lidt på gulvet.','Du kigger på gulvet foran fryseren.','Alma siger: "Jeg kan ikke lide chokolade."','Pelle logrer. Han har ingen is.','Du kigger nøje på lågen til fryseren.','Du går ud for at lede efter flere spor.']},
+ hist:['Fryseren står på klem. Der drypper lidt på gulvet.','Du kigger på gulvet foran fryseren.','Alma siger: "Jeg kan ikke lide chokolade."','Bella logrer. Hun har ingen is.','Du kigger nøje på lågen til fryseren.','Du går ud for at lede efter flere spor.']},
 {id:'kat',titel:'Hvor er katten Misse?',sted:'Sommerhuset og haven',titelD:'Hvor er Misse?',erSted:true,
  intro:'Katten Misse plejer at komme, når man rasler med maden. Men i dag kommer hun ikke. Hvor er hun?',
  labels:{lyd:'Lyd',ting:'Der er',doer:'Døren'},
@@ -256,15 +257,84 @@ const SAGER=[
  mist:[
   {navn:'Mågen Max',rolle:'skriger altid efter mad',t:{spor:'vinger',sted:'på terrassen',ting:'hvide fjer'}},
   {navn:'Morfar Finn Drost',rolle:'elsker boller med ost',t:{spor:'hænder',sted:'på terrassen',ting:'krummer'}},
-  {navn:'Hunden Pelle',rolle:'elsker boller',t:{spor:'poter',sted:'under bordet',ting:'hundehår'}}],
+  {navn:'Hunden Bella',rolle:'elsker boller',t:{spor:'poter',sted:'under bordet',ting:'hundehår'}}],
  spor:[
   {tekst:'Krummerne fører ud på terrassen.',n:'sted',v:'på terrassen'},
   {tekst:'Der ligger en hvid fjer ved krummerne.',n:'ting',v:'hvide fjer'},
   {tekst:'Nogen fløj væk, da vi kom.',n:'spor',v:'vinger'}],
  skyldig:'Mågen Max',
  loesning:'Mågen Max sad på taget med bollen i næbbet. Han skreg glad. Camille fik en ny bolle med smør og ost.',
- hist:['Fadet er tomt. Der ligger krummer på bordet.','Du følger krummerne med fingeren.','Morfar Finn siger: "Jeg har kun spist to boller." Han har smør på kinden.','Pelle ligger under bordet og sover.','Du finder noget blødt og hvidt.','Du hører et skrig oppe fra taget.']}
+ hist:['Fadet er tomt. Der ligger krummer på bordet.','Du følger krummerne med fingeren.','Morfar Finn siger: "Jeg har kun spist to boller." Han har smør på kinden.','Bella ligger under bordet og sover.','Du finder noget blødt og hvidt.','Du hører et skrig oppe fra taget.']},
+{id:'pizza',titel:'Pizzaen uden ost',sted:'Fru Wongs pizzeria',
+ intro:'Fru Wong er sur. Hun er altid sur. Men i dag er hun ekstra sur: Nogen har spist al osten af den store pizza!',
+ labels:{sted:'Var',mund:'Om munden',fod:'Fodspor'},
+ mist:[
+  {navn:'Fru Wong',rolle:'ejer pizzeriaet og er altid sur',t:{sted:'bag disken',mund:'ingenting',fod:'træsko'}},
+  {navn:'Hunden Bella',rolle:'elsker ost',t:{sted:'under bordet',mund:'ost',fod:'poter'}},
+  {navn:'Morfar Finn Drost',rolle:'tabte sine briller',t:{sted:'under bordet',mund:'ingenting',fod:'brune sko'}}],
+ spor:[
+  {tekst:'Nogen var under bordet.',n:'sted',v:'under bordet'},
+  {tekst:'Den skyldige har ost om munden.',n:'mund',v:'ost'},
+  {tekst:'Der er poteaftryk i melet på gulvet.',n:'fod',v:'poter'}],
+ skyldig:'Hunden Bella',
+ loesning:'Det var Bella! Hun havde slikket al osten af. Fru Wong knurrede og gav hende alligevel et stykke ost. Hun smilede næsten.',
+ hist:['Fru Wong peger på pizzaen. "Se! Ingen ost!"','Du kigger på pizzaen. Der er kun tomat tilbage.','Du går rundt om bordet med din lup.','Morfar Finn kravler op fra gulvet. "Jeg fandt mine briller!"','Fru Wong banker en træsko i gulvet.','Du kigger på alle munde. Én af dem er gul.','Bella logrer og kigger væk.','Du kigger ned i melet på gulvet.']},
+{id:'skovl',titel:'Den forsvundne skovl',sted:'Legepladsen',
+ intro:'Camilles røde skovl er væk fra sandkassen. Lærke og Josefine leger på legepladsen, og Morfar sidder på bænken. Hvem har taget den?',
+ labels:{toej:'Tøj',sted:'Var',vane:'Vane'},
+ mist:[
+  {navn:'Lærke',rolle:'bygger de bedste sandslotte',t:{toej:'gul kjole',sted:'i sandkassen',vane:'graver huller'}},
+  {navn:'Josefine',rolle:'gynger højest af alle',t:{toej:'rød kjole',sted:'på gyngen',vane:'graver huller'}},
+  {navn:'Morfar Finn Drost',rolle:'læser avis på bænken',t:{toej:'brun jakke',sted:'på bænken',vane:'læser avis'}}],
+ spor:[
+  {tekst:'Der er et nyt, dybt hul i sandkassen.',n:'vane',v:'graver huller'},
+  {tekst:'En rød tråd sidder fast på skovlens skaft.',n:'toej',v:'rød kjole'},
+  {tekst:'Skovlen lå under gyngen.',n:'sted',v:'på gyngen'}],
+ skyldig:'Josefine',
+ loesning:'Josefine havde lånt skovlen. Hun gravede en hemmelig sten ned til Camille, en med glimmer på! Nu graver de huller sammen.',
+ hist:['Du kigger i sandkassen. Skovlen er væk.','Lærke bygger et slot. "Jeg har min egen skovl," siger hun.','Du går rundt på legepladsen og kigger.','Morfar Finn kigger op fra avisen. "Skovl? Jeg graver aldrig."','Du finder noget rødt i sandet.','Josefine gynger højt og fniser.','Du kigger under gyngen.','Du samler alle ledetrådene i notesbogen.']},
+{id:'kage',titel:'Hvem smagte på kagen?',sted:'Køkkenet',
+ intro:'Der er fødselsdag i morgen. Kagen står i køkkenet. Men nu mangler der et stykke! Hvem har smagt på den?',
+ labels:{haender:'Hænder',sted:'Var',elsker:'Elsker'},
+ mist:[
+  {navn:'Dagmar',rolle:'elsker chokolade',t:{haender:'krummer på trøjen',sted:'i køkkenet',elsker:'chokolade'}},
+  {navn:'Johanne',rolle:'elsker jordbær',t:{haender:'rene hænder',sted:'i haven',elsker:'jordbær'}},
+  {navn:'Morfar Finn Drost',rolle:'drikker kaffe i køkkenet',t:{haender:'rene hænder',sted:'i køkkenet',elsker:'kaffe'}}],
+ spor:[
+  {tekst:'Nogen var i køkkenet i eftermiddag.',n:'sted',v:'i køkkenet'},
+  {tekst:'Der er chokolade på et glas.',n:'elsker',v:'chokolade'},
+  {tekst:'Der ligger krummer på en trøje.',n:'haender',v:'krummer på trøjen'}],
+ skyldig:'Dagmar',
+ loesning:'Dagmar smagte bare lige, om kagen var god. Det var den! Hun lovede at bage en ny sammen med Camille i morgen.',
+ hist:['Du kigger på kagen. Der mangler et stykke i kanten.','Johanne kommer ind fra haven med jordbær.','Du spørger alle, hvor de har været.','Morfar Finn drikker kaffe. "Jeg rører aldrig kage før fødselsdagen."','Du kigger på glassene på bordet.','Dagmar fniser og gemmer hænderne bag ryggen.','Du kigger på alles trøjer.','Du lægger ledetrådene sammen.']},
+{id:'loft',titel:'Lyden på loftet',sted:'Sommerhuset om natten',
+ intro:'Yrsa sover hos Camille. Midt om natten lyder der skridt på loftet. Og så et dunk! Hvem er deroppe?',
+ labels:{lyd:'Lyd',sted:'Var',spor:'Efterlader'},
+ mist:[
+  {navn:'Katten Misse',rolle:'går lydløst rundt om natten',t:{lyd:'lydløse skridt',sted:'på loftet',spor:'kattehår'}},
+  {navn:'Yrsa',rolle:'kan ikke falde i søvn',t:{lyd:'fnisen',sted:'på loftet',spor:'sokker'}},
+  {navn:'Morfar Finn Drost',rolle:'snorker højt',t:{lyd:'snorken',sted:'i soveværelset',spor:'tøfler'}}],
+ spor:[
+  {tekst:'Lyden kom fra loftet.',n:'sted',v:'på loftet'},
+  {tekst:'Der ligger kattehår på loftstrappen.',n:'spor',v:'kattehår'},
+  {tekst:'Først var der lydløse skridt, så et dunk.',n:'lyd',v:'lydløse skridt'}],
+ skyldig:'Katten Misse',
+ loesning:'Det var Misse! Hun havde væltet en kasse med julepynt på loftet. Yrsa og Camille grinede så meget, at Morfar vågnede.',
+ hist:['Du tager din lommelygte. Yrsa holder dig i hånden.','Dunk! Der er det igen.','Du lytter ved loftstrappen.','Morfar Finn snorker inde fra soveværelset.','Du lyser på trappen med lommelygten.','Yrsa hvisker: "Jeg fniser, men jeg er ikke på loftet!"','Du lytter en gang til. Helt stille … og så dunk.','Du kravler op ad trappen med lygten.']}
 ];
+
+
+// 19-10-2026: sagerne fik 8 opgaver i stedet for 6. De gamle sager får to ekstra historielinjer,
+// sat ind på plads 1 og 4, så ledetrådene stadig afsløres ved opgave 3, 6 og 8.
+const EKSTRA_HIST={
+ bamse:['Bella snuser til sengen og logrer.','Du kigger ud ad vinduet. Det har regnet.'],
+ jordbaer:['Der ligger to små blade på bordet.','Solsorten synger. Den har ikke rød saft om næbbet.'],
+ telt:['Yrsa sover stadig i teltet ved siden af.','Du finder en lille skål i græsset.'],
+ is:['Der drypper is på gulvet foran fryseren.','Du følger dråberne med fingeren.'],
+ kat:['Du kalder: "Misse! Misse!" Ingen svar.','Du kigger i kurven. Den er tom.'],
+ bolle:['Der er smør på dugen.','Mågen Max skriger oppe fra taget.']
+};
+for(const s of SAGER){const e=EKSTRA_HIST[s.id];if(e){s.hist.splice(1,0,e[0]);s.hist.splice(4,0,e[1])}}
 
 // ---------- Dansk 2. klasse ----------
 const DANSK=[
@@ -319,7 +389,65 @@ const DANSK=[
  {q:'sol + skin = ?',o:['solskin','skinsol','solsol','skinskin']},
  {q:'regn + bue = ?',o:['regnbue','bueregn','regnbu','regne']},
  {q:'Hvilken dag kommer efter mandag?',o:['tirsdag','søndag','fredag','onsdag']},
- {q:'Hvilken dag kommer efter fredag?',o:['lørdag','torsdag','mandag','søndag']}
+ {q:'Hvilken dag kommer efter fredag?',o:['lørdag','torsdag','mandag','søndag']},
+ ...[['sø','søø','sjø','søe'],['træ','trææ','tre','træe'],['mad','maad','madt','matt'],['sne','snee','sné','snæ'],['bus','buss','bos','buus'],['hat','hatt','had','haat'],['dyr','dyyr','dyer','dyhr'],['æg','ægg','eg','ægh'],['øre','øøre','ørre','øhre'],['tæppe','tæpe','teppe','tæppee'],['lampe','lambe','lampee','lammpe'],['sofa','sofaa','sowfa','soffa'],['kaffe','kafe','kaffee','kaffa'],['appelsin','apelsin','appelsiin','abbelsin'],['banan','bannan','banann','banaan'],['krokodille','krokodile','krokkodille','krokodihle'],['flyver','flyer','flyvver','flyveer'],['morfar','morfarr','moorfar','morfah']]
+   .map(o=>({q:'Hvilket ord er stavet rigtigt?',o,n:(o[0].length>5?2:1)})),
+ {q:'Hvilket ord rimer på "ko"?',o:['sko','ku','kat','kop']},
+ {q:'Hvilket ord rimer på "hat"?',o:['kat','hus','hest','hal']},
+ {q:'Hvilket ord rimer på "bold"?',o:['kold','bil','bog','bal']},
+ {q:'Hvilket ord rimer på "sne"?',o:['te','sol','snor','sø']},
+ {q:'Hvilket ord rimer på "mor"?',o:['bror','mus','mand','mur']},
+ {q:'Hvilket ord rimer på "pizza"?',o:['Lisa','pizzeria','ost','is'],n:2},
+ {q:'Hvilket bogstav slutter "hund" med?',o:['d','n','h','t']},
+ {q:'Hvilket bogstav er i midten af "kat"?',o:['a','k','t','e']},
+ {q:'Hvor mange bogstaver er der i "Bella"?',o:['5','4','6','3']},
+ {q:'Hvilket ord starter med samme lyd som "sol"?',o:['sø','ko','ol','lås']},
+ {q:'Hvilket bogstav er IKKE en vokal?',o:['k','a','o','u'],n:2},
+ {q:'Hvor mange vokaler er der i "Camille"?',o:['3','2','4','1'],f:'a, i og e er vokaler.',n:2},
+ {q:'Hvor mange stavelser er der i "pizza"?',o:['2','1','3','4'],f:'piz-za.'},
+ {q:'Hvor mange stavelser er der i "detektiv"?',o:['3','2','4','5'],f:'de-tek-tiv.',n:2},
+ {q:'Hvor mange stavelser er der i "morfar"?',o:['2','1','3','4']},
+ {q:'En sko, to ___',o:['sko','skoer','skoe','skor'],f:'Nogle ord ændrer sig ikke: en sko, to sko.',n:2},
+ {q:'En mus, to ___',o:['mus','muse','muser','musene'],n:2},
+ {q:'Et æg, to ___',o:['æg','ægge','ægger','ægs'],n:2},
+ {q:'En pige, to ___',o:['piger','pige','pigene','pigs']},
+ {q:'Hvilket ord er noget, man kan gøre?',o:['svømme','sø','våd','blå']},
+ {q:'Hvilket ord er en ting?',o:['skovl','grave','dyb','under']},
+ {q:'Hvilket ord fortæller, hvordan noget er?',o:['sur','pizza','bager','Fru Wong'],f:'Fru Wong er sur. "Sur" fortæller, hvordan hun er.'},
+ {q:'Hvad er det modsatte af "tyk"?',o:['tynd','høj','stor','lang']},
+ {q:'Hvad er det modsatte af "ny"?',o:['gammel','ung','god','fin']},
+ {q:'Hvad er det modsatte af "sur"?',o:['glad','sød','salt','vred']},
+ {q:'Hvad er det modsatte af "ude"?',o:['inde','oppe','nede','væk']},
+ {q:'Hvad er det modsatte af "høj"?',o:['lav','lille','dyb','kort'],n:2},
+ {q:'Hvilket ord betyder det samme som "sjov"?',o:['morsom','kedelig','sød','sur'],n:2},
+ {q:'Hvilket ord betyder det samme som "rar"?',o:['sød','sur','træt','hurtig'],n:2},
+ {q:'Hvilken sætning er rigtig?',o:['Bella er en hund.','bella er en hund.','Bella Er en hund','bella er en Hund.'],f:'Navne skrives med stort, og der er punktum til sidst.'},
+ {q:'Hvilken sætning er rigtig?',o:['Morfar hedder Finn.','morfar hedder finn.','Morfar Hedder Finn','morfar hedder Finn'],f:'Navnet Finn skrives med stort.'},
+ {q:'Hvad skal der stå til sidst? "Hvor er Bella"',o:['?','.','!',',']},
+ {q:'Hvad skal der stå til sidst? "Pas på"',o:['!','?',',','-'],f:'Når man råber eller advarer, bruger man udråbstegn.',n:2},
+ {q:'Hvilket ord passer? "Bella ___ på sin bold."',o:['gnaver','gnave','gnavede','gnav'],n:2},
+ {q:'Hvilket ord passer? "I går ___ vi til stranden."',o:['gik','går','gå','gået'],n:2},
+ {q:'Hvilket ord passer? "Morfar ___ avis hver morgen."',o:['læser','læste','læse','læst']},
+ {t:'Bella er en brun hund. Hun elsker ost. Når ingen kigger, hopper hun op på bordet.',q:'Hvad elsker Bella?',o:['ost','kød','kage','is']},
+ {t:'Bella er en brun hund. Hun elsker ost. Når ingen kigger, hopper hun op på bordet.',q:'Hvilken farve har Bella?',o:['brun','sort','hvid','gul']},
+ {t:'Fru Wong bager pizza. Hun er altid sur. Men hendes pizza er den bedste i byen.',q:'Hvordan er Fru Wong?',o:['sur','glad','træt','bange']},
+ {t:'Fru Wong bager pizza. Hun er altid sur. Men hendes pizza er den bedste i byen.',q:'Hvad bager Fru Wong?',o:['pizza','kage','brød','boller']},
+ {t:'Morfar Finn leder efter sine briller. Han kigger i bilen og i haven. Brillerne sidder på hans hoved!',q:'Hvor er brillerne?',o:['på hans hoved','i bilen','i haven','på bordet']},
+ {t:'Yrsa og Camille bygger en hule af puder. Katten Misse kravler ind og falder i søvn.',q:'Hvem falder i søvn i hulen?',o:['Misse','Yrsa','Camille','Morfar']},
+ {t:'Lærke har en gul kjole. Josefine har en rød kjole. Dagmar har en blå kjole med prikker.',q:'Hvem har den røde kjole?',o:['Josefine','Lærke','Dagmar','Johanne'],n:2},
+ {t:'Det er lørdag. Johanne cykler hen til Camille. De spiser pandekager og leger detektiver hele dagen.',q:'Hvad spiser de?',o:['pandekager','pizza','is','boller'],n:2},
+ {t:'Det er lørdag. Johanne cykler hen til Camille. De spiser pandekager og leger detektiver hele dagen.',q:'Hvilken dag er det?',o:['lørdag','søndag','fredag','mandag'],n:2},
+ {q:'Hvilket bogstav kommer efter s?',o:['t','r','u','q']},
+ {q:'Hvilket bogstav kommer lige før k?',o:['j','l','i','h'],n:2},
+ {q:'Hvilket ord kommer først i alfabetet?',o:['abe','bil','kat','sø']},
+ {q:'Hvad er det store bogstav til "e"?',o:['E','F','Æ','B']},
+ {q:'is + bil = ?',o:['isbil','bilis','isbilen','is-bil']},
+ {q:'hunde + hus = ?',o:['hundehus','hushund','hundhus','hundehuse']},
+ {q:'Hvilken dag kommer efter onsdag?',o:['torsdag','tirsdag','fredag','søndag']},
+ {q:'Hvilken dag kommer før mandag?',o:['søndag','tirsdag','lørdag','fredag'],n:2},
+ {q:'Hvilken måned kommer efter januar?',o:['februar','marts','december','juni'],n:2},
+ {q:'Hvilken årstid er det, når det sner?',o:['vinter','sommer','forår','efterår']}
+
 ];
 
 // ---------- Engelsk 2. klasse ----------
@@ -342,7 +470,43 @@ const ENGELSK=[
  {q:'How many fingers do you have on one hand?',o:['five','four','ten','two']},
  {q:'Hvad betyder "big"?',o:['stor','lille','blå','bil']},
  {q:'Hvad betyder "small"?',o:['lille','stor','smal','sulten']},
- {q:'Hvad betyder "happy"?',o:['glad','sur','træt','hurtig']}
+ {q:'Hvad betyder "happy"?',o:['glad','sur','træt','hurtig']},
+ ...[['orange','orange','yellow','red','pink'],['lyserød','pink','purple','red','white'],['lilla','purple','pink','blue','brown'],['brun','brown','black','blue','grey'],['grå','grey','green','gold','white'],['mus','mouse','house','horse','moose'],['kanin','rabbit','rat','cat','bat'],['frø','frog','fog','dog','fox'],['and','duck','dog','dot','deer'],['ko','cow','cat','car','cap'],['får','sheep','ship','shop','sheet'],['bjørn','bear','beer','bird','boar'],['fisk','fish','dish','wish','fist'],['fod','foot','food','fool','fat'],['øje','eye','ear','egg','ice'],['mund','mouth','mouse','month','moth'],['ben','leg','lag','log','let'],['bedstefar','grandad','dad','granny','uncle'],['søster','sister','brother','mother','mister'],['bror','brother','father','sister','butter'],['baby','baby','boy','bee','body'],['is','ice cream','ice','cream','cake'],['kage','cake','cook','coke','cat'],['pizza','pizza','pasta','piece','place'],['vand','water','wind','winter','wetter'],['mælk','milk','melt','mild','mile'],['bil','car','cat','cap','can'],['bus','bus','bush','boss','box'],['cykel','bike','bite','back','bake'],['båd','boat','bat','boot','bite'],['hoppe','jump','jam','jog','job'],['løbe','run','ran','rain','ring'],['sove','sleep','slip','sheep','sweep'],['spise','eat','ate','it','eight'],['drikke','drink','drank','dream','drop'],['læse','read','red','ride','road'],['stor','big','bag','bug','beg'],['lille','small','smell','smile','snail'],['hurtig','fast','fat','first','feast'],['glad','happy','hungry','heavy','hairy']]
+   .map(([da,...o])=>({q:`Hvad hedder "${da}" på engelsk?`,o,n:(o[0].length>4?2:1)})),
+ ...[[11,'eleven'],[12,'twelve'],[13,'thirteen'],[14,'fourteen'],[15,'fifteen'],[16,'sixteen'],[17,'seventeen'],[18,'eighteen'],[19,'nineteen'],[20,'twenty']]
+   .map(([n,en],_,alle)=>({q:`Hvad hedder ${n} på engelsk?`,o:[en,...shuffle(alle.filter(x=>x[1]!==en)).slice(0,3).map(x=>x[1])],n:2})),
+ {q:'Hvad betyder "dog"?',o:['hund','kat','and','gris']},
+ {q:'Hvad betyder "cat"?',o:['kat','ko','kage','kam']},
+ {q:'Hvad betyder "red"?',o:['rød','rund','ren','ræv']},
+ {q:'Hvad betyder "blue"?',o:['blå','blomst','blød','bil']},
+ {q:'Hvad betyder "one"?',o:['et','to','en and','ingen']},
+ {q:'Hvad betyder "please"?',o:['vær så venlig','tak','hej','farvel']},
+ {q:'Hvad betyder "sorry"?',o:['undskyld','tak','hej','ja'],n:2},
+ {q:'Hvad betyder "What is your name?"',o:['Hvad hedder du?','Hvor bor du?','Hvor gammel er du?','Hvad laver du?']},
+ {q:'Hvad betyder "I am hungry"?',o:['Jeg er sulten','Jeg er træt','Jeg er glad','Jeg er sur'],n:2},
+ {q:'Hvad betyder "I like pizza"?',o:['Jeg kan lide pizza','Jeg laver pizza','Jeg har pizza','Jeg spiser pizza'],n:2},
+ {q:'Hvad betyder "Good morning, Grandpa"?',o:['Godmorgen, morfar','Godnat, morfar','Farvel, far','Hej, mor']},
+ {q:'Hvad betyder "It is raining"?',o:['Det regner','Det sner','Solen skinner','Det blæser'],n:2},
+ {q:'Hvad betyder "The dog is brown"?',o:['Hunden er brun','Hunden er sort','Katten er brun','Hunden er sur']},
+ {q:'Hvad hedder "Jeg hedder Camille" på engelsk?',o:['My name is Camille','I am name Camille','Me Camille','Camille is me']},
+ {q:'Hvad hedder "Jeg er 8 år" på engelsk?',o:['I am eight years old','I have eight years','I am eight old','Me eight year'],n:2},
+ {q:'Hvad hedder "Tak for mad" på engelsk?',o:['Thank you for the food','Thanks food','Food thank you','Good food you'],n:3},
+ {q:'What colour is a strawberry?',o:['red','blue','green','black']},
+ {q:'What colour is snow?',o:['white','black','green','brown']},
+ {q:'What colour is the sun?',o:['yellow','blue','purple','grey']},
+ {q:'How many eyes do you have?',o:['two','one','three','four']},
+ {q:'How many legs does a spider have?',o:['eight','six','four','two'],n:2},
+ {q:'Which animal says "woof"?',o:['a dog','a cat','a cow','a duck']},
+ {q:'Which animal says "meow"?',o:['a cat','a dog','a pig','a bird']},
+ {q:'Which is a fruit?',o:['an apple','a carrot','a potato','a cake'],n:2},
+ {q:'Which day comes after Friday?',o:['Saturday','Sunday','Monday','Thursday'],n:3},
+ {q:'What is the opposite of "big"?',o:['small','tall','long','bad']},
+ {q:'What is the opposite of "happy"?',o:['sad','glad','mad','bad'],n:2},
+ {t:'This is Bella. Bella is a dog. She is brown. She likes cheese.',q:'What does Bella like?',o:['cheese','cake','fish','bread'],n:2},
+ {t:'This is Bella. Bella is a dog. She is brown. She likes cheese.',q:'What colour is Bella?',o:['brown','black','white','red'],n:2},
+ {t:'Grandpa Finn has a hat. The hat is green. A bird sits on the hat!',q:'What colour is the hat?',o:['green','red','blue','yellow'],n:2},
+ {t:'Grandpa Finn has a hat. The hat is green. A bird sits on the hat!',q:'What sits on the hat?',o:['a bird','a cat','a dog','a frog'],n:3}
+
 ];
 
 // ---------- Matematik 2. klasse ----------
@@ -390,6 +554,42 @@ const MAT=[
  ()=>{const s=rnd(11,20),a=rnd(2,s-2);return{q:`${a} + ? = ${s}`,s:s-a,f:`${s} − ${a} = ${s-a}`}}
 ];
 
+
+// Sværhedsgrad (19-10-2026): niveau 1: 0-5 stjerner, niveau 2: 6-14, niveau 3: 15+.
+const NIVEAU_NAVN=['','Detektivlærling','Detektiv','Mesterdetektiv'];
+function niveau(){const st=Object.values(P.sager).reduce((a,x)=>a+(x.stars||0),0);return st>=15?3:(st>=6?2:1)}
+
+
+// Niveau 2+: plus og minus til 100 MED tierovergang, det dobbelte, tre tal, klokken kvart
+const MAT2=[
+ ()=>{let a=rnd(15,85),b=rnd(6,99-a);if((a%10)+(b%10)<10)b=Math.min(99-a,b+(10-(a%10)));return{q:`Hvad er ${a} + ${b}?`,s:a+b,f:`Fyld op til næste tier: ${a} + ${10-a%10} = ${a+10-a%10}, og så resten.`}},
+ ()=>{let a=rnd(31,99),b=rnd(5,a-1);if((a%10)>=(b%10))b=Math.min(a-1,b+((a%10)-(b%10)+1));return{q:`Hvad er ${a} − ${b}?`,s:a-b,f:`Træk ned til tieren først: ${a} − ${a%10} = ${a-a%10}, og så resten.`}},
+ ()=>{const n=rnd(11,45);return{q:`Hvad er det dobbelte af ${n}?`,s:2*n,f:`${n} + ${n} = ${2*n}`}},
+ ()=>{const n=2*rnd(11,40);return{q:`Hvad er halvdelen af ${n}?`,s:n/2}},
+ ()=>{const a=rnd(10,40),b=rnd(10,40),c=rnd(1,19);return{q:`Hvad er ${a} + ${b} + ${c}?`,s:a+b+c}},
+ ()=>{const s=rnd(40,99),a=rnd(10,s-10);return{q:`${a} + ? = ${s}`,s:s-a,f:`${s} − ${a} = ${s-a}`}},
+ ()=>{const h=rnd(1,11);return{q:`Den store viser peger på 3. Den lille er lige efter ${h}. Hvad er klokken?`,o:[`kvart over ${ORD[h]}`,`kvart i ${ORD[h+1]}`,`halv ${ORD[h+1]}`,`klokken ${ORD[h]}`],mc:true,f:`Når den store viser peger på 3, er klokken kvart over.`}},
+ ()=>{const h=rnd(1,11);return{q:`Den store viser peger på 9. Den lille er lige før ${h+1}. Hvad er klokken?`,o:[`kvart i ${ORD[h+1]}`,`kvart over ${ORD[h]}`,`halv ${ORD[h+1]}`,`klokken ${ORD[h+1]}`],mc:true,f:`Når den store viser peger på 9, er klokken kvart i.`}},
+ ()=>{const k=rnd(3,9);return{q:`En edderkop har 8 ben. Hvor mange ben har ${k} edderkopper?`,s:8*k}},
+ ()=>{const b=rnd(1,10);return{q:`Hvad er 4 · ${b}?`,s:4*b}},
+ ()=>{const b=rnd(1,10);return{q:`Hvad er 3 · ${b}?`,s:3*b}},
+ ()=>{const a=rnd(2,9),t=rnd(2,9);return{q:`${a*t} kr. skal deles ligeligt mellem ${a} børn. Hvor mange kr. får hver?`,s:t,f:`${a} · ${t} = ${a*t}`}},
+ ()=>{const n=rnd(101,199);return{q:`Hvilket tal kommer lige efter ${n}?`,s:n+1}},
+ ()=>{const l=unik(4,100,500);const m=Math.max(...l);return{q:'Hvilket tal er størst?',o:[m+'',...l.filter(x=>x!==m).map(String)],mc:true}}
+];
+// Niveau 3: tal til 1000, gange med 6-10, enkel division, meter og centimeter
+const MAT3=[
+ ()=>{const a=rnd(120,780),b=rnd(110,999-a);return{q:`Hvad er ${a} + ${b}?`,s:a+b}},
+ ()=>{const a=rnd(300,999),b=rnd(100,a-50);return{q:`Hvad er ${a} − ${b}?`,s:a-b}},
+ ()=>{const a=rnd(6,10),b=rnd(2,10);return{q:`Hvad er ${a} · ${b}?`,s:a*b}},
+ ()=>{const a=pick([2,5,10]),b=rnd(2,10);return{q:`Hvad er ${a*b} : ${a}?`,s:b,f:`${a} · ${b} = ${a*b}`}},
+ ()=>{const m=rnd(2,9);return{q:`Hvor mange centimeter er ${m} meter?`,s:100*m}},
+ ()=>{const t=rnd(2,5);return{q:`Hvor mange minutter er ${t} timer?`,s:60*t}},
+ ()=>{const n=rnd(2,9);return{q:`Hvilket tal mangler? ${n}, ${n*2}, ${n*4}, ?`,s:n*8,f:'Tallene fordobles.'}},
+ ()=>{const l=rnd(3,9),b=rnd(2,6);return{q:`Et rektangel er ${l} cm langt og ${b} cm bredt. Hvad er omkredsen i cm?`,s:2*(l+b),f:`${l} + ${b} + ${l} + ${b} = ${2*(l+b)}`}},
+ ()=>{const p=rnd(12,48),k=rnd(2,4);return{q:`${k} is koster ${p} kr. hver. Hvad koster de tilsammen?`,s:p*k}}
+];
+
 // ---------- Gemt fremgang ----------
 let P;
 function load(){try{P=JSON.parse(localStorage.getItem(LS))||{}}catch(e){P={}}
@@ -398,12 +598,13 @@ function save(){try{localStorage.setItem(LS,JSON.stringify(P))}catch(e){}}
 function noterDag(){const d=new Date().toISOString().slice(0,10);if(!P.dage.includes(d)){P.dage.push(d);save()}}
 function pickItem(fag){
   const bank=fag==='dansk'?DANSK:ENGELSK;let seen=P.set[fag];
-  let kand=bank.map((_,i)=>i).filter(i=>!seen.includes(i));
-  if(!kand.length){seen=P.set[fag]=[];kand=bank.map((_,i)=>i)}
+  const niv=niveau();const ok=i=>(bank[i].n||1)<=niv;
+  let kand=bank.map((_,i)=>i).filter(i=>ok(i)&&!seen.includes(i));
+  if(!kand.length){seen=P.set[fag]=[];kand=bank.map((_,i)=>i).filter(ok)}
   const i=pick(kand);seen.push(i);save();
   const it=bank[i];return{type:'mc',q:it.q,t:it.t,svar:it.o[0],opts:shuffle(it.o),f:it.f};
 }
-function lavMat(){const it=pick(MAT)();
+function lavMat(){const niv=niveau();const pool=MAT.concat(niv>=2?MAT2:[],niv>=3?MAT3:[]);const it=pick(pool)();
   if(it.mc)return{type:'mc',q:it.q,svar:it.o[0],opts:shuffle(it.o),f:it.f};
   return{type:'tal',q:it.q,svar:String(it.s),f:it.f};}
 function lavSpm(fag){return fag==='mat'?lavMat():pickItem(fag)}
@@ -418,7 +619,7 @@ function render(){
 }
 // Gem hvor hun er naaet til (sag eller traening), saa appen kan lukkes og aabnes igen
 function gemS(){try{if(S.screen==='q'||S.screen==='deduk'){const g=Object.assign({},S,{sag:S.sag?S.sag.id:undefined});localStorage.setItem(LS+'_s',JSON.stringify(g))}else localStorage.removeItem(LS+'_s')}catch(e){}}
-function genoptag(){try{const g=JSON.parse(localStorage.getItem(LS+'_s')||'null');if(!g||!g.screen)return;if(g.sag){g.sag=SAGER.find(s=>s.id===g.sag);if(!g.sag)return}if(g.mode==='sag'&&!g.sag)return;S=g}catch(e){}}
+function genoptag(){try{const g=JSON.parse(localStorage.getItem(LS+'_s')||'null');if(!g||!g.screen)return;if(g.sag){g.sag=SAGER.find(s=>s.id===g.sag);if(!g.sag)return}if(g.mode==='sag'&&!g.sag)return;if(g.mode==='sag'&&g.qs.length!==N_SPM)return;S=g}catch(e){}}
 function stjerner(n){return '★'.repeat(n)+'☆'.repeat(3-n)}
 
 function rHjem(){
@@ -426,7 +627,7 @@ function rHjem(){
   const st=Object.values(P.sager).reduce((a,x)=>a+(x.stars||0),0);
   return `
   <header class="brand"><h1>Detektiv ${NAVN}</h1><small>Detektivbureauet · 2. klasse</small></header>
-  <div class="stats"><div class="stat">Løste sager <b>${done}/${SAGER.length}</b></div><div class="stat">Stjerner <b>${st}</b></div><div class="stat">Dage som detektiv <b>${P.dage.length}</b></div></div>
+  <div class="stats"><div class="stat">Løste sager <b>${done}/${SAGER.length}</b></div><div class="stat">Stjerner <b>${st}</b></div><div class="stat">Dage som detektiv <b>${P.dage.length}</b></div><div class="stat">Niveau <b>${niveau()}</b> ${NIVEAU_NAVN[niveau()]}</div></div>
   <section class="sektion"><div class="sektion-h"><h2>Sager</h2><span>${N_SPM} opgaver pr. sag</span></div>
   ${SAGER.map((s,i)=>{const p=P.sager[s.id]||{};const kl=p.done?'done':(p.igang?'igang':'');
     const status=p.done?`<span class="stjerner">${stjerner(p.stars)}</span>`:(p.igang?'I gang':'Ny sag');
@@ -478,7 +679,7 @@ function rTraenSlut(){const f=FAG[S.fag];const r=S.qs.length-S.fejl;return `
 // ---------- Opgave-flow ----------
 function startSag(id){const sag=SAGER.find(s=>s.id===id);noterDag();
   P.sager[id]=P.sager[id]||{};P.sager[id].igang=true;save();
-  const fag=shuffle(['mat','mat','mat','dansk','dansk','eng']);
+  const fag=shuffle(FAGMIX);
   S={screen:'q',mode:'sag',sag,qs:fag,i:0,fejl:0,forsog:0};nyt();}
 function startTraen(fag){noterDag();S={screen:'q',mode:'traen',fag,qs:Array(N_TRAEN).fill(fag),i:0,fejl:0,forsog:0};nyt();}
 function nyt(){S.fag=S.qs[S.i];S.item=lavSpm(S.fag);S.forsog=0;S.screen='q';render();const inp=document.getElementById('ans');if(inp)inp.focus();}
@@ -508,7 +709,7 @@ function naeste(){S.i++;
   if(S.i<S.qs.length){nyt();return}
   if(S.mode==='sag'){S.screen='deduk';S.ude=[];render()}else{S.screen='traenslut';render()}}
 function anklag(i){const s=S.sag,m=s.mist[i];
-  if(m.navn===s.skyldig){const stars=S.fejl<=1?3:(S.fejl<=2?2:1);const p=P.sager[s.id];
+  if(m.navn===s.skyldig){const stars=S.fejl<=1?3:(S.fejl<=3?2:1);const p=P.sager[s.id];
     p.done=true;p.igang=false;p.stars=Math.max(p.stars||0,stars);save();S.screen='opklaret';render();konfetti();return}
   const sp=s.spor.find(x=>m.t[x.n]!==x.v);S.ude.push(i);
   render();document.getElementById('fb').innerHTML=`<div class="fb bad"><div class="t">Nej, ${s.erSted?'hun er ikke '+esc(m.navn.toLowerCase()):'det var ikke '+esc(m.navn)}.</div>
