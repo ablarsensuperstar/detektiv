@@ -599,13 +599,15 @@ const MAT3=[
 // kun når der er net - ellers venter det til næste gang.
 const SYNC=window.DETEKTIV_SYNC||null;
 let _syncTimer=null;
+function logSvar(rigtigt){try{P.log=P.log||[];const it=S.item||{};P.log.push({t:new Date().toISOString(),fag:S.fag,q:String(it.q||'').slice(0,90),ok:rigtigt?1:0,forsog:(S.forsog||0)+1,hvor:S.mode==='sag'?(S.sag&&S.sag.titel):'Træning',nr:(S.i||0)+1});if(P.log.length>60)P.log=P.log.slice(-60)}catch(e){}}
 function brugNoter(rigtigt){try{const d=new Date().toISOString().slice(0,10);P.brug=P.brug||{};
   const b=P.brug[d]||(P.brug[d]={spm:0,rigtige:0,sek:0});b.spm++;if(rigtigt)b.rigtige++;
   if(S.t0){b.sek+=Math.min(300,Math.round((Date.now()-S.t0)/1000));S.t0=Date.now()}}catch(e){}}
 function sync(){if(!SYNC)return;clearTimeout(_syncTimer);_syncTimer=setTimeout(()=>{
   if(!navigator.onLine)return;
   const titler={};SAGER.forEach(x=>titler[x.id]=x.titel);
-  const data={navn:NAVN,opdateret:new Date().toISOString(),niveau:niveau(),
+  const nu=S.screen==='q'?{hvad:S.mode==='sag'?'sag':'træning',sag:S.sag?S.sag.titel:null,fag:S.fag,nr:S.i+1,af:S.qs?S.qs.length:0}:S.screen==='deduk'?{hvad:'anklager',sag:S.sag?S.sag.titel:null}:S.screen==='gange'?{hvad:'regnejagt',tab:String(S.tab)}:S.screen==='opklaret'?{hvad:'løste sagen',sag:S.sag?S.sag.titel:null}:{hvad:'forsiden'};
+  const data={navn:NAVN,opdateret:new Date().toISOString(),nu,log:(P.log||[]).slice(-40),niveau:niveau(),
     stjerner:Object.values(P.sager).reduce((a,x)=>a+(x.stars||0),0),loeste:Object.values(P.sager).filter(x=>x.done).length,
     antalSager:SAGER.length,sager:P.sager,titler,gange:P.gange||{},dage:P.dage||[],brug:P.brug||{},spm:P.spm||0,rigtige:P.rigtige||0};
   fetch(SYNC.url.replace(/\/$/,'')+'/familier/'+SYNC.kode+'/'+SYNC.barn+'.json',{method:'PUT',body:JSON.stringify(data)}).catch(()=>{})},2000)}
@@ -651,7 +653,7 @@ const app=document.getElementById('app');
 function go(s){S=s;render();window.scrollTo({top:0,behavior:'instant'})}
 function render(){
   const r={hjem:rHjem,intro:rIntro,q:rQ,deduk:rDeduk,opklaret:rOpklaret,traenslut:rTraenSlut,gangevalg:rGangeValg,gange:rGange,gangeslut:rGangeSlut}[S.screen];
-  app.innerHTML=r();bind();gemS();
+  app.innerHTML=r();bind();gemS();sync();
 }
 // Gem hvor hun er naaet til (sag eller traening), saa appen kan lukkes og aabnes igen
 function gemS(){try{if(S.screen==='q'||S.screen==='deduk'){const g=Object.assign({},S,{sag:S.sag?S.sag.id:undefined});localStorage.setItem(LS+'_s',JSON.stringify(g))}else localStorage.removeItem(LS+'_s')}catch(e){}}
@@ -722,8 +724,8 @@ function nyt(){S.fag=S.qs[S.i];S.item=lavSpm(S.fag);S.forsog=0;S.screen='q';S.t0
 function norm(v){return String(v).trim().toLowerCase().replace(/\s+/g,'').replace(/\./g,'').replace(',','.')}
 function tjek(svar){const it=S.item;const rigtigt=norm(svar)===norm(it.svar);
   P.spm++;if(rigtigt&&S.forsog===0)P.rigtige++;if(rigtigt||S.forsog>=1)brugNoter(rigtigt&&S.forsog===0);save();
-  if(rigtigt){vis(true,svar);return}
-  S.forsog++;if(S.forsog===1){S.fejl++;visPrøvIgen(svar)}else vis(false,svar);}
+  if(rigtigt){logSvar(true);save();vis(true,svar);return}
+  S.forsog++;if(S.forsog===1){S.fejl++;visPrøvIgen(svar)}else{logSvar(false);save();vis(false,svar)}}
 function visPrøvIgen(svar){const fb=document.getElementById('fb');
   document.querySelectorAll('.opt').forEach(b=>{if(b.dataset.opt===svar){b.classList.add('bad');b.disabled=true}});
   const inp=document.getElementById('ans');if(inp){inp.classList.add('bad');inp.select()}

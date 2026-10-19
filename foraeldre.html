@@ -39,6 +39,19 @@ input{font:inherit;padding:8px 12px;border-radius:10px;border:1px solid var(--li
 .rek{display:flex;flex-wrap:wrap;gap:6px}
 .rek span{background:var(--paper2);border-radius:999px;padding:3px 10px;font-size:.85rem}
 .tom{color:var(--muted)}
+.nu{display:flex;align-items:center;gap:8px;background:var(--paper2);border-radius:10px;padding:8px 12px;font-weight:700}
+.nu i{width:10px;height:10px;border-radius:50%;background:var(--ok);box-shadow:0 0 0 4px rgba(47,138,74,.2);flex:none;animation:puls 1.6s infinite}
+.nu.stille{font-weight:600;color:var(--muted)}
+@keyframes puls{0%,100%{opacity:1}50%{opacity:.4}}
+.log{display:flex;flex-direction:column;gap:2px;max-height:360px;overflow:auto}
+.ev{display:grid;grid-template-columns:auto auto auto 1fr auto;gap:8px;align-items:baseline;padding:5px 6px;border-bottom:1px dashed var(--line);font-size:.9rem}
+.ev .tid{color:var(--muted);font-variant-numeric:tabular-nums}
+.ev .ok{color:var(--ok);font-weight:800}.ev .bad{color:#c23b2f;font-weight:800}
+.ev .fagm{color:var(--muted);font-size:.8rem;text-transform:uppercase;letter-spacing:.05em}
+.ev .q{min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.ev .hvor{color:var(--muted);font-size:.8rem;white-space:nowrap}
+@media(max-width:600px){.ev{grid-template-columns:auto auto 1fr}.ev .fagm,.ev .hvor{display:none}}
+@media(prefers-reduced-motion:reduce){.nu i{animation:none}}
 .opsaet{background:var(--paper);border:1px solid var(--line);border-radius:14px;padding:18px;display:flex;flex-direction:column;gap:10px}
 .opsaet form{display:flex;gap:8px;flex-wrap:wrap}
 .fejl{color:#c23b2f}
@@ -78,8 +91,19 @@ function barn(slug,b){
     return `<div><span>${ESC(titler[id])}</span><span class="stj">${s.done?stjerner(s.stars||0):(s.igang?'i gang':'–')}</span></div>`}).join('');
   const rek=Object.entries(b.gange||{}).map(([t,r])=>`<span>${t==='bland'?'Blandet':(isNaN(t)?ESC(t):t+'-tabel')}: ${(r.ms/1000).toFixed(1).replace('.',',')} s · ${r.fejl} fejl</span>`).join('')||'<span class="tom">ingen endnu</span>';
   const niv=['','Detektivlærling','Detektiv','Mesterdetektiv'][b.niveau||1]||'';
+  const aktiv=b.opdateret&&(Date.now()-new Date(b.opdateret).getTime())<3*60000;
+  const nu=b.nu||{};let nuTekst='';
+  if(nu.hvad==='sag')nuTekst=`er i gang med «${ESC(nu.sag||'')}», opgave ${nu.nr} af ${nu.af} (${FAGNAVN[nu.fag]||nu.fag||''})`;
+  else if(nu.hvad==='træning')nuTekst=`træner ${FAGNAVN[nu.fag]||nu.fag||''}, opgave ${nu.nr} af ${nu.af}`;
+  else if(nu.hvad==='anklager')nuTekst=`er ved at anklage i «${ESC(nu.sag||'')}»`;
+  else if(nu.hvad==='regnejagt')nuTekst=`kører regnejagten (${ESC(nu.tab||'')})`;
+  else if(nu.hvad==='løste sagen')nuTekst=`har lige løst «${ESC(nu.sag||'')}»`;
+  else if(nu.hvad==='forsiden')nuTekst='kigger på forsiden';
+  const nuLinje=aktiv&&nuTekst?`<div class="nu"><i></i>Lige nu: ${nuTekst}</div>`:(nuTekst?`<div class="nu stille">Sidst: ${nuTekst}</div>`:'');
+  const log=(b.log||[]).slice().reverse().slice(0,30).map(e=>`<div class="ev"><span class="tid">${klok(e.t)}</span><span class="${e.ok?'ok':'bad'}">${e.ok?(e.forsog>1?'✓ (2. forsøg)':'✓'):'✗'}</span><span class="fagm">${FAGNAVN[e.fag]||e.fag||''}</span><span class="q">${ESC(e.q||'')}</span><span class="hvor">${ESC(e.hvor||'')}${e.nr?' · nr. '+e.nr:''}</span></div>`).join('');
   return `<section class="kort" style="--farve:${FARVE[slug]||'var(--brass)'}">
-   <div class="hoved"><h2>Detektiv ${ESC(b.navn||slug)}</h2><span class="sidst">Sidst spillet ${siden(b.opdateret)}</span></div>
+   <div class="hoved"><h2>Detektiv ${ESC(b.navn||slug)}</h2><span class="sidst">Sidst aktiv ${siden(b.opdateret)}</span></div>
+   ${nuLinje}
    <div class="tal">
     <div><b>${b.stjerner||0}</b><span>stjerner af ${(b.antalSager||0)*3}</span></div>
     <div><b>${b.loeste||0}/${b.antalSager||0}</b><span>sager løst</span></div>
@@ -90,20 +114,37 @@ function barn(slug,b){
    <div><h3>Sidste 14 dage · ${ugeSpm} opgaver den seneste uge, ${ugeRigt} rigtige, ca. ${ugeMin} min.</h3><div class="graf">${graf}</div></div>
    <div><h3>Sager</h3><div class="sager">${sager||'<p class="tom">ingen data endnu</p>'}</div></div>
    <div><h3>Rekorder i regnejagten</h3><div class="rek">${rek}</div></div>
+   <div><h3>Seneste svar</h3><div class="log">${log||'<p class="tom">ingen svar endnu</p>'}</div></div>
   </section>`;
 }
+const FAGNAVN={dansk:'dansk',mat:'matematik',eng:'engelsk'};
+function klok(iso){try{const d=new Date(iso);const idag=new Date().toDateString()===d.toDateString();
+  return (idag?'':d.toLocaleDateString('da-DK',{day:'numeric',month:'numeric'})+' ')+d.toLocaleTimeString('da-DK',{hour:'2-digit',minute:'2-digit'})}catch(e){return ''}}
+// Live: Firebase sender ændringer som en strøm (Server-Sent Events). Falder det ud, henter vi selv hvert minut.
+let ES=null,DATA=null;
+function tegn(){if(!DATA){$('indhold').innerHTML='<p class="tom">Ingen data endnu. Åbn spillene på telefonerne med net, så dukker de op her.</p>';return}
+  const slugs=['emilie','camille'].filter(k=>DATA[k]);
+  $('indhold').innerHTML=slugs.length?slugs.map(k=>barn(k,DATA[k])).join(''):'<p class="tom">Ingen data endnu. Åbn spillene på telefonerne med net, så dukker de op her.</p>'}
+function startLive(){if(!CFG||ES||!window.EventSource)return;
+  try{ES=new EventSource(CFG.url.replace(/\/$/,'')+'/familier/'+CFG.kode+'.json');
+    const anvend=(path,data)=>{if(path==='/'){DATA=data}else{const dele=path.split('/').filter(Boolean);DATA=DATA||{};let o=DATA;
+      for(let i=0;i<dele.length-1;i++){o[dele[i]]=o[dele[i]]||{};o=o[dele[i]]}if(data===null)delete o[dele[dele.length-1]];else o[dele[dele.length-1]]=data}
+      tegn();$('status').textContent='Live · '+new Date().toLocaleTimeString('da-DK',{hour:'2-digit',minute:'2-digit',second:'2-digit'})};
+    ES.addEventListener('put',e=>{const m=JSON.parse(e.data);anvend(m.path,m.data)});
+    ES.addEventListener('patch',e=>{const m=JSON.parse(e.data);const base=m.path.replace(/\/$/,'');for(const k in m.data)anvend(base+'/'+k,m.data[k])});
+    ES.onerror=()=>{$('status').textContent='Live-forbindelsen genoprettes …'};
+  }catch(e){ES=null}}
 async function hent(){
   if(!CFG){$('opsaet').hidden=false;$('status').textContent='';return}
   $('opsaet').hidden=true;$('status').textContent='Henter …';
   try{const r=await fetch(CFG.url.replace(/\/$/,'')+'/familier/'+CFG.kode+'.json?nocache='+Date.now());
-    if(!r.ok)throw new Error('HTTP '+r.status);const data=await r.json();
-    if(!data){$('indhold').innerHTML='<p class="tom">Ingen data endnu. Åbn spillene på telefonerne med net, så dukker de op her.</p>';$('status').textContent='Forbundet';return}
-    const slugs=['emilie','camille'].filter(k=>data[k]);
-    if(!slugs.length){$('indhold').innerHTML='<p class="tom">Ingen data endnu. Åbn spillene på telefonerne med net, så dukker de op her.</p>';$('status').textContent='Forbundet';return}
-    $('indhold').innerHTML=slugs.map(k=>barn(k,data[k])).join('');
+    if(!r.ok)throw new Error('HTTP '+r.status);DATA=await r.json();tegn();
     $('status').textContent='Opdateret '+new Date().toLocaleTimeString('da-DK',{hour:'2-digit',minute:'2-digit'});
+    startLive();
   }catch(e){$('status').innerHTML='<span class="fejl">Kunne ikke hente: '+ESC(e.message)+'</span>';$('opsaet').hidden=false}
 }
+// "Lige nu"-linjen skal falme, når der ikke er sket noget i 3 minutter - gentegn hvert halve minut
+setInterval(()=>{if(DATA)tegn()},30000);
 $('form').onsubmit=e=>{e.preventDefault();CFG={url:$('url').value.trim(),kode:$('kode').value.trim()};try{localStorage.setItem('detektiv_foraeldre',JSON.stringify(CFG))}catch(x){}hent()};
 $('opdater').onclick=hent;
 hent();setInterval(hent,60000);
