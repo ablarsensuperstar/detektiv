@@ -953,7 +953,7 @@ document.addEventListener('keydown',e=>{if(S.screen!=='gange')return;if(/^[0-9]$
 
 load();genoptag();render();
 </script>
-<script>if('serviceWorker' in navigator){addEventListener('load',()=>{navigator.serviceWorker.register('sw.js').catch(()=>{})})}</script>
+<script>if('serviceWorker' in navigator){addEventListener('load',()=>{navigator.serviceWorker.register('sw.js').catch(()=>{})});let _ny=false;navigator.serviceWorker.addEventListener('controllerchange',()=>{if(_ny)return;_ny=true;const s=window.S;if(!s||s.screen==='hjem'||s.screen==='gangevalg'||s.screen==='intro')location.reload()})}</script>
 
 </body>
 </html>
