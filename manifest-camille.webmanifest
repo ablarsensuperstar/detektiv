@@ -1,0 +1,14 @@
+{
+  "name": "Detektiv Camille",
+  "short_name": "Camille",
+  "lang": "da",
+  "start_url": "./camille.html",
+  "scope": "./",
+  "display": "standalone",
+  "background_color": "#eaeef0",
+  "theme_color": "#1b2236",
+  "icons": [
+    { "src": "ikoner/camille-192.png", "sizes": "192x192", "type": "image/png" },
+    { "src": "ikoner/camille-512.png", "sizes": "512x512", "type": "image/png", "purpose": "any maskable" }
+  ]
+}

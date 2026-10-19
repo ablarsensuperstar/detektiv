@@ -5,12 +5,17 @@
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <meta name="theme-color" content="#1b2236">
 <meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="default">
 <meta name="apple-mobile-web-app-title" content="Detektiv Emilie">
 <style>html,body{margin:0}[hidden]{display:none!important}</style>
 <title>Detektiv Emilie</title>
 <meta name="claude:viewport-fit-sides" content="cover">
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Special+Elite&family=Nunito:wght@400;600;700;800&display=swap">
+<link rel="manifest" href="manifest-emilie.webmanifest">
+<link rel="apple-touch-icon" href="ikoner/emilie-180.png">
+<link rel="icon" type="image/png" sizes="192x192" href="ikoner/emilie-192.png">
+<link rel="stylesheet" href="fonts/fonts.css">
+
 <style>
 /* Layout: ét smalt spor (max 560px) som en detektivs notesbog. Sagsmapper som kartotekskort med messingfane, opgaver på en linjeret side. */
 :root{
@@ -675,6 +680,7 @@ document.addEventListener('keydown',e=>{if(S.screen!=='gange')return;if(/^[0-9]$
 
 load();genoptag();render();
 </script>
+<script>if('serviceWorker' in navigator){addEventListener('load',()=>{navigator.serviceWorker.register('sw.js').catch(()=>{})})}</script>
 
 </body>
 </html>
