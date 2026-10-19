@@ -1,0 +1,584 @@
+<!doctype html>
+<html lang="da">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#1b2236">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-title" content="Detektiv Camille">
+<style>html,body{margin:0}[hidden]{display:none!important}</style>
+<title>Detektiv Camille</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Special+Elite&family=Nunito:wght@400;600;700;800&display=swap">
+<style>
+/* Layout: ét smalt spor (max 560px) som en detektivs notesbog. Sagsmapper som kartotekskort med messingfane, opgaver på en linjeret side. Større skrift end storesøsterens udgave. */
+:root{
+  --bg:#eaeef0;
+  --paper:#faf8f1;
+  --paper2:#f1eee3;
+  --ink:#1b2236;
+  --muted:#5d6579;
+  --line:#cdd3de;
+  --rule:#d9d2bf;
+  --brass:#a8771f;
+  --brass-soft:#f1e4c4;
+  --wax:#b8382f;
+  --ok:#2f8a4a;
+  --ok-soft:#dff2e4;
+  --bad:#c23b2f;
+  --bad-soft:#f8e0dc;
+  --dansk:#b8382f;
+  --mat:#1f5fa8;
+  --eng:#2f8a4a;
+  --gange:#0e8a8a;
+  --shadow:0 6px 18px rgba(27,34,54,.12);
+  --display:'Special Elite','Courier New',monospace;
+  --body:'Nunito','Segoe UI',system-ui,sans-serif;
+}
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]){
+    --bg:#111624; --paper:#1b2234; --paper2:#222b40; --ink:#ebe6d8; --muted:#a4aabb; --line:#303a52; --rule:#2c3449;
+    --brass:#d3a44c; --brass-soft:#3a3120; --wax:#e0564a; --ok:#5cc07a; --ok-soft:#1d3a28; --bad:#ef6a5e; --bad-soft:#44231f;
+    --dansk:#ef6a5e; --mat:#6aa6ec; --eng:#5cc07a; --gange:#4fc9c9; --shadow:0 6px 18px rgba(0,0,0,.45); color-scheme:dark;
+  }
+}
+:root[data-theme="dark"]{
+  --bg:#111624; --paper:#1b2234; --paper2:#222b40; --ink:#ebe6d8; --muted:#a4aabb; --line:#303a52; --rule:#2c3449;
+  --brass:#d3a44c; --brass-soft:#3a3120; --wax:#e0564a; --ok:#5cc07a; --ok-soft:#1d3a28; --bad:#ef6a5e; --bad-soft:#44231f;
+  --dansk:#ef6a5e; --mat:#6aa6ec; --eng:#5cc07a; --gange:#4fc9c9; --shadow:0 6px 18px rgba(0,0,0,.45); color-scheme:dark;
+}
+*{box-sizing:border-box}
+body{background:var(--bg);color:var(--ink);font-family:var(--body);font-size:18px;line-height:1.5;margin:0;
+  padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px));padding-block:12px 32px}
+.wrap{max-width:560px;margin:0 auto;display:flex;flex-direction:column;gap:14px}
+h1,h2,h3{font-family:var(--display);font-weight:400;margin:0;text-wrap:balance;line-height:1.2}
+h1{font-size:1.9rem}
+h2{font-size:1.45rem}
+h3{font-size:1.15rem}
+p{margin:0}
+button{font:inherit;color:inherit;cursor:pointer;border:0;background:none}
+button:focus-visible,input:focus-visible{outline:3px solid var(--brass);outline-offset:2px}
+.top{display:flex;align-items:center;justify-content:space-between;gap:10px;min-height:44px}
+.lnk{color:var(--muted);font-weight:700;padding:8px 4px;border-radius:8px}
+.lnk:hover{color:var(--ink)}
+.brand{display:flex;align-items:baseline;gap:10px;flex-wrap:wrap}
+.brand small{font-family:var(--display);color:var(--brass);letter-spacing:.08em;text-transform:uppercase;font-size:.8rem}
+.stats{display:flex;gap:8px;flex-wrap:wrap}
+.stat{background:var(--paper);border:1px solid var(--line);border-radius:999px;padding:6px 14px;font-weight:700;font-size:.9rem;display:flex;gap:6px;align-items:center}
+.stat b{color:var(--brass);font-variant-numeric:tabular-nums}
+.sektion{display:flex;flex-direction:column;gap:10px}
+.sektion-h{display:flex;align-items:baseline;justify-content:space-between;gap:10px}
+.sektion-h span{color:var(--muted);font-size:.9rem;font-weight:700}
+.mappe{position:relative;text-align:left;background:var(--paper);border:1px solid var(--line);border-radius:6px 14px 14px 14px;padding:16px 16px 14px;box-shadow:var(--shadow);display:grid;grid-template-columns:1fr auto;gap:4px 12px;align-items:center;width:100%;margin-top:14px}
+.mappe::before{content:attr(data-nr);position:absolute;top:-14px;left:14px;background:var(--brass);color:#fff;font-family:var(--display);font-size:.75rem;letter-spacing:.1em;padding:2px 10px;border-radius:6px 6px 0 0}
+.mappe h3{grid-column:1}
+.mappe .sted{grid-column:1;color:var(--muted);font-size:.9rem}
+.mappe .status{grid-column:2;grid-row:1/3;font-weight:800;font-size:.85rem;padding:6px 10px;border-radius:999px;background:var(--paper2);color:var(--muted);white-space:nowrap}
+.mappe.done .status{background:var(--ok-soft);color:var(--ok)}
+.mappe.igang .status{background:var(--brass-soft);color:var(--brass)}
+.mappe:hover{transform:translateY(-1px)}
+.stjerner{color:var(--brass);letter-spacing:.05em}
+.fagrad{display:grid;grid-template-columns:repeat(3,1fr);gap:10px}
+.fagknap{background:var(--paper);border:1px solid var(--line);border-top:5px solid var(--f);border-radius:12px;padding:14px 10px;font-weight:800;box-shadow:var(--shadow)}
+.fagknap small{display:block;color:var(--muted);font-weight:600;font-size:.8rem}
+.gangeknap{background:var(--paper);border:1px solid var(--line);border-left:6px solid var(--gange);border-radius:12px;padding:14px 16px;text-align:left;box-shadow:var(--shadow);display:flex;justify-content:space-between;align-items:center;gap:10px;width:100%}
+.gangeknap small{display:block;color:var(--muted);font-weight:600;font-size:.85rem}
+.prog{display:flex;gap:6px;align-items:center}
+.prog i{width:12px;height:12px;border-radius:50%;border:2px solid var(--line);display:block}
+.prog i.d{background:var(--brass);border-color:var(--brass)}
+.prog i.n{border-color:var(--brass);box-shadow:0 0 0 3px var(--brass-soft)}
+.fag{align-self:flex-start;font-weight:800;font-size:.8rem;letter-spacing:.08em;text-transform:uppercase;color:#fff;background:var(--f);padding:4px 12px;border-radius:999px}
+.side{background:var(--paper);background-image:repeating-linear-gradient(transparent 0 31px,var(--rule) 31px 32px);background-position:0 18px;border:1px solid var(--line);border-radius:12px;padding:18px 18px 20px;box-shadow:var(--shadow);display:flex;flex-direction:column;gap:16px}
+.qtext{font-size:1.35rem;font-weight:700;line-height:1.45}
+.qtext .tekst{display:block;font-weight:600;font-size:1.1rem;color:var(--muted);margin-bottom:10px;padding:10px 12px;background:var(--paper2);border-radius:8px;line-height:1.6}
+.opts{display:grid;gap:10px}
+.opt{text-align:left;background:var(--paper2);border:2px solid var(--line);border-radius:12px;padding:12px 14px;font-weight:700;font-size:1.1rem;min-height:56px;display:flex;align-items:center;gap:12px;transition:transform .08s}
+.opt:hover:not(:disabled){border-color:var(--brass)}
+.opt:active:not(:disabled){transform:scale(.99)}
+.opt .b{width:30px;height:30px;border-radius:50%;background:var(--paper);border:1px solid var(--line);display:grid;place-items:center;font-size:.85rem;flex:none;font-family:var(--display)}
+.opt.ok{border-color:var(--ok);background:var(--ok-soft)}
+.opt.bad{border-color:var(--bad);background:var(--bad-soft);opacity:.7}
+.opt:disabled{cursor:default}
+.ans{display:flex;gap:10px}
+.ans input{flex:1;min-width:0;font:inherit;font-size:1.5rem;font-weight:700;padding:10px 14px;border-radius:12px;border:2px solid var(--line);background:var(--paper2);color:var(--ink);font-variant-numeric:tabular-nums}
+.ans input.ok{border-color:var(--ok)}
+.ans input.bad{border-color:var(--bad)}
+.knap{background:var(--ink);color:var(--bg);font-weight:800;padding:12px 20px;border-radius:12px;min-height:48px}
+.knap.brass{background:var(--brass);color:#fff}
+.knap.lys{background:var(--paper2);color:var(--ink);border:1px solid var(--line)}
+.knap:disabled{opacity:.5;cursor:default}
+.fb{border-radius:12px;padding:14px 16px;display:flex;flex-direction:column;gap:10px;border:1px solid var(--line);background:var(--paper)}
+.fb.ok{border-color:var(--ok)}
+.fb.bad{border-color:var(--bad)}
+.fb .t{font-weight:800;font-size:1.1rem}
+.fb.ok .t{color:var(--ok)}
+.fb.bad .t{color:var(--bad)}
+.fb .fork{color:var(--muted);font-size:1rem}
+.hist{font-family:var(--display);font-size:1.08rem;line-height:1.55;border-left:3px solid var(--brass);padding-left:12px}
+.spor{background:var(--brass-soft);border:1px dashed var(--brass);border-radius:10px;padding:10px 14px;display:flex;gap:10px;align-items:flex-start}
+.spor .lup{font-family:var(--display);color:var(--brass);font-size:.75rem;letter-spacing:.1em;text-transform:uppercase;flex:none;padding-top:3px}
+.rad{display:flex;gap:10px;justify-content:flex-end;flex-wrap:wrap}
+.intro{background:var(--paper);border:1px solid var(--line);border-radius:12px;padding:20px 18px;box-shadow:var(--shadow);display:flex;flex-direction:column;gap:14px}
+.intro .sted{font-family:var(--display);color:var(--brass);font-size:.85rem;letter-spacing:.08em;text-transform:uppercase}
+.intro p.hist{font-family:var(--body);border:0;padding:0;font-size:1.1rem;line-height:1.6}
+.mist{display:grid;gap:10px}
+.mistk{text-align:left;background:var(--paper);border:2px solid var(--line);border-radius:12px;padding:12px 14px;display:flex;flex-direction:column;gap:6px;box-shadow:var(--shadow)}
+.mistk:hover{border-color:var(--brass)}
+.mistk b{font-size:1.1rem}
+.mistk .rolle{color:var(--muted);font-size:.95rem}
+.traek{display:flex;flex-wrap:wrap;gap:6px}
+.traek span{font-size:.9rem;font-weight:700;background:var(--paper2);border:1px solid var(--line);border-radius:999px;padding:3px 10px}
+.mistk.ude{opacity:.5}
+.mistk.ude:hover{border-color:var(--line)}
+.sporliste{display:flex;flex-direction:column;gap:8px}
+.opk{background:var(--paper);border:1px solid var(--line);border-radius:12px;padding:24px 18px;box-shadow:var(--shadow);display:flex;flex-direction:column;gap:14px;align-items:center;text-align:center}
+.opk .stempel{font-family:var(--display);color:var(--wax);border:3px solid var(--wax);border-radius:8px;padding:6px 16px;font-size:1.4rem;letter-spacing:.12em;text-transform:uppercase;transform:rotate(-4deg)}
+.opk .store{font-size:2.2rem;color:var(--brass);letter-spacing:.1em}
+.opk p{max-width:46ch}
+.score{font-size:3rem;font-family:var(--display);color:var(--brass);font-variant-numeric:tabular-nums}
+.tabeller{display:grid;grid-template-columns:repeat(3,1fr);gap:8px}
+.tab{background:var(--paper);border:2px solid var(--line);border-radius:12px;padding:14px 4px;font-weight:800;font-size:1.1rem;font-variant-numeric:tabular-nums;display:flex;flex-direction:column;align-items:center;gap:2px}
+.tab small{font-weight:700;color:var(--muted);font-size:.72rem}
+.tab:hover{border-color:var(--gange)}
+.gspil{display:flex;flex-direction:column;gap:14px}
+.ur{display:flex;justify-content:space-between;align-items:center;font-weight:800;font-variant-numeric:tabular-nums}
+.ur .tid{font-family:var(--display);font-size:1.5rem;color:var(--gange)}
+.gq{font-size:3rem;font-weight:800;text-align:center;font-variant-numeric:tabular-nums;letter-spacing:.02em}
+.gq.ok{color:var(--ok)}
+.gq.bad{color:var(--bad)}
+.pad{display:grid;grid-template-columns:repeat(3,1fr);gap:8px}
+.pad button{background:var(--paper2);border:2px solid var(--line);border-radius:12px;font-size:1.6rem;font-weight:800;min-height:60px;font-variant-numeric:tabular-nums}
+.pad button:active{transform:scale(.97)}
+.pad button.ok{background:var(--gange);color:#fff;border-color:var(--gange)}
+.gsvar{text-align:center;font-size:2rem;font-weight:800;min-height:44px;font-variant-numeric:tabular-nums;color:var(--gange)}
+.bar{height:8px;background:var(--paper2);border-radius:999px;overflow:hidden}
+.bar i{display:block;height:100%;background:var(--gange);width:0;transition:width .2s}
+canvas.konf{position:fixed;inset:0;pointer-events:none;width:100%;height:100%}
+@media (max-width:420px){.gq{font-size:2.5rem}}
+@media (prefers-reduced-motion:reduce){*{transition:none!important;animation:none!important}}
+</style>
+</head>
+<body>
+<div class="wrap" id="app"></div>
+
+<script>
+'use strict';
+const rnd=(a,b)=>a+Math.floor(Math.random()*(b-a+1));
+const pick=a=>a[rnd(0,a.length-1)];
+const shuffle=a=>{a=a.slice();for(let i=a.length-1;i>0;i--){const j=rnd(0,i);[a[i],a[j]]=[a[j],a[i]]}return a};
+const esc=s=>String(s).replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
+const LS='detektiv_camille_v1';
+const NAVN='Camille';
+const FAG={dansk:{navn:'Dansk',farve:'var(--dansk)'},mat:{navn:'Matematik',farve:'var(--mat)'},eng:{navn:'Engelsk',farve:'var(--eng)'}};
+const N_SPM=6, SPOR_VED=[1,3,5], N_TRAEN=8, N_JAGT=12;
+
+// ---------- Sagerne (2. klasse: korte sætninger, tre mistænkte) ----------
+const SAGER=[
+{id:'bamse',titel:'Bamsen Bjørn er væk',sted:'Sommerhuset',
+ intro:'Bamsen Bjørn sover altid i Camilles seng. Men i dag er han væk! Hvem har taget ham?',
+ labels:{fod:'Fodspor',sted:'Var',ting:'Har'},
+ mist:[
+  {navn:'Hunden Pelle',rolle:'elsker bløde ting',t:{fod:'poter',sted:'i haven',ting:'mudder på poterne'}},
+  {navn:'Morfar Finn Drost',rolle:'læser avis i stuen',t:{fod:'hjemmesko',sted:'i stuen',ting:'avisen'}},
+  {navn:'Nabopigen Olivia',rolle:'leger tit i haven',t:{fod:'gummistøvler',sted:'i haven',ting:'en spand'}}],
+ spor:[
+  {tekst:'Sporet går ud i haven.',n:'sted',v:'i haven'},
+  {tekst:'Der er mudder på gulvet.',n:'ting',v:'mudder på poterne'},
+  {tekst:'Aftrykkene på gulvet er fra poter.',n:'fod',v:'poter'}],
+ skyldig:'Hunden Pelle',
+ loesning:'Pelle havde lagt Bjørn i sin hundekurv. Han ville bare sove med ham. Nu har Pelle fået sin egen bamse.',
+ hist:['Du tager din lup frem. Nu er du detektiv!','Sengen er tom. Men dynen er krøllet.','Du kigger på gulvet med lommelygten.','Morfar Finn siger: "Jeg har ikke set Bjørn."','Olivia siger: "Jeg har kun leget med min spand."','Du går ud i haven og kigger dig omkring.']},
+{id:'jordbaer',titel:'Hvem spiste jordbærrene?',sted:'Haven',
+ intro:'Morfar har plukket en stor skål jordbær. Nu er skålen tom! Hvem har spist dem?',
+ labels:{spor:'Fingre',sted:'Var',mund:'Om munden'},
+ mist:[
+  {navn:'Solsorten',rolle:'sidder på taget',t:{spor:'et næb',sted:'på taget',mund:'ingenting'}},
+  {navn:'Lillebror Noah',rolle:'elsker jordbær',t:{spor:'små fingre',sted:'i haven',mund:'rød saft'}},
+  {navn:'Morfar Finn Drost',rolle:'plukkede jordbærrene',t:{spor:'store fingre',sted:'i køkkenet',mund:'ingenting'}}],
+ spor:[
+  {tekst:'Nogen var i haven i eftermiddag.',n:'sted',v:'i haven'},
+  {tekst:'Der er små fingermærker på skålen.',n:'spor',v:'små fingre'},
+  {tekst:'Den skyldige har rød saft om munden.',n:'mund',v:'rød saft'}],
+ skyldig:'Lillebror Noah',
+ loesning:'Noah grinede og viste sin røde mund. Han havde spist alle jordbærrene! Han lovede at plukke nye i morgen.',
+ hist:['Skålen er helt tom. Kun to små blade ligger tilbage.','Du spørger alle, hvor de har været.','Du kigger på skålen med din lup.','Solsorten synger på taget. Den ser mæt ud.','Morfar Finn griner: "Jeg spiser aldrig jordbær før aftensmad."','Du kigger alle i ansigtet. Én af dem har noget om munden.']},
+{id:'telt',titel:'Lyden i teltet',sted:'Campingpladsen',
+ intro:'Om natten var der en mærkelig lyd uden for teltet. Smask, smask, puf. Hvem var det?',
+ labels:{spor:'Fodspor',tid:'Er vågen',mad:'Spiser'},
+ mist:[
+  {navn:'Pindsvinet',rolle:'bor under hækken',t:{spor:'små poter',tid:'om natten',mad:'kattemad'}},
+  {navn:'Katten Mis',rolle:'bor i hus nummer 3',t:{spor:'bløde poter',tid:'om natten',mad:'mælk'}},
+  {navn:'Morfar Finn Drost',rolle:'sover tungt i den store campingvogn',t:{spor:'gummistøvler',tid:'om dagen',mad:'lakrids'}}],
+ spor:[
+  {tekst:'Lyden kom midt om natten.',n:'tid',v:'om natten'},
+  {tekst:'Skålen med kattemad er tom.',n:'mad',v:'kattemad'},
+  {tekst:'Der er små, spidse aftryk i sandet.',n:'spor',v:'små poter'}],
+ skyldig:'Pindsvinet',
+ loesning:'Det var pindsvinet! Det havde fundet kattemaden og smaskede højt. Nu får det sin egen lille skål hver aften.',
+ hist:['Du kryber ud af teltet. Græsset er vådt.','Du husker, hvornår du hørte lyden.','Der står en skål ved siden af teltet.','Morfar Finn kommer forbi. "Jeg sov hele natten," siger han.','Katten Mis slikker sig om munden. Den har drukket mælk.','Du kigger ned i sandet foran teltet.']},
+{id:'is',titel:'Den forsvundne is',sted:'Køkkenet',
+ intro:'Der lå tre is i fryseren. Nu er der kun to! Hvem har taget den sidste chokoladeis?',
+ labels:{fod:'Fødder',sted:'Var',ting:'Har på sig'},
+ mist:[
+  {navn:'Morfar Finn Drost',rolle:'elsker chokolade',t:{fod:'store fødder',sted:'på terrassen',ting:'chokolade på skjorten'}},
+  {navn:'Kusine Alma',rolle:'elsker jordbær',t:{fod:'store fødder',sted:'i køkkenet',ting:'jordbærsaft på kjolen'}},
+  {navn:'Hunden Pelle',rolle:'snuser altid ved fryseren',t:{fod:'poter',sted:'i haven',ting:'ingenting'}}],
+ spor:[
+  {tekst:'Store fodspor går væk fra fryseren.',n:'fod',v:'store fødder'},
+  {tekst:'Der er chokolade på fryserens låge.',n:'ting',v:'chokolade på skjorten'},
+  {tekst:'En ispind ligger på terrassen.',n:'sted',v:'på terrassen'}],
+ skyldig:'Morfar Finn Drost',
+ loesning:'Morfar Finn blev helt rød i hovedet. "Jeg var så varm!" sagde han. Han købte nye is til alle.',
+ hist:['Fryseren står på klem. Der drypper lidt på gulvet.','Du kigger på gulvet foran fryseren.','Alma siger: "Jeg kan ikke lide chokolade."','Pelle logrer. Han har ingen is.','Du kigger nøje på lågen til fryseren.','Du går ud for at lede efter flere spor.']},
+{id:'kat',titel:'Hvor er katten Misse?',sted:'Sommerhuset og haven',titelD:'Hvor er Misse?',erSted:true,
+ intro:'Katten Misse plejer at komme, når man rasler med maden. Men i dag kommer hun ikke. Hvor er hun?',
+ labels:{lyd:'Lyd',ting:'Der er',doer:'Døren'},
+ mist:[
+  {navn:'I skuret',rolle:'det gamle skur i haven',t:{lyd:'et svagt mjav',ting:'gamle fiskenet',doer:'står på klem'}},
+  {navn:'Under sengen',rolle:'i det lille værelse',t:{lyd:'et svagt mjav',ting:'støv og sokker',doer:'er åben'}},
+  {navn:'Oppe i træet',rolle:'det store æbletræ',t:{lyd:'fuglekvidder',ting:'blade og æbler',doer:'ingen dør'}}],
+ spor:[
+  {tekst:'Du hører et svagt mjav et sted.',n:'lyd',v:'et svagt mjav'},
+  {tekst:'Der ligger kattehår ved en dør, som står på klem.',n:'doer',v:'står på klem'},
+  {tekst:'Det lugter af fisk derinde.',n:'ting',v:'gamle fiskenet'}],
+ skyldig:'I skuret',
+ loesning:'Misse sad i skuret oven på de gamle fiskenet. Døren var smækket i bag hende. Hun fik en ekstra portion mad.',
+ hist:['Du rasler med maden igen. Ingen kat.','Du står helt stille og lytter.','Du kigger under sengen. Kun støv og en sok.','Du kigger op i træet. Kun fugle.','Morfar Finn siger: "Katte gemmer sig altid, hvor det lugter af fisk."','Du går hen mod skuret og snuser.']},
+{id:'bolle',titel:'Den sidste bolle',sted:'Morgenbordet på terrassen',
+ intro:'Der var én bolle tilbage på fadet. Camille skulle have den. Men nu er den væk!',
+ labels:{spor:'Spor',sted:'Var',ting:'Taber'},
+ mist:[
+  {navn:'Mågen Max',rolle:'skriger altid efter mad',t:{spor:'vinger',sted:'på terrassen',ting:'hvide fjer'}},
+  {navn:'Morfar Finn Drost',rolle:'elsker boller med ost',t:{spor:'hænder',sted:'på terrassen',ting:'krummer'}},
+  {navn:'Hunden Pelle',rolle:'elsker boller',t:{spor:'poter',sted:'under bordet',ting:'hundehår'}}],
+ spor:[
+  {tekst:'Krummerne fører ud på terrassen.',n:'sted',v:'på terrassen'},
+  {tekst:'Der ligger en hvid fjer ved krummerne.',n:'ting',v:'hvide fjer'},
+  {tekst:'Nogen fløj væk, da vi kom.',n:'spor',v:'vinger'}],
+ skyldig:'Mågen Max',
+ loesning:'Mågen Max sad på taget med bollen i næbbet. Han skreg glad. Camille fik en ny bolle med smør og ost.',
+ hist:['Fadet er tomt. Der ligger krummer på bordet.','Du følger krummerne med fingeren.','Morfar Finn siger: "Jeg har kun spist to boller." Han har smør på kinden.','Pelle ligger under bordet og sover.','Du finder noget blødt og hvidt.','Du hører et skrig oppe fra taget.']}
+];
+
+// ---------- Dansk 2. klasse ----------
+const DANSK=[
+ ...[['hus','huus','hos','hyss'],['bil','biil','bihl','bel'],['kat','katt','kad','kaat'],['is','iis','es','iss'],['bold','boold','bolld','båld'],['skib','skiib','sgib','skeb'],['hund','hond','hunt','hunn'],['mus','muus','mws','muss'],['bog','bok','båg','bogg'],['fisk','fesk','fisg','fiisk'],['ko','koo','kå','koh'],['gris','griis','gres','kris'],['sko','skoo','sgo','skoh'],['seng','sæng','sen','senk'],['stol','stoll','sdol','stohl'],['sol','soll','sohl','såll'],['dreng','dræng','drenk','dreeng'],['pige','pie','pije','piige']]
+   .map(o=>({q:'Hvilket ord er stavet rigtigt?',o})),
+ {q:'Hvilket ord rimer på "kat"?',o:['hat','kost','ko','kam']},
+ {q:'Hvilket ord rimer på "mus"?',o:['hus','mand','mor','maj']},
+ {q:'Hvilket ord rimer på "sol"?',o:['stol','sok','sal','sød']},
+ {q:'Hvilket ord rimer på "bil"?',o:['pil','bål','bold','bod']},
+ {q:'Hvilket ord rimer på "hund"?',o:['mund','hat','hus','hest']},
+ {q:'Hvilket ord rimer på "is"?',o:['gris','ost','ild','ide']},
+ {q:'Hvilket bogstav starter "sol" med?',o:['s','o','l','å']},
+ {q:'Hvilket bogstav starter "mus" med?',o:['m','u','s','n']},
+ {q:'Hvilket ord starter med samme lyd som "bold"?',o:['bil','pil','dåse','mus']},
+ {q:'Hvilket ord starter med samme lyd som "kat"?',o:['ko','gås','hat','and']},
+ {q:'Hvilket ord slutter på samme lyd som "hus"?',o:['mus','hund','hat','hest']},
+ {q:'Hvilket bogstav er en vokal?',o:['a','b','k','s'],f:'Vokalerne er a, e, i, o, u, y, æ, ø og å.'},
+ {q:'Hvilket bogstav er en vokal?',o:['e','m','t','p'],f:'Vokalerne er a, e, i, o, u, y, æ, ø og å.'},
+ {q:'Hvor mange vokaler er der i "sofa"?',o:['2','1','3','4'],f:'o og a er vokaler.'},
+ {q:'Hvor mange stavelser er der i "banan"?',o:['2','1','3','4'],f:'ba-nan. Klap to gange.'},
+ {q:'Hvor mange stavelser er der i "sommerfugl"?',o:['3','1','2','4'],f:'som-mer-fugl.'},
+ {q:'Hvor mange stavelser er der i "bil"?',o:['1','2','3','4']},
+ {q:'En bil, to ___',o:['biler','bils','bile','bilen']},
+ {q:'En kat, to ___',o:['katte','kats','kattes','katter']},
+ {q:'Et hus, to ___',o:['huse','husar','huser','hus']},
+ {q:'En hund, to ___',o:['hunde','hunds','hunder','hundene']},
+ {q:'Hvilket ord er noget, man kan gøre?',o:['løbe','bil','rød','hus']},
+ {q:'Hvilket ord er en ting?',o:['bold','hoppe','glad','under']},
+ {q:'Hvilket ord fortæller, hvordan noget er?',o:['glad','hund','sover','og']},
+ {q:'Hvad er det modsatte af "stor"?',o:['lille','høj','tyk','lang']},
+ {q:'Hvad er det modsatte af "varm"?',o:['kold','våd','lun','hed']},
+ {q:'Hvad er det modsatte af "oppe"?',o:['nede','ude','inde','over']},
+ {q:'Hvad er det modsatte af "hurtig"?',o:['langsom','rask','stille','sjov']},
+ {q:'Hvad er det modsatte af "lys"?',o:['mørk','hvid','gul','klar']},
+ {q:'Hvad er det modsatte af "glad"?',o:['ked af det','sjov','træt','sulten']},
+ {q:'Hvilken sætning er rigtig?',o:['Hunden sover.','hunden sover','Hunden sover','hunden Sover.'],f:'Stort bogstav først og punktum til sidst.'},
+ {q:'Hvilken sætning er rigtig?',o:['Jeg hedder Camille.','jeg hedder camille.','Jeg Hedder Camille','jeg hedder Camille'],f:'Navne skrives med stort.'},
+ {q:'Hvad skal der stå til sidst? "Hvor er min bamse"',o:['?','.','!',','],f:'Det er et spørgsmål.'},
+ {q:'Hvad skal der stå til sidst? "Jeg elsker is"',o:['.','?',',','-']},
+ {t:'Ida har en rød cykel. Hun cykler til stranden.',q:'Hvilken farve har cyklen?',o:['rød','blå','grøn','gul']},
+ {t:'Ida har en rød cykel. Hun cykler til stranden.',q:'Hvor cykler Ida hen?',o:['til stranden','til skolen','hjem','til byen']},
+ {t:'Mads leder efter sin bold. Den ligger under sengen.',q:'Hvor er bolden?',o:['under sengen','i haven','på bordet','i skabet']},
+ {t:'Katten Misse sover i kurven. Hunden Bo sover på sofaen.',q:'Hvem sover på sofaen?',o:['Hunden Bo','Katten Misse','Mor','Ingen']},
+ {t:'Det regner. Lea tager sine gummistøvler på.',q:'Hvad tager Lea på?',o:['gummistøvler','sandaler','hue','regnjakke']},
+ {t:'Noah finder en nøgle i sandet. Den er guld.',q:'Hvad finder Noah?',o:['en nøgle','en skal','en krabbe','en mønt']},
+ {q:'Hvilket bogstav kommer efter d?',o:['e','c','f','b']},
+ {q:'Hvilket bogstav kommer efter m?',o:['n','l','o','k']},
+ {q:'Hvilket bogstav kommer lige før h?',o:['g','i','f','j']},
+ {q:'Hvilket bogstav kommer først i alfabetet?',o:['b','k','s','æ']},
+ {q:'Hvad er det store bogstav til "a"?',o:['A','Æ','B','Å']},
+ {q:'Hvad er det lille bogstav til "G"?',o:['g','q','j','y']},
+ {q:'sol + skin = ?',o:['solskin','skinsol','solsol','skinskin']},
+ {q:'regn + bue = ?',o:['regnbue','bueregn','regnbu','regne']},
+ {q:'Hvilken dag kommer efter mandag?',o:['tirsdag','søndag','fredag','onsdag']},
+ {q:'Hvilken dag kommer efter fredag?',o:['lørdag','torsdag','mandag','søndag']}
+];
+
+// ---------- Engelsk 2. klasse ----------
+const ENGELSK=[
+ ...[['rød','red','blue','green','yellow'],['blå','blue','black','brown','red'],['grøn','green','grey','gold','yellow'],['gul','yellow','white','orange','blue'],['sort','black','blue','brown','white'],['hvid','white','red','pink','grey'],['hund','dog','cat','cow','pig'],['kat','cat','dog','hat','rat'],['fisk','fish','frog','fox','bird'],['fugl','bird','bee','bear','fish'],['hest','horse','house','mouse','cow'],['ko','cow','car','cat','pig'],['gris','pig','dog','duck','sheep'],['mor','mum','dad','girl','boy'],['far','dad','mum','man','boy'],['dreng','boy','girl','toy','baby'],['pige','girl','boy','mum','sister'],['hoved','head','hand','hat','heart'],['hånd','hand','head','foot','leg'],['hus','house','horse','mouse','home'],['bold','ball','bell','bill','doll'],['æble','apple','pear','egg','ant'],['sol','sun','son','moon','star'],['skole','school','shop','ship','sea']]
+   .map(([da,...o])=>({q:`Hvad hedder "${da}" på engelsk?`,o})),
+ ...[[1,'one'],[2,'two'],[3,'three'],[4,'four'],[5,'five'],[6,'six'],[7,'seven'],[8,'eight'],[9,'nine'],[10,'ten']]
+   .map(([n,en],_,alle)=>({q:`Hvad hedder ${n} på engelsk?`,o:[en,...shuffle(alle.filter(x=>x[1]!==en)).slice(0,3).map(x=>x[1])]})),
+ {q:'Hvad betyder "Hello"?',o:['Hej','Farvel','Tak','Ja']},
+ {q:'Hvad betyder "Goodbye"?',o:['Farvel','Hej','Godnat','Tak']},
+ {q:'Hvad betyder "Thank you"?',o:['Tak','Hej','Undskyld','Nej']},
+ {q:'Hvad betyder "Good night"?',o:['Godnat','Godmorgen','Farvel','God mad']},
+ {q:'Hvad betyder "My name is Camille"?',o:['Jeg hedder Camille','Jeg er ni år','Jeg kan lide Camille','Min kat hedder Camille']},
+ {q:'Hvad betyder "How old are you?"',o:['Hvor gammel er du?','Hvad hedder du?','Hvor bor du?','Hvordan har du det?']},
+ {q:'Hvad betyder "yes"?',o:['ja','nej','måske','hej']},
+ {q:'Hvad betyder "no"?',o:['nej','ja','nu','ny']},
+ {q:'What colour is a banana?',o:['yellow','blue','red','green']},
+ {q:'What colour is the grass?',o:['green','red','black','pink']},
+ {q:'How many legs does a cat have?',o:['four','two','three','five']},
+ {q:'How many fingers do you have on one hand?',o:['five','four','ten','two']},
+ {q:'Hvad betyder "big"?',o:['stor','lille','blå','bil']},
+ {q:'Hvad betyder "small"?',o:['lille','stor','smal','sulten']},
+ {q:'Hvad betyder "happy"?',o:['glad','sur','træt','hurtig']}
+];
+
+// ---------- Matematik 2. klasse ----------
+const unik=(n,a,b)=>{const r=new Set();while(r.size<n)r.add(rnd(a,b));return[...r]};
+const ORD=['','et','to','tre','fire','fem','seks','syv','otte','ni','ti','elleve','tolv'];
+const MAT=[
+ ()=>{const a=rnd(2,12),b=rnd(1,20-a);return{q:`Hvad er ${a} + ${b}?`,s:a+b}},
+ ()=>{const a=rnd(2,12),b=rnd(1,20-a);return{q:`Hvad er ${a} + ${b}?`,s:a+b}},
+ ()=>{const a=rnd(5,20),b=rnd(1,a-1);return{q:`Hvad er ${a} − ${b}?`,s:a-b}},
+ ()=>{const a=rnd(5,20),b=rnd(1,a-1);return{q:`Hvad er ${a} − ${b}?`,s:a-b}},
+ ()=>{const a=rnd(1,8)*10,b=rnd(1,9-a/10)*10;return{q:`Hvad er ${a} + ${b}?`,s:a+b,f:`${a/10} tiere + ${b/10} tiere = ${(a+b)/10} tiere`}},
+ ()=>{const a=rnd(11,88),e=rnd(0,9-a%10),t=rnd(e?0:1,Math.floor((99-a-e)/10));const b=t*10+e;return{q:`Hvad er ${a} + ${b}?`,s:a+b}},
+ ()=>{const a=rnd(21,99),e=rnd(0,a%10),t=rnd(0,Math.floor(a/10)-1);const b=Math.max(1,t*10+e);return{q:`Hvad er ${a} − ${b}?`,s:a-b}},
+ ()=>{const a=rnd(1,5)*2;return{q:`Hvilket tal mangler? ${a}, ${a+2}, ${a+4}, ?`,s:a+6,f:'Vi tæller i 2\'ere.'}},
+ ()=>{const a=rnd(1,6)*5;return{q:`Hvilket tal mangler? ${a}, ${a+5}, ${a+10}, ?`,s:a+15,f:'Vi tæller i 5\'ere.'}},
+ ()=>{const a=rnd(1,5)*10;return{q:`Hvilket tal mangler? ${a}, ${a+10}, ${a+20}, ?`,s:a+30,f:'Vi tæller i 10\'ere.'}},
+ ()=>{const a=rnd(3,15);return{q:`Hvilket tal mangler? ${a}, ${a+1}, ${a+2}, ?`,s:a+3}},
+ ()=>{const n=rnd(2,10);return{q:`Hvad er det dobbelte af ${n}?`,s:2*n,f:`${n} + ${n} = ${2*n}`}},
+ ()=>{const n=2*rnd(2,10);return{q:`Hvad er halvdelen af ${n}?`,s:n/2}},
+ ()=>{const a=rnd(3,12),b=rnd(2,20-a);return{q:`${NAVN} har ${a} æbler og får ${b} mere. Hvor mange æbler har hun nu?`,s:a+b,f:`${a} + ${b} = ${a+b}`}},
+ ()=>{const a=rnd(6,15),b=rnd(2,a-1);return{q:`Der sidder ${a} fugle på en gren. ${b} flyver væk. Hvor mange er der tilbage?`,s:a-b,f:`${a} − ${b} = ${a-b}`}},
+ ()=>{const k=rnd(2,5);return{q:`En hund har 4 ben. Hvor mange ben har ${k} hunde?`,s:4*k,f:`${Array(k).fill(4).join(' + ')} = ${4*k}`}},
+ ()=>{const p=rnd(5,15);return{q:`${NAVN} har 20 kr. En is koster ${p} kr. Hvor mange kroner har hun tilbage?`,s:20-p,f:`20 − ${p} = ${20-p}`}},
+ ()=>{const a=rnd(2,7),b=rnd(2,7);return{q:`Detektiven finder ${a} spor i haven og ${b} spor i huset. Hvor mange spor i alt?`,s:a+b}},
+ ()=>{const h=rnd(1,12);return{q:`Den lille viser peger på ${h}. Den store viser peger på 12. Hvad er klokken?`,o:[`klokken ${ORD[h]}`,...shuffle([1,2,3,4,5,6,7,8,9,10,11,12].filter(x=>x!==h)).slice(0,3).map(x=>`klokken ${ORD[x]}`)],mc:true,f:'Når den store viser peger på 12, er klokken hel.'}},
+ ()=>{const h=rnd(1,11);return{q:`Den store viser peger på 6. Den lille viser er mellem ${h} og ${h+1}. Hvad er klokken?`,o:[`halv ${ORD[h+1]}`,`halv ${ORD[h]}`,`klokken ${ORD[h]}`,`klokken ${ORD[h+1]}`],mc:true,f:`Halv ${ORD[h+1]} betyder, at der er en halv time til klokken ${ORD[h+1]}.`}},
+ ()=>{return{q:'Hvor mange hjørner har en trekant?',s:3}},
+ ()=>{return{q:'Hvor mange hjørner har en firkant?',s:4}},
+ ()=>{return{q:'Hvilken form har ingen hjørner?',o:['cirkel','trekant','firkant','rektangel'],mc:true}},
+ ()=>{const l=unik(4,10,99);const m=Math.max(...l);return{q:'Hvilket tal er størst?',o:[m+'',...l.filter(x=>x!==m).map(String)],mc:true}},
+ ()=>{const l=unik(4,10,99);const m=Math.min(...l);return{q:'Hvilket tal er mindst?',o:[m+'',...l.filter(x=>x!==m).map(String)],mc:true}},
+ ()=>{const n=rnd(9,98);return{q:`Hvilket tal kommer lige efter ${n}?`,s:n+1}},
+ ()=>{const n=rnd(10,99);return{q:`Hvilket tal kommer lige før ${n}?`,s:n-1}},
+ ()=>{const n=rnd(21,99);return{q:`Hvor mange tiere er der i tallet ${n}?`,s:Math.floor(n/10),f:`${n} er ${Math.floor(n/10)} tiere og ${n%10} enere.`}},
+ ()=>{const n=rnd(21,99);return{q:`Hvor mange enere er der i tallet ${n}?`,s:n%10,f:`${n} er ${Math.floor(n/10)} tiere og ${n%10} enere.`}},
+ ()=>{const e=rnd(1,10)*2;const u=[1,3,5,7,9,11,13,15,17,19];return{q:'Hvilket tal er lige?',o:[e+'',...shuffle(u).slice(0,3).map(String)],mc:true,f:'Lige tal ender på 0, 2, 4, 6 eller 8.'}},
+ ()=>{const m=[1,2,5,10,20];const a=pick(m),b=pick(m);return{q:`Du har en ${a}-krone og en ${b}-krone. Hvor mange kroner er det?`,s:a+b}},
+ ()=>{const m=[2,5,10,20];const a=pick(m),b=pick(m),c=pick(m);return{q:`Du har tre mønter: ${a} kr., ${b} kr. og ${c} kr. Hvor mange kroner er det i alt?`,s:a+b+c}},
+ ()=>{return{q:'Hvor mange dage er der i en uge?',s:7}},
+ ()=>{return{q:'Hvor mange måneder er der på et år?',s:12}},
+ ()=>{const b=rnd(1,10);return{q:`Hvad er 2 · ${b}?`,s:2*b,f:`${b} + ${b} = ${2*b}`}},
+ ()=>{const b=rnd(1,10);return{q:`Hvad er 5 · ${b}?`,s:5*b}},
+ ()=>{const b=rnd(1,10);return{q:`Hvad er 10 · ${b}?`,s:10*b}},
+ ()=>{const a=rnd(2,9),b=rnd(2,9),c=rnd(1,20-a-b);return{q:`Hvad er ${a} + ${b} + ${c}?`,s:a+b+c}},
+ ()=>{const s=rnd(11,20),a=rnd(2,s-2);return{q:`${a} + ? = ${s}`,s:s-a,f:`${s} − ${a} = ${s-a}`}}
+];
+
+// ---------- Gemt fremgang ----------
+let P;
+function load(){try{P=JSON.parse(localStorage.getItem(LS))||{}}catch(e){P={}}
+  P.sager=P.sager||{};P.set=P.set||{dansk:[],eng:[]};P.rigtige=P.rigtige||0;P.spm=P.spm||0;P.gange=P.gange||{};P.dage=P.dage||[];}
+function save(){try{localStorage.setItem(LS,JSON.stringify(P))}catch(e){}}
+function noterDag(){const d=new Date().toISOString().slice(0,10);if(!P.dage.includes(d)){P.dage.push(d);save()}}
+function pickItem(fag){
+  const bank=fag==='dansk'?DANSK:ENGELSK;let seen=P.set[fag];
+  let kand=bank.map((_,i)=>i).filter(i=>!seen.includes(i));
+  if(!kand.length){seen=P.set[fag]=[];kand=bank.map((_,i)=>i)}
+  const i=pick(kand);seen.push(i);save();
+  const it=bank[i];return{type:'mc',q:it.q,t:it.t,svar:it.o[0],opts:shuffle(it.o),f:it.f};
+}
+function lavMat(){const it=pick(MAT)();
+  if(it.mc)return{type:'mc',q:it.q,svar:it.o[0],opts:shuffle(it.o),f:it.f};
+  return{type:'tal',q:it.q,svar:String(it.s),f:it.f};}
+function lavSpm(fag){return fag==='mat'?lavMat():pickItem(fag)}
+
+// ---------- Tilstand og rendering ----------
+let S={screen:'hjem'};
+const app=document.getElementById('app');
+function go(s){S=s;render();window.scrollTo({top:0,behavior:'instant'})}
+function render(){
+  const r={hjem:rHjem,intro:rIntro,q:rQ,deduk:rDeduk,opklaret:rOpklaret,traenslut:rTraenSlut,gangevalg:rGangeValg,gange:rGange,gangeslut:rGangeSlut}[S.screen];
+  app.innerHTML=r();bind();gemS();
+}
+// Gem hvor hun er naaet til (sag eller traening), saa appen kan lukkes og aabnes igen
+function gemS(){try{if(S.screen==='q'||S.screen==='deduk'){const g=Object.assign({},S,{sag:S.sag?S.sag.id:undefined});localStorage.setItem(LS+'_s',JSON.stringify(g))}else localStorage.removeItem(LS+'_s')}catch(e){}}
+function genoptag(){try{const g=JSON.parse(localStorage.getItem(LS+'_s')||'null');if(!g||!g.screen)return;if(g.sag){g.sag=SAGER.find(s=>s.id===g.sag);if(!g.sag)return}if(g.mode==='sag'&&!g.sag)return;S=g}catch(e){}}
+function stjerner(n){return '★'.repeat(n)+'☆'.repeat(3-n)}
+
+function rHjem(){
+  const done=Object.values(P.sager).filter(x=>x.done).length;
+  const st=Object.values(P.sager).reduce((a,x)=>a+(x.stars||0),0);
+  return `
+  <header class="brand"><h1>Detektiv ${NAVN}</h1><small>Detektivbureauet · 2. klasse</small></header>
+  <div class="stats"><div class="stat">Løste sager <b>${done}/${SAGER.length}</b></div><div class="stat">Stjerner <b>${st}</b></div><div class="stat">Dage som detektiv <b>${P.dage.length}</b></div></div>
+  <section class="sektion"><div class="sektion-h"><h2>Sager</h2><span>${N_SPM} opgaver pr. sag</span></div>
+  ${SAGER.map((s,i)=>{const p=P.sager[s.id]||{};const kl=p.done?'done':(p.igang?'igang':'');
+    const status=p.done?`<span class="stjerner">${stjerner(p.stars)}</span>`:(p.igang?'I gang':'Ny sag');
+    return `<button class="mappe ${kl}" data-sag="${s.id}" data-nr="Sag nr. ${i+1}"><h3>${esc(s.titel)}</h3><div class="sted">${esc(s.sted)}</div><div class="status">${status}</div></button>`}).join('')}
+  </section>
+  <section class="sektion"><div class="sektion-h"><h2>Regnejagten</h2><span>på tid</span></div>
+   <button class="gangeknap" data-go="gangevalg"><div><b>Plus, minus og gange</b><small>Vælg en jagt og svar så hurtigt du kan</small></div><span>→</span></button>
+  </section>
+  <section class="sektion"><div class="sektion-h"><h2>Træning</h2><span>${N_TRAEN} opgaver i ét fag</span></div>
+   <div class="fagrad">${Object.entries(FAG).map(([k,f])=>`<button class="fagknap" style="--f:${f.farve}" data-traen="${k}">${f.navn}<small>${N_TRAEN} opgaver</small></button>`).join('')}</div>
+  </section>`;
+}
+function rIntro(){const s=S.sag;return `
+  <header class="top"><button class="lnk" data-go="hjem">← Sager</button></header>
+  <div class="intro"><div class="sted">${esc(s.sted)}</div><h2>${esc(s.titel)}</h2><p class="hist">${esc(s.intro)}</p>
+   <div><b>${s.erSted?'Måske er hun':'De mistænkte'}:</b> ${s.mist.map(m=>esc(s.erSted?m.navn.toLowerCase():m.navn)).join(', ')}.</div>
+   <p>Løs ${N_SPM} opgaver og find 3 ledetråde. Så kan du løse sagen!</p>
+   <div class="rad"><button class="knap brass" data-start="${s.id}">Start sagen</button></div></div>`;}
+function rQ(){const it=S.item,f=FAG[S.fag];const n=S.qs.length;
+  const prog=`<div class="prog">${Array.from({length:n},(_,i)=>`<i class="${i<S.i?'d':(i===S.i?'n':'')}"></i>`).join('')}</div>`;
+  let svar;
+  if(it.type==='mc')svar=`<div class="opts">${it.opts.map((o,i)=>`<button class="opt" data-opt="${esc(o)}" id="opt${i}"><span class="b">${'ABCD'[i]}</span><span>${esc(o)}</span></button>`).join('')}</div>`;
+  else svar=`<form class="ans" id="ansform"><input id="ans" inputmode="numeric" autocomplete="off" placeholder="Skriv tallet" aria-label="Dit svar"><button class="knap" type="submit">Tjek</button></form>`;
+  return `<header class="top"><button class="lnk" data-go="hjem">← ${S.mode==='sag'?'Sagen':'Træning'}</button>${prog}</header>
+   <span class="fag" style="--f:${f.farve}">${f.navn}</span>
+   <div class="side"><div class="qtext">${it.t?`<span class="tekst">${esc(it.t)}</span>`:''}${esc(it.q)}</div>${svar}</div>
+   <div id="fb"></div>`;}
+function rDeduk(){const s=S.sag;return `
+  <header class="top"><button class="lnk" data-go="hjem">← Sager</button></header>
+  <div class="intro"><div class="sted">${esc(s.titel)}</div><h2>${esc(s.titelD||'Hvem var det?')}</h2>
+   <div class="sporliste">${s.spor.map(sp=>`<div class="spor"><span class="lup">Ledetråd</span><span>${esc(sp.tekst)}</span></div>`).join('')}</div>
+   <p>Kig på ledetrådene. Tryk på ${s.erSted?'det sted, du tror, hun er':'den, du tror, det var'}.</p></div>
+  <div class="mist">${s.mist.map((m,i)=>{const ude=S.ude.includes(i);
+    return `<button class="mistk ${ude?'ude':''}" data-mist="${i}" ${ude?'disabled':''}><b>${esc(m.navn)}</b><span class="rolle">${esc(m.rolle)}</span>
+     <div class="traek">${Object.entries(m.t).map(([k,v])=>`<span>${esc(s.labels[k])}: ${esc(v)}</span>`).join('')}</div></button>`}).join('')}</div>
+  <div id="fb"></div>`;}
+function rOpklaret(){const s=S.sag,p=P.sager[s.id];return `
+  <div class="opk"><div class="stempel">Løst</div><h2>${esc(s.titel)}</h2>
+   <div class="store">${stjerner(p.stars)}</div>
+   <p><b>${s.erSted?`Hun var ${esc(s.skyldig.toLowerCase())}!`:`Det var ${esc(s.skyldig)}!`}</b></p><p>${esc(s.loesning)}</p>
+   <p style="color:var(--muted)">${S.fejl===0?'Ingen fejl. Du er en superdetektiv!':S.fejl===1?'Kun én fejl. Flot!':`${S.fejl} fejl. Men sagen er løst!`}</p>
+   <div class="rad"><button class="knap brass" data-go="hjem">Tilbage til sagerne</button></div></div>`;}
+function rTraenSlut(){const f=FAG[S.fag];const r=S.qs.length-S.fejl;return `
+  <div class="opk"><span class="fag" style="--f:${f.farve};align-self:center">${f.navn}</span><h2>Træning færdig</h2>
+   <div class="score">${r} / ${S.qs.length}</div>
+   <p>${r===S.qs.length?'Alle rigtige! Fantastisk!':r>=S.qs.length-2?'Godt gået!':'Godt kæmpet. Prøv igen!'}</p>
+   <div class="rad"><button class="knap lys" data-go="hjem">Hjem</button><button class="knap brass" data-traen="${S.fag}">Igen</button></div></div>`;}
+
+// ---------- Opgave-flow ----------
+function startSag(id){const sag=SAGER.find(s=>s.id===id);noterDag();
+  P.sager[id]=P.sager[id]||{};P.sager[id].igang=true;save();
+  const fag=shuffle(['mat','mat','mat','dansk','dansk','eng']);
+  S={screen:'q',mode:'sag',sag,qs:fag,i:0,fejl:0,forsog:0};nyt();}
+function startTraen(fag){noterDag();S={screen:'q',mode:'traen',fag,qs:Array(N_TRAEN).fill(fag),i:0,fejl:0,forsog:0};nyt();}
+function nyt(){S.fag=S.qs[S.i];S.item=lavSpm(S.fag);S.forsog=0;S.screen='q';render();const inp=document.getElementById('ans');if(inp)inp.focus();}
+function norm(v){return String(v).trim().toLowerCase().replace(/\s+/g,'').replace(/\./g,'').replace(',','.')}
+function tjek(svar){const it=S.item;const rigtigt=norm(svar)===norm(it.svar);
+  P.spm++;if(rigtigt&&S.forsog===0)P.rigtige++;save();
+  if(rigtigt){vis(true,svar);return}
+  S.forsog++;if(S.forsog===1){S.fejl++;visPrøvIgen(svar)}else vis(false,svar);}
+function visPrøvIgen(svar){const fb=document.getElementById('fb');
+  document.querySelectorAll('.opt').forEach(b=>{if(b.dataset.opt===svar){b.classList.add('bad');b.disabled=true}});
+  const inp=document.getElementById('ans');if(inp){inp.classList.add('bad');inp.select()}
+  fb.innerHTML=`<div class="fb bad"><div class="t">Ikke helt. Prøv én gang til!</div></div>`;}
+function vis(rigtigt,svar){const it=S.item,fb=document.getElementById('fb');
+  document.querySelectorAll('.opt').forEach(b=>{b.disabled=true;if(b.dataset.opt===it.svar)b.classList.add('ok');else if(b.dataset.opt===svar&&!rigtigt)b.classList.add('bad')});
+  const inp=document.getElementById('ans');if(inp){inp.disabled=true;inp.classList.add(rigtigt?'ok':'bad');document.querySelector('#ansform button').disabled=true}
+  let h='';
+  if(rigtigt)h+=`<div class="t">${pick(['Rigtigt!','Flot!','Ja!','Godt set, detektiv!','Super!'])}</div>`;
+  else h+=`<div class="t">Det rigtige svar er: ${esc(it.svar)}</div>`;
+  if(it.f)h+=`<div class="fork">${esc(it.f)}</div>`;
+  const sidste=S.i===S.qs.length-1;
+  if(S.mode==='sag'){h+=`<p class="hist">${esc(S.sag.hist[S.i])}</p>`;
+    const k=SPOR_VED.indexOf(S.i);if(k>=0)h+=`<div class="spor"><span class="lup">Ledetråd ${k+1}</span><span>${esc(S.sag.spor[k].tekst)}</span></div>`;}
+  h+=`<div class="rad"><button class="knap brass" id="naeste">${sidste?(S.mode==='sag'?'Løs sagen →':'Se resultat →'):'Næste →'}</button></div>`;
+  fb.innerHTML=`<div class="fb ${rigtigt?'ok':'bad'}">${h}</div>`;
+  const b=document.getElementById('naeste');b.focus();b.scrollIntoView({block:'nearest',behavior:'smooth'});}
+function naeste(){S.i++;
+  if(S.i<S.qs.length){nyt();return}
+  if(S.mode==='sag'){S.screen='deduk';S.ude=[];render()}else{S.screen='traenslut';render()}}
+function anklag(i){const s=S.sag,m=s.mist[i];
+  if(m.navn===s.skyldig){const stars=S.fejl<=1?3:(S.fejl<=2?2:1);const p=P.sager[s.id];
+    p.done=true;p.igang=false;p.stars=Math.max(p.stars||0,stars);save();S.screen='opklaret';render();konfetti();return}
+  const sp=s.spor.find(x=>m.t[x.n]!==x.v);S.ude.push(i);
+  render();document.getElementById('fb').innerHTML=`<div class="fb bad"><div class="t">Nej, ${s.erSted?'hun er ikke '+esc(m.navn.toLowerCase()):'det var ikke '+esc(m.navn)}.</div>
+   <div class="fork">${esc(s.labels[sp.n])}: ${esc(m.t[sp.n])}. Men ledetråden siger: "${esc(sp.tekst)}"</div></div>`;
+  document.getElementById('fb').scrollIntoView({behavior:'smooth',block:'nearest'});}
+
+// ---------- Regnejagten ----------
+const JAGTER=[{id:'plus',navn:'Plus til 20',kort:'Plus'},{id:'minus',navn:'Minus til 20',kort:'Minus'},{id:'2',navn:'2-tabellen',kort:'2 ·'},{id:'5',navn:'5-tabellen',kort:'5 ·'},{id:'10',navn:'10-tabellen',kort:'10 ·'},{id:'bland',navn:'Blandet',kort:'Alt'}];
+const jagtNavn=id=>JAGTER.find(j=>j.id===id).navn;
+function rGangeValg(){return `
+  <header class="top"><button class="lnk" data-go="hjem">← Hjem</button></header>
+  <div class="intro" style="border-left:6px solid var(--gange)"><h2>Regnejagten</h2><p>Vælg en jagt. Du får ${N_JAGT} regnestykker, og uret kører. Slå din egen bedste tid!</p></div>
+  <div class="tabeller">${JAGTER.map(j=>{const b=P.gange[j.id];return `<button class="tab" data-tab="${j.id}">${j.navn}<small>${b?`bedst ${fmt(b.ms)} · ${b.fejl} fejl`:'ny'}</small></button>`}).join('')}</div>`;}
+function fmt(ms){const s=Math.round(ms/100)/10;return s.toFixed(1).replace('.',',')+' s'}
+function lavStykke(id){
+  if(id==='bland')id=pick(['plus','minus','2','5','10']);
+  if(id==='plus'){const a=rnd(1,15),b=rnd(1,20-a);return{a,b,op:'+',s:a+b}}
+  if(id==='minus'){const a=rnd(3,20),b=rnd(1,a-1);return{a,b,op:'−',s:a-b}}
+  const t=+id,b=rnd(1,10);return Math.random()<.5?{a:t,b,op:'·',s:t*b}:{a:b,b:t,op:'·',s:t*b};}
+let gTimer=null;
+function startGange(tab){noterDag();const qs=Array.from({length:N_JAGT},()=>lavStykke(tab));
+  S={screen:'gange',tab,qs,i:0,fejl:0,inp:'',start:Date.now(),laast:false};render();
+  clearInterval(gTimer);gTimer=setInterval(()=>{const e=document.getElementById('tid');if(e)e.textContent=fmt(Date.now()-S.start);else clearInterval(gTimer)},100);}
+function rGange(){const q=S.qs[S.i];return `
+  <header class="top"><button class="lnk" data-go="gangevalg">← Afbryd</button><div class="ur"><span class="tid" id="tid">${fmt(Date.now()-S.start)}</span></div></header>
+  <div class="side gspil" style="background-image:none">
+   <div class="ur"><span>${jagtNavn(S.tab)}</span><span>${S.i+1} / ${S.qs.length} · ${S.fejl} fejl</span></div>
+   <div class="bar"><i style="width:${S.i/S.qs.length*100}%"></i></div>
+   <div class="gq" id="gq">${q.a} ${q.op} ${q.b} = ?</div>
+   <div class="gsvar" id="gsvar">${S.inp||'&nbsp;'}</div>
+   <div class="pad">${[1,2,3,4,5,6,7,8,9].map(d=>`<button data-d="${d}">${d}</button>`).join('')}<button data-d="slet">⌫</button><button data-d="0">0</button><button data-d="ok" class="ok">OK</button></div>
+  </div>`;}
+function gTast(d){if(S.laast)return;
+  if(d==='slet')S.inp=S.inp.slice(0,-1);else if(d==='ok')return gTjek();else if(S.inp.length<3)S.inp+=d;
+  document.getElementById('gsvar').innerHTML=S.inp||'&nbsp;';
+  const q=S.qs[S.i];if(S.inp.length&&+S.inp===q.s&&String(q.s).length===S.inp.length)gTjek();}
+function gTjek(){if(!S.inp)return;const q=S.qs[S.i];const ok=+S.inp===q.s;const gq=document.getElementById('gq');
+  S.laast=true;gq.textContent=`${q.a} ${q.op} ${q.b} = ${q.s}`;
+  if(ok){gq.classList.add('ok');setTimeout(()=>{S.i++;S.inp='';S.laast=false;if(S.i>=S.qs.length)gSlut();else render()},350)}
+  else{S.fejl++;gq.classList.add('bad');document.getElementById('gsvar').textContent=S.inp+' ✗';
+    setTimeout(()=>{S.i++;S.inp='';S.laast=false;if(S.i>=S.qs.length)gSlut();else render()},1400)}}
+function gSlut(){clearInterval(gTimer);const ms=Date.now()-S.start+S.fejl*3000;const b=P.gange[S.tab];
+  S.ms=ms;S.ny=!b||ms<b.ms;if(S.ny)P.gange[S.tab]={ms,fejl:S.fejl};save();S.screen='gangeslut';render();if(S.ny&&S.fejl===0)konfetti();}
+function rGangeSlut(){return `
+  <div class="opk" style="border-top:6px solid var(--gange)"><h2>${jagtNavn(S.tab)}</h2>
+   <div class="score" style="color:var(--gange)">${fmt(S.ms)}</div>
+   <p>${S.fejl===0?'Ingen fejl!':`${S.fejl} fejl (hver fejl koster 3 sekunder).`} ${S.ny?'Ny rekord!':`Din rekord er ${fmt(P.gange[S.tab].ms)}.`}</p>
+   <div class="rad"><button class="knap lys" data-go="gangevalg">Vælg jagt</button><button class="knap brass" style="background:var(--gange)" data-tab="${S.tab}">Igen</button></div></div>`;}
+
+// ---------- Konfetti ----------
+function konfetti(){if(matchMedia('(prefers-reduced-motion: reduce)').matches)return;
+  const c=document.createElement('canvas');c.className='konf';document.body.appendChild(c);const x=c.getContext('2d');
+  c.width=innerWidth;c.height=innerHeight;const farver=['#a8771f','#b8382f','#1f5fa8','#2f8a4a','#0e8a8a','#e0b24a'];
+  const p=Array.from({length:120},()=>({x:Math.random()*c.width,y:-20-Math.random()*c.height*.5,vx:(Math.random()-.5)*2,vy:2+Math.random()*3,r:4+Math.random()*5,f:pick(farver),a:Math.random()*6}));
+  const t0=performance.now();(function frame(t){x.clearRect(0,0,c.width,c.height);
+    p.forEach(q=>{q.x+=q.vx;q.y+=q.vy;q.a+=.1;x.save();x.translate(q.x,q.y);x.rotate(q.a);x.fillStyle=q.f;x.fillRect(-q.r/2,-q.r/2,q.r,q.r*.6);x.restore()});
+    if(t-t0<2800)requestAnimationFrame(frame);else c.remove()})(t0);}
+
+// ---------- Events ----------
+function bind(){
+  app.querySelectorAll('[data-go]').forEach(b=>b.onclick=()=>{clearInterval(gTimer);const g=b.dataset.go;if(g==='hjem')go({screen:'hjem'});else if(g==='gangevalg')go({screen:'gangevalg'})});
+  app.querySelectorAll('[data-sag]').forEach(b=>b.onclick=()=>go({screen:'intro',sag:SAGER.find(s=>s.id===b.dataset.sag)}));
+  app.querySelectorAll('[data-start]').forEach(b=>b.onclick=()=>startSag(b.dataset.start));
+  app.querySelectorAll('[data-traen]').forEach(b=>b.onclick=()=>startTraen(b.dataset.traen));
+  app.querySelectorAll('[data-tab]').forEach(b=>b.onclick=()=>startGange(b.dataset.tab));
+  app.querySelectorAll('[data-d]').forEach(b=>b.onclick=()=>gTast(b.dataset.d));
+  app.querySelectorAll('.opt').forEach(b=>b.onclick=()=>tjek(b.dataset.opt));
+  app.querySelectorAll('[data-mist]').forEach(b=>b.onclick=()=>anklag(+b.dataset.mist));
+  const f=document.getElementById('ansform');if(f)f.onsubmit=e=>{e.preventDefault();const v=document.getElementById('ans').value;if(v.trim())tjek(v)};
+}
+app.addEventListener('click',e=>{if(e.target.id==='naeste')naeste()});
+document.addEventListener('keydown',e=>{if(S.screen!=='gange')return;if(/^[0-9]$/.test(e.key))gTast(e.key);else if(e.key==='Backspace')gTast('slet');else if(e.key==='Enter')gTast('ok')});
+
+load();genoptag();render();
+</script>
+
+</body>
+</html>

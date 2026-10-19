@@ -1,0 +1,680 @@
+<!doctype html>
+<html lang="da">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#1b2236">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-title" content="Detektiv Emilie">
+<style>html,body{margin:0}[hidden]{display:none!important}</style>
+<title>Detektiv Emilie</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Special+Elite&family=Nunito:wght@400;600;700;800&display=swap">
+<style>
+/* Layout: ét smalt spor (max 560px) som en detektivs notesbog. Sagsmapper som kartotekskort med messingfane, opgaver på en linjeret side. */
+:root{
+  --bg:#e7eaf0;
+  --paper:#faf8f1;
+  --paper2:#f1eee3;
+  --ink:#1b2236;
+  --muted:#5d6579;
+  --line:#cdd3de;
+  --rule:#d9d2bf;
+  --brass:#a8771f;
+  --brass-soft:#f1e4c4;
+  --wax:#b8382f;
+  --ok:#2f8a4a;
+  --ok-soft:#dff2e4;
+  --bad:#c23b2f;
+  --bad-soft:#f8e0dc;
+  --dansk:#b8382f;
+  --mat:#1f5fa8;
+  --eng:#2f8a4a;
+  --gange:#7a3fa0;
+  --shadow:0 6px 18px rgba(27,34,54,.12);
+  --display:'Special Elite','Courier New',monospace;
+  --body:'Nunito','Segoe UI',system-ui,sans-serif;
+}
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]){
+    --bg:#111624; --paper:#1b2234; --paper2:#222b40; --ink:#ebe6d8; --muted:#a4aabb; --line:#303a52; --rule:#2c3449;
+    --brass:#d3a44c; --brass-soft:#3a3120; --wax:#e0564a; --ok:#5cc07a; --ok-soft:#1d3a28; --bad:#ef6a5e; --bad-soft:#44231f;
+    --dansk:#ef6a5e; --mat:#6aa6ec; --eng:#5cc07a; --gange:#c58df0; --shadow:0 6px 18px rgba(0,0,0,.45); color-scheme:dark;
+  }
+}
+:root[data-theme="dark"]{
+  --bg:#111624; --paper:#1b2234; --paper2:#222b40; --ink:#ebe6d8; --muted:#a4aabb; --line:#303a52; --rule:#2c3449;
+  --brass:#d3a44c; --brass-soft:#3a3120; --wax:#e0564a; --ok:#5cc07a; --ok-soft:#1d3a28; --bad:#ef6a5e; --bad-soft:#44231f;
+  --dansk:#ef6a5e; --mat:#6aa6ec; --eng:#5cc07a; --gange:#c58df0; --shadow:0 6px 18px rgba(0,0,0,.45); color-scheme:dark;
+}
+*{box-sizing:border-box}
+body{background:var(--bg);color:var(--ink);font-family:var(--body);font-size:17px;line-height:1.5;margin:0;
+  padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px));padding-block:12px 32px}
+.wrap{max-width:560px;margin:0 auto;display:flex;flex-direction:column;gap:14px}
+h1,h2,h3{font-family:var(--display);font-weight:400;margin:0;text-wrap:balance;line-height:1.2}
+h1{font-size:1.9rem}
+h2{font-size:1.45rem}
+h3{font-size:1.15rem}
+p{margin:0}
+button{font:inherit;color:inherit;cursor:pointer;border:0;background:none}
+button:focus-visible,input:focus-visible{outline:3px solid var(--brass);outline-offset:2px}
+.top{display:flex;align-items:center;justify-content:space-between;gap:10px;min-height:44px}
+.lnk{color:var(--muted);font-weight:700;padding:8px 4px;border-radius:8px}
+.lnk:hover{color:var(--ink)}
+.brand{display:flex;align-items:baseline;gap:10px;flex-wrap:wrap}
+.brand small{font-family:var(--display);color:var(--brass);letter-spacing:.08em;text-transform:uppercase;font-size:.8rem}
+.stats{display:flex;gap:8px;flex-wrap:wrap}
+.stat{background:var(--paper);border:1px solid var(--line);border-radius:999px;padding:6px 14px;font-weight:700;font-size:.9rem;display:flex;gap:6px;align-items:center}
+.stat b{color:var(--brass);font-variant-numeric:tabular-nums}
+.sektion{display:flex;flex-direction:column;gap:10px}
+.sektion-h{display:flex;align-items:baseline;justify-content:space-between;gap:10px}
+.sektion-h span{color:var(--muted);font-size:.9rem;font-weight:700}
+/* sagsmappe */
+.mappe{position:relative;text-align:left;background:var(--paper);border:1px solid var(--line);border-radius:6px 14px 14px 14px;padding:16px 16px 14px;box-shadow:var(--shadow);display:grid;grid-template-columns:1fr auto;gap:4px 12px;align-items:center;width:100%;margin-top:14px}
+.mappe::before{content:attr(data-nr);position:absolute;top:-14px;left:14px;background:var(--brass);color:#fff;font-family:var(--display);font-size:.75rem;letter-spacing:.1em;padding:2px 10px;border-radius:6px 6px 0 0}
+.mappe h3{grid-column:1}
+.mappe .sted{grid-column:1;color:var(--muted);font-size:.9rem}
+.mappe .status{grid-column:2;grid-row:1/3;font-weight:800;font-size:.85rem;padding:6px 10px;border-radius:999px;background:var(--paper2);color:var(--muted);white-space:nowrap}
+.mappe.done .status{background:var(--ok-soft);color:var(--ok)}
+.mappe.igang .status{background:var(--brass-soft);color:var(--brass)}
+.mappe.laast{opacity:.6}
+.mappe:hover{transform:translateY(-1px)}
+.stjerner{color:var(--brass);letter-spacing:.05em}
+/* træning */
+.fagrad{display:grid;grid-template-columns:repeat(3,1fr);gap:10px}
+.fagknap{background:var(--paper);border:1px solid var(--line);border-top:5px solid var(--f);border-radius:12px;padding:14px 10px;font-weight:800;box-shadow:var(--shadow)}
+.fagknap small{display:block;color:var(--muted);font-weight:600;font-size:.8rem}
+.gangeknap{background:var(--paper);border:1px solid var(--line);border-left:6px solid var(--gange);border-radius:12px;padding:14px 16px;text-align:left;box-shadow:var(--shadow);display:flex;justify-content:space-between;align-items:center;gap:10px;width:100%}
+.gangeknap small{display:block;color:var(--muted);font-weight:600;font-size:.85rem}
+/* spørgsmål */
+.prog{display:flex;gap:6px;align-items:center}
+.prog i{width:12px;height:12px;border-radius:50%;border:2px solid var(--line);display:block}
+.prog i.d{background:var(--brass);border-color:var(--brass)}
+.prog i.n{border-color:var(--brass);box-shadow:0 0 0 3px var(--brass-soft)}
+.fag{align-self:flex-start;font-weight:800;font-size:.8rem;letter-spacing:.08em;text-transform:uppercase;color:#fff;background:var(--f);padding:4px 12px;border-radius:999px}
+.side{background:var(--paper);background-image:repeating-linear-gradient(transparent 0 31px,var(--rule) 31px 32px);background-position:0 18px;border:1px solid var(--line);border-radius:12px;padding:18px 18px 20px;box-shadow:var(--shadow);display:flex;flex-direction:column;gap:16px}
+.qtext{font-size:1.25rem;font-weight:700;line-height:1.45}
+.qtext .tekst{display:block;font-weight:600;font-size:1.05rem;font-style:italic;color:var(--muted);margin-bottom:10px;padding:10px 12px;background:var(--paper2);border-radius:8px}
+.opts{display:grid;gap:10px}
+.opt{text-align:left;background:var(--paper2);border:2px solid var(--line);border-radius:12px;padding:12px 14px;font-weight:700;min-height:52px;display:flex;align-items:center;gap:12px;transition:transform .08s}
+.opt:hover:not(:disabled){border-color:var(--brass)}
+.opt:active:not(:disabled){transform:scale(.99)}
+.opt .b{width:28px;height:28px;border-radius:50%;background:var(--paper);border:1px solid var(--line);display:grid;place-items:center;font-size:.8rem;flex:none;font-family:var(--display)}
+.opt.ok{border-color:var(--ok);background:var(--ok-soft)}
+.opt.bad{border-color:var(--bad);background:var(--bad-soft);opacity:.7}
+.opt:disabled{cursor:default}
+.ans{display:flex;gap:10px}
+.ans input{flex:1;min-width:0;font:inherit;font-size:1.3rem;font-weight:700;padding:10px 14px;border-radius:12px;border:2px solid var(--line);background:var(--paper2);color:var(--ink);font-variant-numeric:tabular-nums}
+.ans input.ok{border-color:var(--ok)}
+.ans input.bad{border-color:var(--bad)}
+.knap{background:var(--ink);color:var(--bg);font-weight:800;padding:12px 20px;border-radius:12px;min-height:48px}
+.knap.brass{background:var(--brass);color:#fff}
+.knap.lys{background:var(--paper2);color:var(--ink);border:1px solid var(--line)}
+.knap:disabled{opacity:.5;cursor:default}
+.fb{border-radius:12px;padding:14px 16px;display:flex;flex-direction:column;gap:10px;border:1px solid var(--line);background:var(--paper)}
+.fb.ok{border-color:var(--ok)}
+.fb.bad{border-color:var(--bad)}
+.fb .t{font-weight:800;font-size:1.05rem}
+.fb.ok .t{color:var(--ok)}
+.fb.bad .t{color:var(--bad)}
+.fb .fork{color:var(--muted);font-size:.95rem}
+.hist{font-family:var(--display);font-size:1.02rem;line-height:1.5;border-left:3px solid var(--brass);padding-left:12px}
+.spor{background:var(--brass-soft);border:1px dashed var(--brass);border-radius:10px;padding:10px 14px;display:flex;gap:10px;align-items:flex-start}
+.spor .lup{font-family:var(--display);color:var(--brass);font-size:.75rem;letter-spacing:.1em;text-transform:uppercase;flex:none;padding-top:3px}
+.rad{display:flex;gap:10px;justify-content:flex-end;flex-wrap:wrap}
+/* intro / deduktion */
+.intro{background:var(--paper);border:1px solid var(--line);border-radius:12px;padding:20px 18px;box-shadow:var(--shadow);display:flex;flex-direction:column;gap:14px}
+.intro .sted{font-family:var(--display);color:var(--brass);font-size:.85rem;letter-spacing:.08em;text-transform:uppercase}
+.intro p.hist{font-family:var(--body);border:0;padding:0;font-size:1.05rem}
+.mist{display:grid;gap:10px}
+.mistk{text-align:left;background:var(--paper);border:2px solid var(--line);border-radius:12px;padding:12px 14px;display:flex;flex-direction:column;gap:6px;box-shadow:var(--shadow)}
+.mistk:hover{border-color:var(--brass)}
+.mistk b{font-size:1.05rem}
+.mistk .rolle{color:var(--muted);font-size:.9rem}
+.traek{display:flex;flex-wrap:wrap;gap:6px}
+.traek span{font-size:.82rem;font-weight:700;background:var(--paper2);border:1px solid var(--line);border-radius:999px;padding:3px 10px}
+.traek span.x{text-decoration:line-through;opacity:.55}
+.mistk.ude{opacity:.5}
+.mistk.ude:hover{border-color:var(--line)}
+.sporliste{display:flex;flex-direction:column;gap:8px}
+.anklag{background:var(--paper2);border:2px solid var(--brass);border-radius:12px;padding:14px 16px;display:flex;flex-direction:column;gap:10px}
+/* opklaret */
+.opk{background:var(--paper);border:1px solid var(--line);border-radius:12px;padding:24px 18px;box-shadow:var(--shadow);display:flex;flex-direction:column;gap:14px;align-items:center;text-align:center}
+.opk .stempel{font-family:var(--display);color:var(--wax);border:3px solid var(--wax);border-radius:8px;padding:6px 16px;font-size:1.4rem;letter-spacing:.12em;text-transform:uppercase;transform:rotate(-4deg)}
+.opk .store{font-size:2.2rem;color:var(--brass);letter-spacing:.1em}
+.opk p{max-width:46ch}
+.score{font-size:3rem;font-family:var(--display);color:var(--brass);font-variant-numeric:tabular-nums}
+/* gangespil */
+.tabeller{display:grid;grid-template-columns:repeat(5,1fr);gap:8px}
+.tab{background:var(--paper);border:2px solid var(--line);border-radius:12px;padding:12px 4px;font-weight:800;font-size:1.1rem;font-variant-numeric:tabular-nums;display:flex;flex-direction:column;align-items:center;gap:2px}
+.tab small{font-weight:700;color:var(--muted);font-size:.7rem}
+.tab:hover{border-color:var(--gange)}
+.tab.bland{grid-column:1/-1}
+.gspil{display:flex;flex-direction:column;gap:14px}
+.ur{display:flex;justify-content:space-between;align-items:center;font-weight:800;font-variant-numeric:tabular-nums}
+.ur .tid{font-family:var(--display);font-size:1.5rem;color:var(--gange)}
+.gq{font-size:3rem;font-weight:800;text-align:center;font-variant-numeric:tabular-nums;letter-spacing:.02em}
+.gq.ok{color:var(--ok)}
+.gq.bad{color:var(--bad)}
+.pad{display:grid;grid-template-columns:repeat(3,1fr);gap:8px}
+.pad button{background:var(--paper2);border:2px solid var(--line);border-radius:12px;font-size:1.5rem;font-weight:800;min-height:56px;font-variant-numeric:tabular-nums}
+.pad button:active{transform:scale(.97)}
+.pad button.ok{background:var(--gange);color:#fff;border-color:var(--gange)}
+.gsvar{text-align:center;font-size:2rem;font-weight:800;min-height:44px;font-variant-numeric:tabular-nums;color:var(--gange)}
+.bar{height:8px;background:var(--paper2);border-radius:999px;overflow:hidden}
+.bar i{display:block;height:100%;background:var(--gange);width:0;transition:width .2s}
+canvas.konf{position:fixed;inset:0;pointer-events:none;width:100%;height:100%}
+@media (max-width:420px){.fagrad{grid-template-columns:1fr 1fr 1fr}.tabeller{grid-template-columns:repeat(3,1fr)}.gq{font-size:2.5rem}}
+@media (prefers-reduced-motion:reduce){*{transition:none!important;animation:none!important}}
+</style>
+</head>
+<body>
+<div class="wrap" id="app"></div>
+
+<script>
+'use strict';
+// ---------- Hjælpere ----------
+const rnd=(a,b)=>a+Math.floor(Math.random()*(b-a+1));
+const pick=a=>a[rnd(0,a.length-1)];
+const shuffle=a=>{a=a.slice();for(let i=a.length-1;i>0;i--){const j=rnd(0,i);[a[i],a[j]]=[a[j],a[i]]}return a};
+const esc=s=>String(s).replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
+const LS='detektiv_emilie_v1';
+const FAG={dansk:{navn:'Dansk',farve:'var(--dansk)'},mat:{navn:'Matematik',farve:'var(--mat)'},eng:{navn:'Engelsk',farve:'var(--eng)'}};
+
+// ---------- Sagerne ----------
+const SAGER=[
+{id:'kage',titel:'Den forsvundne lagkage',sted:'Sommerhuset ved Vesterhavet',
+ intro:'Det regner over sommerhuset, og i dag fylder bedste 70 år. Men da Emilie åbner køleskabet for at hente lagkagen, er fadet tomt. Kun lidt flødeskum og nogle melede fodspor er tilbage.',
+ labels:{haar:'Hår',sko:'Sko',ting:'Havde med'},
+ mist:[
+  {navn:'Morfar Finn Drost',rolle:'elsker kage og siger, han var på fisketur',t:{haar:'gråt',sko:'gummistøvler',ting:'en paraply'}},
+  {navn:'Tante Lis',rolle:'bagte selv kagen i går',t:{haar:'gråt',sko:'sandaler',ting:'en kurv'}},
+  {navn:'Viktor fra nabohuset',rolle:'9 år og altid sulten',t:{haar:'lyst',sko:'gummistøvler',ting:'en rygsæk'}},
+  {navn:'Fætter Oskar',rolle:'siger, han sov til middag',t:{haar:'brunt',sko:'gummistøvler',ting:'en paraply'}}],
+ spor:[
+  {tekst:'Fodsporene i det spildte mel er fra gummistøvler.',n:'sko',v:'gummistøvler'},
+  {tekst:'Der sidder et langt, gråt hår fast på kagefadet.',n:'haar',v:'gråt'},
+  {tekst:'Ved bagdøren står en våd paraply, som ingen vil kendes ved.',n:'ting',v:'en paraply'}],
+ skyldig:'Morfar Finn Drost',
+ loesning:'Morfar Finn tilstod. Han ville bare smage et lille stykke, men så smagte han et til … og et til. Resten af kagen stod gemt i bådskuret, og bedste grinede, så hun fik tårer i øjnene.',
+ hist:[
+  'Du tager din notesbog frem. Første regel for en detektiv: Se dig godt omkring, før du drager konklusioner.',
+  'Køkkenvinduet står på klem. Udenfor er græsset trampet ned, så nogen er gået den vej.',
+  'Du bøjer dig ned over de melede fodspor på gulvet og måler dem omhyggeligt.',
+  'Tante Lis sværger, at kagen stod i køleskabet klokken tre. Det er altså sket inden for de sidste to timer.',
+  'Viktor fra nabohuset kigger ind ad vinduet. "Jeg har ikke spist noget!" råber han, før nogen har spurgt.',
+  'Du undersøger det tomme kagefad med lup. Der sidder noget fast i flødeskummet …',
+  'Fætter Oskar gaber og siger, han har sovet hele eftermiddagen. Men hans støvler er våde.',
+  'Du går ud ad bagdøren. Regnen siler ned, og noget står lænet op ad væggen.']},
+{id:'sand',titel:'Sandborgen der forsvandt',sted:'Stranden ved campingpladsen',
+ intro:'Hele eftermiddagen byggede børnene på campingpladsen en kæmpe sandborg med voldgrav og tre tårne. Næste morgen er den trampet flad. Hvem har været på stranden i nattens mulm og mørke?',
+ labels:{spor:'Fodspor',tid:'På stranden',ting:'Kendetegn'},
+ mist:[
+  {navn:'Hunden Bjørn',rolle:'campingpladsens store, glade hund',t:{spor:'poter',tid:'om natten',ting:'elsker at grave'}},
+  {navn:'Morfar Finn Drost',rolle:'går morgentur barfodet i vandkanten',t:{spor:'bare fødder',tid:'ved solopgang',ting:'har en stok'}},
+  {navn:'Surfer-Sune',rolle:'bor i den blå campingvogn',t:{spor:'bare fødder',tid:'ved solopgang',ting:'bruger surfvoks'}},
+  {navn:'Lille Ida',rolle:'5 år og vild med sandslotte',t:{spor:'bare fødder',tid:'i seng kl. 19',ting:'har spand og skovl'}}],
+ spor:[
+  {tekst:'Sporene i sandet er fra bare menneskefødder, ikke poter.',n:'spor',v:'bare fødder'},
+  {tekst:'En nabo i telt 12 hørte nogen gå rundt på stranden ved solopgang.',n:'tid',v:'ved solopgang'},
+  {tekst:'I voldgraven ligger små klatter af blåt surfvoks.',n:'ting',v:'bruger surfvoks'}],
+ skyldig:'Surfer-Sune',
+ loesning:'Sune tabte sin nøgle i sandet aftenen før og ledte efter den ved solopgang. Han fandt nøglen, men sandborgen overlevede ikke. Nu har han lovet at hjælpe med at bygge en ny, der er dobbelt så stor.',
+ hist:[
+  'Du går en runde om ruinerne af sandborgen. Et godt sted at starte: Hvad er der stadig tilbage?',
+  'Tårn nummer tre står faktisk endnu. Så hvem det end var, var det nok ikke med vilje.',
+  'Du finder tydelige aftryk i det fugtige sand ved voldgraven og måler dem med din lineal.',
+  'Lille Ida græder. "Det var ikke mig!" Hendes mor nikker: Ida sov allerede klokken syv.',
+  'Hunden Bjørn logrer og graver et hul lige ved siden af dig. Han er i hvert fald ikke god til at skjule noget.',
+  'Du går fra telt til telt og spørger, om nogen hørte noget i nat.',
+  'Morfar Finn siger, han gik sin morgentur klokken seks, men kun langs vandkanten.',
+  'Du graver forsigtigt i voldgraven og finder noget klistret og blåt.']},
+{id:'brev',titel:'Det hemmelige brev',sted:'Biblioteket i feriebyen',
+ intro:'På biblioteket i feriebyen falder en lille seddel ud af en bog. Der står med sirlig skrift: "Mød mig ved fyrtårnet, når solen går ned." Ingen afsender. Hvem har skrevet den, og hvorfor?',
+ labels:{pen:'Skriver med',duft:'Dufter af',bog:'Yndlingsbøger'},
+ mist:[
+  {navn:'Hr. Holm',rolle:'bibliotekar med små, runde briller',t:{pen:'blå fyldepen',duft:'gamle bøger',bog:'krimier'}},
+  {navn:'Postbud Pia',rolle:'cykler rundt med dagens post',t:{pen:'rød kuglepen',duft:'cykelolie',bog:'digte'}},
+  {navn:'Morfar Finn Drost',rolle:'går tur til fyrtårnet hver aften',t:{pen:'blyant',duft:'pibetobak',bog:'krimier'}},
+  {navn:'Fru Birk fra bageriet',rolle:'bager byens bedste kanelsnegle',t:{pen:'blå fyldepen',duft:'kanel',bog:'kogebøger'}}],
+ spor:[
+  {tekst:'Sedlen er skrevet med blåt blæk fra en fyldepen.',n:'pen',v:'blå fyldepen'},
+  {tekst:'Papiret dufter svagt af kanel.',n:'duft',v:'kanel'},
+  {tekst:'Sedlen lå i en kogebog om kager.',n:'bog',v:'kogebøger'}],
+ skyldig:'Fru Birk fra bageriet',
+ loesning:'Fru Birk tilstod med et smil. Sedlen var til hendes mand: en invitation til en overraskelses-picnic ved fyrtårnet på deres bryllupsdag. Han havde bare lånt den forkerte bog med hjem.',
+ hist:[
+  'Du lægger sedlen forsigtigt i en plastiklomme. Et bevis må aldrig blive beskidt.',
+  'Hr. Holm pudser sine briller og siger, at bogen blev afleveret i morges, men han så ikke af hvem.',
+  'Du holder sedlen op mod lyset og ser nøje på skriften.',
+  'Postbud Pia kommer forbi med dagens post. Hun griner: "Jeg skriver aldrig breve. Jeg bærer dem bare."',
+  'Morfar Finn sidder i hjørnet med en krimi. Han nikker mod fyrtårnet: "Der går jeg hver aften."',
+  'Du lugter forsigtigt til papiret. Der er en duft, du kender …',
+  'Bibliotekets lampe blinker. Udenfor begynder solen at gå ned over havet.',
+  'Du finder den bog, sedlen faldt ud af, og læser titlen på ryggen.']},
+{id:'hotel',titel:'Spøgelset på Hotel Søblik',sted:'3. sal på et gammelt badehotel',
+ intro:'Gæsterne på Hotel Søblik klager: Hver nat lyder der skridt og dunk på 3. sal, men gangen er tom. Nogle hvisker om et spøgelse. Du tror ikke på spøgelser. Du tror på beviser.',
+ labels:{tid:'Oppe om natten',lyd:'Lyder som',ting:'Har altid med'},
+ mist:[
+  {navn:'Morfar Finn Drost',rolle:'bor på værelse 32 og sover dårligt',t:{tid:'hele natten',lyd:'bløde hjemmesko',ting:'en termokande kaffe'}},
+  {navn:'Fru Vang på værelse 31',rolle:'ældre dame, der sover dårligt',t:{tid:'hele natten',lyd:'en stok mod gulvet',ting:'papegøjen Polle'}},
+  {navn:'Carlo, kokken',rolle:'bager brød, før gæsterne vågner',t:{tid:'fra kl. 4',lyd:'klaprende træsko',ting:'mel på tøjet'}},
+  {navn:'Hotelkatten Sokke',rolle:'ejer egentlig hele hotellet',t:{tid:'hele natten',lyd:'ingenting',ting:'kattehår overalt'}}],
+ spor:[
+  {tekst:'Lydene begynder ved midnat og fortsætter hele natten.',n:'tid',v:'hele natten'},
+  {tekst:'På gangen ligger tre grønne fjer.',n:'ting',v:'papegøjen Polle'},
+  {tekst:'I gulvtæppet er der små, runde mærker som fra en stok.',n:'lyd',v:'en stok mod gulvet'}],
+ skyldig:'Fru Vang på værelse 31',
+ loesning:'Fru Vang rødmede. Papegøjen Polle fløj ud af buret hver nat, og hun listede rundt med sin stok for at fange ham uden at vække nogen. Nu har Polle fået en ny lås på buret, og spøgelset er forsvundet.',
+ hist:[
+  'Du lejer værelse 33 og lægger din notesbog på natbordet. I nat holder du dig vågen.',
+  'Klokken 23 er alt stille. Morfar Finn på værelse 32 hælder kaffe op fra sin termokande og siger, at han aldrig har set noget.',
+  'Du noterer tidspunktet, første gang du hører noget. Dunk. Dunk. Skrab.',
+  'Carlo kommer op fra kælderen med nybagte boller. "Spøgelser? Pyt. Jeg hører kun min ovn."',
+  'Katten Sokke stryger forbi dine ben uden en lyd og forsvinder ind under en dør.',
+  'Du lyser med lommelygten hen over gulvtæppet på gangen.',
+  'Fru Vang åbner sin dør på klem. "Har De set en fugl?" spørger hun og lukker hurtigt igen.',
+  'Du går ned på knæ og undersøger gulvtæppet helt tæt på.']},
+{id:'cykel',titel:'Den forsvundne cykel',sted:'Feriecenterets cykelskur',
+ intro:'Emilies lejecykel stod låst ved cykelskuret i feriecenteret. Nu er den væk, og det samme er cykelhjelmen. Men låsen er ikke klippet over. Nogen havde en nøgle.',
+ labels:{jakke:'Jakke',hjelm:'Cykelhjelm',noegle:'Nøgle til skuret'},
+ mist:[
+  {navn:'Jonas i receptionen',rolle:'har travlt og glemmer tit ting',t:{jakke:'blå',hjelm:'kører altid med',noegle:'ja'}},
+  {navn:'Freja fra hytte 7',rolle:'7 år og vild med is',t:{jakke:'gul',hjelm:'kører aldrig med',noegle:'nej'}},
+  {navn:'Gartner Gert',rolle:'slår græs og låser skuret om aftenen',t:{jakke:'blå',hjelm:'kører aldrig med',noegle:'ja'}},
+  {navn:'Morfar Finn Drost',rolle:'leder altid efter sine briller',t:{jakke:'rød',hjelm:'kører altid med',noegle:'nej'}}],
+ spor:[
+  {tekst:'En gæst så en person i blå jakke cykle ud ad porten.',n:'jakke',v:'blå'},
+  {tekst:'Cykelhjelmen er også væk. Den, der tog cyklen, kører med hjelm.',n:'hjelm',v:'kører altid med'},
+  {tekst:'Låsen er åbnet med en nøgle, ikke klippet op.',n:'noegle',v:'ja'}],
+ skyldig:'Jonas i receptionen',
+ loesning:'Jonas kom tilbage en time senere med cyklen og en pose fra apoteket. En gæst var blevet syg, og hans egen cykel var punkteret. Han havde glemt at lægge en seddel. Han undskyldte og gav en is som plaster på såret.',
+ hist:[
+  'Du undersøger stedet, hvor cyklen stod. Der er ingen glasskår og ingen mærker efter værktøj.',
+  'Freja fra hytte 7 kommer forbi med en is. "Jeg har kun et løbehjul," siger hun.',
+  'Du spørger gæsterne på terrassen, om nogen har set en cykel køre ud.',
+  'Gartner Gert slår græs ved skuret. Han viser sin nøgle frem: "Jeg låser hver aften klokken otte."',
+  'Morfar Finn leder efter sine briller. De sidder på hans hoved. Han har ikke set nogen cykel.',
+  'Du tjekker knagerækken i skuret, hvor hjelmen plejer at hænge.',
+  'I receptionen er der tomt. Et skilt siger: "Tilbage om lidt".',
+  'Du ser nøje på låsen og på nøglehullet.']},
+{id:'sok',titel:'Sokkemysteriet',sted:'Bryggerset og haven',
+ intro:'I sommerhuset forsvinder der sokker. Ikke par, kun én ad gangen. Mor har mistet tre, far fire, og Emilies yndlingssok med stjerner er også væk. Vaskemaskinen nægter at udtale sig.',
+ labels:{sted:'Er mest',spor:'Efterlader',vane:'Vane'},
+ mist:[
+  {navn:'Lillebror Malte',rolle:'5 år og bygger huler af alt',t:{sted:'i hulen i stuen',spor:'klistrede fingermærker',vane:'samler på alt blødt'}},
+  {navn:'Hunden Pelle',rolle:'ser altid uskyldig ud',t:{sted:'i haven',spor:'poteaftryk og bidemærker',vane:'gemmer ting'}},
+  {navn:'Morfar Finn Drost',rolle:'sorterer vasketøjet og glemmer, hvor han lagde det',t:{sted:'i bryggerset',spor:'ryddelige bunker',vane:'lægger ting på "sikre steder"'}},
+  {navn:'Skaden i birketræet',rolle:'en nysgerrig fugl',t:{sted:'i haven',spor:'fjer og kviste',vane:'stjæler blanke ting'}}],
+ spor:[
+  {tekst:'Et spor af sokkefnug fører fra bryggerset ud i haven.',n:'sted',v:'i haven'},
+  {tekst:'Under hækken ligger en sok med små huller, som fra tænder.',n:'spor',v:'poteaftryk og bidemærker'},
+  {tekst:'Sokkerne er ikke blanke. De er bløde og dufter af hund.',n:'vane',v:'gemmer ting'}],
+ skyldig:'Hunden Pelle',
+ loesning:'Under terrassen fandt du Pelles hemmelige rede: elleve sokker, en vante og en halv tennisbold. Pelle logrede stolt. Nu har han fået sin egen gamle sok, som han må beholde.',
+ hist:[
+  'Du laver en liste over alle de forsvundne sokker. Elleve i alt. Det er mange sokker.',
+  'Morfar Finn siger, at sokkerne forsvinder mellem vaskemaskinen og tørresnoren i haven.',
+  'Du følger gulvet med lommelygten fra bryggerset og ud ad bagdøren.',
+  'Malte viser stolt sin hule frem. Der er puder, bamser og tæpper, men ingen sokker.',
+  'Skaden skræpper fra birketræet. I reden glimter noget. Det er en teske.',
+  'Du kravler ind under hækken, hvor græsset er trådt ned.',
+  'Pelle kommer løbende og vil lege. Han ser meget uskyldig ud. Lidt for uskyldig.',
+  'Du samler de fundne sokker op og undersøger dem nøje.']}
+];
+const SPOR_VED=[2,5,7]; // efter spørgsmål nr. 3, 6 og 8 afsløres en ledetråd
+
+// ---------- Dansk (første svarmulighed er altid den rigtige; blandes ved visning) ----------
+const DANSK=[
+ {q:'Hvilket ord er stavet rigtigt?',o:['chokolade','chokkolade','sjokolade','chokolage']},
+ {q:'Hvilket ord er stavet rigtigt?',o:['cykel','sykel','cyckel','cykkel']},
+ {q:'Hvilket ord er stavet rigtigt?',o:['bibliotek','biblotek','bibliothek','bibliotæk']},
+ {q:'Hvilket ord er stavet rigtigt?',o:['mysterium','mysteriom','mystrium','mysterum']},
+ {q:'Hvilket ord er stavet rigtigt?',o:['detektiv','detektiev','dedektiv','detektive']},
+ {q:'Hvilket ord er stavet rigtigt?',o:['ledetråd','ledetrår','ledertråd','lede tråd']},
+ {q:'Hvilket ord er stavet rigtigt?',o:['fødselsdag','fødelsdag','føldselsdag','fødsesdag']},
+ {q:'Hvilket ord er stavet rigtigt?',o:['hemmelig','hemlig','hemmelik','hemelig']},
+ {q:'Hvilket ord er stavet rigtigt?',o:['skygge','skyge','skygke','sgygge']},
+ {q:'Hvilket ord er stavet rigtigt?',o:['nøgle','nøjle','nøgel','nøkle']},
+ {q:'Hvilket ord er stavet rigtigt?',o:['fyrtårn','fyrtorn','fyrtaarn','fyrtån']},
+ {q:'Hvilket ord er stavet rigtigt?',o:['lommelygte','lommelykte','lomelygte','lommelyte']},
+ {q:'Hvilket ord er stavet rigtigt?',o:['spøgelse','spøjelse','spøgelese','spøgelsse']},
+ {q:'Hvilket ord er stavet rigtigt?',o:['forsvundet','forsvunet','forsvundt','forsvondet']},
+ {q:'Hvilket ord er et navneord?',o:['hund','løbe','hurtig','og'],f:'Et navneord er noget, man kan sætte "en" eller "et" foran: en hund.'},
+ {q:'Hvilket ord er et udsagnsord?',o:['læser','bog','rød','under'],f:'Et udsagnsord er noget, man gør: at læse, jeg læser.'},
+ {q:'Hvilket ord er et tillægsord?',o:['lækker','kage','spiser','hun'],f:'Et tillægsord beskriver noget: en lækker kage.'},
+ {q:'Hvilket ord er et navneord?',o:['lygte','sover','mørk','hvor'],f:'Man kan sige "en lygte".'},
+ {q:'Hvilket ord er et udsagnsord?',o:['gemmer','stol','grøn','aldrig'],f:'At gemme, hun gemmer.'},
+ {q:'Hvilket ord er et tillægsord?',o:['mystisk','mysterium','undrer','det'],f:'Et mystisk brev. Tillægsordet beskriver brevet.'},
+ {q:'Detektiven ___ en ledetråd i går. Hvilket ord mangler?',o:['fandt','finder','fundet','findte'],f:'Datid af "at finde" er "fandt".'},
+ {q:'Hvad er datid af "at gå"? I går ___ jeg til stranden.',o:['gik','gåede','går','gået']},
+ {q:'Hvad er flertal af "en nøgle"?',o:['nøgler','nøglere','nøgle','nøglerne']},
+ {q:'Hvad er flertal af "et spor"?',o:['spor','sporer','spore','sporene'],f:'Nogle ord ændrer sig ikke i flertal: et spor, mange spor.'},
+ {q:'Hvad er bestemt form af "en kage"?',o:['kagen','kaget','kage','kager'],f:'Bestemt form: kagen (den bestemte kage).'},
+ {q:'Hver dag ___ hun en bog. Hvilket ord mangler?',o:['læser','læste','læst','læse'],f:'"Hver dag" er nutid: læser.'},
+ {q:'Hvad er flertal af "en mand"?',o:['mænd','mander','mande','mændene']},
+ {q:'Hvad er datid af "at se"? I går ___ jeg et spøgelse.',o:['så','seede','set','ser']},
+ {q:'Hvilket ord betyder det samme som "bange"?',o:['ræd','modig','glad','træt']},
+ {q:'Hvad er det modsatte af "mørk"?',o:['lys','sort','grå','skygge']},
+ {q:'Hvilket ord betyder det samme som "hurtig"?',o:['rask','langsom','stille','doven']},
+ {q:'Hvad er det modsatte af "begynde"?',o:['slutte','starte','fortsætte','vente']},
+ {q:'Hvilket ord betyder det samme som "mystisk"?',o:['gådefuld','kedelig','tydelig','almindelig']},
+ {q:'Hvad er det modsatte af "skjule"?',o:['vise','gemme','dække','glemme']},
+ {q:'Hvilket ord er sat sammen af to ord?',o:['lommelygte','mørke','lygte','lyser'],f:'lomme + lygte = lommelygte.'},
+ {q:'"fod" + "spor" bliver til …',o:['fodspor','sporfod','fodsspor','fod-spor']},
+ {q:'Hvilke to ord er "sommerhus" sat sammen af?',o:['sommer + hus','som + merhus','somme + rhus','sommerh + us']},
+ {q:'Hvilken sætning er skrevet rigtigt?',o:['Emilie bor i Odense.','emilie bor i odense.','Emilie Bor i odense.','emilie bor i Odense'],f:'Navne og byer skrives med stort, og sætningen slutter med punktum.'},
+ {q:'Hvilket tegn skal der stå til sidst? "Hvem har taget kagen"',o:['?','.','!',','],f:'Det er et spørgsmål, så der skal spørgsmålstegn.'},
+ {q:'Hvilket ord har et stumt h?',o:['hjul','hus','hat','hund'],f:'I "hjul" hører man ikke h\'et.'},
+ {q:'Hvilket ord har et stumt d?',o:['bord','dag','dør','dyr'],f:'I "bord" udtales d\'et ikke.'},
+ {q:'Hvilket ord rimer på "spor"?',o:['stor','spar','sport','spurv']},
+ {q:'Hvilket ord rimer på "nat"?',o:['hat','net','nød','nar']},
+ {q:'Hvilket ord kommer først i alfabetet (i en ordbog)?',o:['hund','kage','mus','ugle'],f:'H kommer før K, M og U.'},
+ {q:'Hvor mange stavelser er der i "lommelygte"?',o:['4','2','3','5'],f:'lom-me-lyg-te.'},
+ {q:'Hvor mange stavelser er der i "detektiv"?',o:['3','2','4','5'],f:'de-tek-tiv.'},
+ {t:'Klokken var midnat. Emilie hørte en dør knirke nedenunder. Hun tog sin lommelygte og listede ned ad trappen. I køkkenet stod køleskabsdøren åben.',q:'Hvad tog Emilie med sig?',o:['en lommelygte','en kniv','en bog','sin telefon']},
+ {t:'Klokken var midnat. Emilie hørte en dør knirke nedenunder. Hun tog sin lommelygte og listede ned ad trappen. I køkkenet stod køleskabsdøren åben.',q:'Hvad opdagede hun i køkkenet?',o:['Køleskabet stod åbent','Vinduet var smadret','Lyset var tændt','Kagen var væk']},
+ {t:'Postbuddet kom aldrig om søndagen. Alligevel lå der et brev på måtten søndag morgen. Der var intet frimærke på.',q:'Hvorfor er brevet mærkeligt?',o:['Der kommer ikke post om søndagen','Det er for stort','Det er vådt','Det er til hunden']},
+ {t:'Postbuddet kom aldrig om søndagen. Alligevel lå der et brev på måtten søndag morgen. Der var intet frimærke på.',q:'Hvad manglede på brevet?',o:['Et frimærke','Et navn','En adresse','En dato']},
+ {t:'Mia så tre både i havnen: en rød, en blå og en grøn. Den grønne var væk næste morgen, men den blå lå stadig ved siden af den røde.',q:'Hvilken båd forsvandt?',o:['Den grønne','Den røde','Den blå','Alle tre']},
+ {t:'Hunden gøede hele natten mod skuret. Om morgenen var låsen brudt op, men intet var væk. Kun en halv sandwich lå på gulvet.',q:'Hvad lå på gulvet i skuret?',o:['En halv sandwich','En kat','En nøgle','En lygte']},
+ {t:'Hunden gøede hele natten mod skuret. Om morgenen var låsen brudt op, men intet var væk. Kun en halv sandwich lå på gulvet.',q:'Hvad var der sket med låsen?',o:['Den var brudt op','Den var væk','Den var låst','Den var ny']},
+ {q:'Hvilket ord skal skrives med stort?',o:['danmark','hund','sommer','strand'],f:'Lande og navne skrives med stort: Danmark.'},
+ {q:'Hvilket ord er et stedord?',o:['hun','løber','hus','gul'],f:'Stedord står i stedet for et navn: hun, han, den, det.'},
+ {q:'Hvad er det modsatte af "tyk"?',o:['tynd','høj','lille','let']},
+ {q:'Hvilket ord betyder det samme som "spise"?',o:['æde','drikke','sove','købe']}
+];
+
+// ---------- Engelsk ----------
+const ENGELSK=[
+ ...[['hund','dog','cat','horse','bird'],['kat','cat','dog','cow','pig'],['hus','house','horse','mouse','hat'],['rød','red','green','blue','yellow'],['grøn','green','grey','red','brown'],['gul','yellow','blue','orange','white'],['bog','book','box','ball','bag'],['nøgle','key','door','lock','car'],['dør','door','window','floor','wall'],['vindue','window','wind','door','winter'],['stol','chair','table','bed','sofa'],['æble','apple','pear','orange','banana'],['mælk','milk','water','juice','tea'],['skole','school','shop','street','ship'],['lærer','teacher','doctor','driver','baker'],['søster','sister','brother','mother','daughter'],['bror','brother','father','sister','uncle'],['bedstemor','grandmother','mother','aunt','grandfather'],['hest','horse','house','mouse','cow'],['fugl','bird','fish','frog','bee'],['fisk','fish','fox','frog','bird'],['hoved','head','hand','hair','heart'],['hånd','hand','head','foot','arm'],['mandag','Monday','Sunday','Friday','March'],['fredag','Friday','Thursday','Monday','February'],['sol','sun','moon','star','snow'],['regn','rain','snow','wind','cloud'],['strand','beach','sea','sand','boat'],['nat','night','day','evening','morning'],['mørk','dark','light','black','cold'],['lommelygte','torch','lamp','candle','light bulb'],['ven','friend','family','teacher','neighbour']]
+   .map(([da,...o])=>({q:`Hvad hedder "${da}" på engelsk?`,o})),
+ ...[['secret','hemmelighed','lygte','spøgelse','nøgle'],['ghost','spøgelse','gæst','gås','gave'],['detective','detektiv','direktør','dessert','dør'],['clue','ledetråd','klo','klub','kludder'],['footprint','fodspor','fodbold','fodtøj','fodtur'],['thief','tyv','tøj','ting','tand'],['letter','brev','lygte','læder','lineal'],['shoes','sko','skole','sokker','skjorte'],['breakfast','morgenmad','pause','brød','frokost'],['bicycle','cykel','bil','bus','båd'],['lighthouse','fyrtårn','lyskontakt','lampe','lyst hus'],['sock','sok','sæk','sko','sol']]
+   .map(([en,...o])=>({q:`Hvad betyder "${en}" på dansk?`,o})),
+ {q:'Hvilket tal er "fourteen"?',o:['14','40','4','15']},
+ {q:'Hvilket tal er "twenty"?',o:['20','12','2','22']},
+ {q:'Hvilket tal er "thirty-two"?',o:['32','23','302','30']},
+ {q:'Hvad hedder 7 på engelsk?',o:['seven','six','eleven','seventeen']},
+ {q:'Hvad hedder 100 på engelsk?',o:['one hundred','one thousand','ten','hundred ten']},
+ {q:'Hvad hedder 12 på engelsk?',o:['twelve','twenty','two','twelfth']},
+ {q:'I ___ ten years old.',o:['am','is','are','be'],f:'I am, you are, she is.'},
+ {q:'She ___ a detective.',o:['is','am','are','be']},
+ {q:'They ___ my friends.',o:['are','is','am','be']},
+ {q:'One cat, two ___.',o:['cats','cat','cates','catts']},
+ {q:'One mouse, two ___.',o:['mice','mouses','mouse','mices'],f:'"Mouse" er uregelmæssigt: one mouse, two mice.'},
+ {q:'This is ___ apple.',o:['an','a','two','is'],f:'Foran en vokallyd (a, e, i, o, u) hedder det "an".'},
+ {q:'What is the opposite of "big"?',o:['small','tall','long','old']},
+ {q:'What is the opposite of "hot"?',o:['cold','warm','wet','dark']},
+ {q:'What colour is the sky on a sunny day?',o:['blue','green','red','black']},
+ {q:'How many legs does a dog have?',o:['four','two','three','six']},
+ {q:'Which day comes after Monday?',o:['Tuesday','Sunday','Friday','Wednesday']},
+ {q:'Which month comes after June?',o:['July','May','August','January']},
+ {t:'My name is Tom. I am nine years old. I have a black cat called Max.',q:'How old is Tom?',o:['nine','eight','ten','seven']},
+ {t:'My name is Tom. I am nine years old. I have a black cat called Max.',q:'What is the cat\'s name?',o:['Max','Tom','Black','Nine']},
+ {t:'Lucy has a red bike and a blue hat. She rides to the beach every Sunday.',q:'What colour is Lucy\'s hat?',o:['blue','red','green','yellow']},
+ {t:'Lucy has a red bike and a blue hat. She rides to the beach every Sunday.',q:'Where does Lucy ride?',o:['to the beach','to school','to the shop','to the park']},
+ {t:'It is dark. The detective has a torch and a notebook. She finds a key under the chair.',q:'Where is the key?',o:['under the chair','on the table','in the box','in the car']},
+ {t:'It is dark. The detective has a torch and a notebook. She finds a key under the chair.',q:'What does the detective have?',o:['a torch and a notebook','a dog and a hat','a key and a car','a book and a cake']},
+ {q:'Hvad betyder "Good morning"?',o:['Godmorgen','Godnat','Farvel','Tak']},
+ {q:'Hvad betyder "Thank you"?',o:['Tak','Hej','Undskyld','Værsgo']},
+ {q:'Hvad betyder "Where is the toilet?"',o:['Hvor er toilettet?','Hvad er klokken?','Hvor bor du?','Hvem er du?']},
+ {q:'Hvad betyder "I don\'t know"?',o:['Det ved jeg ikke','Jeg ved det','Jeg kan ikke','Jeg vil ikke']},
+ {q:'Hvad hedder "Hvad er klokken?" på engelsk?',o:['What time is it?','What is the clock?','How late is it?','Where is the time?']},
+ {q:'Can you ___ me find the key?',o:['help','helps','helping','helped']},
+ {q:'Hvad hedder "venstre" på engelsk?',o:['left','right','straight','back']},
+ {q:'Hvad hedder "vinter" på engelsk?',o:['winter','window','summer','autumn']}
+];
+
+// ---------- Matematik (generatorer) ----------
+const tid=(h,m)=>`${String(h).padStart(2,'0')}:${String(m).padStart(2,'0')}`;
+const MAT=[
+ ()=>{const a=rnd(2,10),b=rnd(2,10);return{q:`Hvad er ${a} · ${b}?`,s:a*b,f:`${a} · ${b} = ${a*b}`}},
+ ()=>{const a=rnd(2,10),b=rnd(2,10);return{q:`Hvad er ${a} · ${b}?`,s:a*b,f:`${a} · ${b} = ${a*b}`}},
+ ()=>{const a=rnd(2,10),b=rnd(2,10);return{q:`Hvad er ${a*b} : ${a}?`,s:b,f:`${a} · ${b} = ${a*b}, så ${a*b} : ${a} = ${b}`}},
+ ()=>{const a=rnd(120,780),b=rnd(110,999-a);return{q:`Hvad er ${a} + ${b}?`,s:a+b}},
+ ()=>{const a=rnd(300,999),b=rnd(100,a-50);return{q:`Hvad er ${a} − ${b}?`,s:a-b}},
+ ()=>{const h=rnd(7,20),m=rnd(0,11)*5,p=pick([15,20,25,30,35,40,45,50,55]);let H=h,M=m+p;if(M>=60){M-=60;H++}
+   return{q:`Toget kører kl. ${tid(h,m)}. Turen tager ${p} minutter. Hvad er klokken, når du er fremme? (skriv fx 14:35 eller 1435)`,s:tid(H,M),type:'tid',f:`${tid(h,m)} + ${p} minutter = ${tid(H,M)}`}},
+ ()=>{const h=rnd(8,19),m=rnd(0,11)*5,p=pick([10,15,20,25,30,45]);let H=h,M=m-p;if(M<0){M+=60;H--}
+   return{q:`Filmen slutter kl. ${tid(h,m)} og varer ${p} minutter. Hvornår startede den? (skriv fx 14:35 eller 1435)`,s:tid(H,M),type:'tid'}},
+ ()=>{const a=rnd(3,9),b=rnd(4,9);return{q:`Detektiven finder ${a} æsker med ${b} ledetråde i hver. Hvor mange ledetråde er der i alt?`,s:a*b,f:`${a} · ${b} = ${a*b}`}},
+ ()=>{const m=rnd(12,30),a=rnd(3,m-3);return{q:`Der er ${m} mistænkte i sagen. ${a} af dem har et alibi. Hvor mange er stadig mistænkte?`,s:m-a,f:`${m} − ${a} = ${m-a}`}},
+ ()=>{const k=rnd(3,12);return{q:`En minibus har 4 hjul. Hvor mange hjul har ${k} minibusser tilsammen?`,s:4*k,f:`4 · ${k} = ${4*k}`}},
+ ()=>{const k=rnd(2,6),s=pick([8,9,12,15,17,20]);return{q:`${k} busser har ${s} sæder hver. Hvor mange sæder er der i alt?`,s:k*s,f:`${k} · ${s} = ${k*s}`}},
+ ()=>{const p=rnd(12,68);return{q:`Emilie har 100 kr. og køber en is til ${p} kr. Hvor mange kroner har hun tilbage?`,s:100-p,f:`100 − ${p} = ${100-p}`}},
+ ()=>{const n=rnd(2,5),p=rnd(8,25);return{q:`${n} is koster ${p} kr. stykket. Hvad koster de tilsammen i kroner?`,s:n*p,f:`${n} · ${p} = ${n*p}`}},
+ ()=>{const n=2*rnd(12,60);return{q:`Hvad er halvdelen af ${n}?`,s:n/2}},
+ ()=>{const n=4*rnd(3,25);return{q:`Hvad er en fjerdedel af ${n}?`,s:n/4,f:`${n} : 4 = ${n/4}`}},
+ ()=>{const n=3*rnd(4,30);return{q:`Hvad er en tredjedel af ${n}?`,s:n/3,f:`${n} : 3 = ${n/3}`}},
+ ()=>{const n=rnd(13,90);return{q:`Hvad er det dobbelte af ${n}?`,s:2*n}},
+ ()=>{const a=rnd(2,15),d=rnd(3,9);return{q:`Hvilket tal mangler? ${a}, ${a+d}, ${a+2*d}, ${a+3*d}, ?`,s:a+4*d,f:`Tallene stiger med ${d} hver gang.`}},
+ ()=>{const a=rnd(2,6);return{q:`Hvilket tal mangler? ${a}, ${2*a}, ${4*a}, ${8*a}, ?`,s:16*a,f:`Tallene fordobles hver gang.`}},
+ ()=>{const a=rnd(40,90),d=rnd(3,8);return{q:`Hvilket tal mangler? ${a}, ${a-d}, ${a-2*d}, ${a-3*d}, ?`,s:a-4*d,f:`Tallene falder med ${d} hver gang.`}},
+ ()=>{const l=rnd(3,12),b=rnd(2,9);return{q:`Et rektangel er ${l} cm langt og ${b} cm bredt. Hvad er omkredsen i cm?`,s:2*(l+b),f:`${l} + ${b} + ${l} + ${b} = ${2*(l+b)}`}},
+ ()=>{const l=rnd(3,12),b=rnd(2,9);return{q:`Et rektangel er ${l} cm langt og ${b} cm bredt. Hvad er arealet i cm²?`,s:l*b,f:`${l} · ${b} = ${l*b}`}},
+ ()=>{let n=rnd(11,989);if(n%10===5)n++;return{q:`Rund ${n} af til nærmeste 10'er.`,s:Math.round(n/10)*10}},
+ ()=>{let n=rnd(101,989);if(n%100===50)n++;return{q:`Rund ${n} af til nærmeste 100.`,s:Math.round(n/100)*100}},
+ ()=>{const t=rnd(2,6);return{q:`Hvor mange minutter er ${t} timer?`,s:60*t,f:`${t} · 60 = ${60*t}`}},
+ ()=>{const m=rnd(2,9);return{q:`Hvor mange centimeter er ${m} meter?`,s:100*m}},
+ ()=>{const u=rnd(2,8);return{q:`Hvor mange dage er ${u} uger?`,s:7*u,f:`${u} · 7 = ${7*u}`}},
+ ()=>{const a=rnd(2,9),b=rnd(2,9),c=rnd(5,40);return{q:`Hvad er (${a} · ${b}) + ${c}?`,s:a*b+c,f:`${a} · ${b} = ${a*b}, og ${a*b} + ${c} = ${a*b+c}`}},
+ ()=>{const n=rnd(12,98);return{q:`Hvad er ${n} · 10?`,s:n*10}},
+ ()=>{const n=rnd(3,45);return{q:`Hvad er ${n} · 100?`,s:n*100}},
+ ()=>{const r=new Set();while(r.size<4)r.add(rnd(100,999));const l=[...r];const m=Math.max(...l);return{q:'Hvilket tal er størst?',o:[m+'',...l.filter(x=>x!==m).map(String)],mc:true}},
+ ()=>{const n=rnd(105,980);return{q:`Hvilket tal er 100 større end ${n}?`,s:n+100}},
+ ()=>{const n=rnd(105,980);return{q:`Hvilket tal er 10 mindre end ${n}?`,s:n-10}},
+ ()=>{const v=pick([['et kvarter',15],['en halv time',30],['tre kvarter',45],['halvanden time',90],['to timer',120]]);return{q:`Hvor mange minutter er ${v[0]}?`,s:v[1]}},
+ ()=>{const e=rnd(3,6),v=rnd(4,9);return{q:`Hotellet har ${e} etager med ${v} værelser på hver etage. Hvor mange værelser er der i alt?`,s:e*v,f:`${e} · ${v} = ${e*v}`}},
+ ()=>{const s=rnd(8,20),d=rnd(3,7);return{q:`Emilie læser ${s} sider om dagen i en mysteriebog. Hvor mange sider har hun læst efter ${d} dage?`,s:s*d,f:`${s} · ${d} = ${s*d}`}},
+ ()=>{const S=rnd(120,320),l=rnd(40,S-20);return{q:`Bogen har ${S} sider. Emilie har læst ${l}. Hvor mange sider mangler hun?`,s:S-l,f:`${S} − ${l} = ${S-l}`}},
+ ()=>{const a=rnd(2,9),b=rnd(2,9),c=rnd(2,5);return{q:`Hvad er ${a} · ${b} · ${c}?`,s:a*b*c,f:`${a} · ${b} = ${a*b}, og ${a*b} · ${c} = ${a*b*c}`}},
+ ()=>{const n=rnd(3,9),r=rnd(1,n-1),q=rnd(3,9);const t=n*q+r;return{q:`${t} ledetråde skal deles ligeligt i ${n} æsker. Hvor mange bliver der til overs?`,s:r,f:`${n} · ${q} = ${n*q}, og ${t} − ${n*q} = ${r} til overs.`}}
+];
+
+// ---------- Gemt fremgang ----------
+let P;
+function load(){try{P=JSON.parse(localStorage.getItem(LS))||{}}catch(e){P={}}
+  P.sager=P.sager||{};P.set=P.set||{dansk:[],eng:[]};P.rigtige=P.rigtige||0;P.spm=P.spm||0;P.gange=P.gange||{};P.dage=P.dage||[];}
+function save(){try{localStorage.setItem(LS,JSON.stringify(P))}catch(e){}}
+function noterDag(){const d=new Date().toISOString().slice(0,10);if(!P.dage.includes(d)){P.dage.push(d);save()}}
+
+function pickItem(fag){
+  const bank=fag==='dansk'?DANSK:ENGELSK;let seen=P.set[fag];
+  let kand=bank.map((_,i)=>i).filter(i=>!seen.includes(i));
+  if(!kand.length){seen=P.set[fag]=[];kand=bank.map((_,i)=>i)}
+  const i=pick(kand);seen.push(i);save();
+  const it=bank[i];return{type:'mc',q:it.q,t:it.t,svar:it.o[0],opts:shuffle(it.o),f:it.f};
+}
+function lavMat(){const it=pick(MAT)();
+  if(it.mc)return{type:'mc',q:it.q,svar:it.o[0],opts:shuffle(it.o),f:it.f};
+  return{type:it.type||'tal',q:it.q,svar:String(it.s),f:it.f};}
+function lavSpm(fag){return fag==='mat'?lavMat():pickItem(fag)}
+
+// ---------- Tilstand og rendering ----------
+let S={screen:'hjem'};
+const app=document.getElementById('app');
+function go(s){S=s;render();window.scrollTo({top:0,behavior:'instant'})}
+function render(){
+  const r={hjem:rHjem,intro:rIntro,q:rQ,deduk:rDeduk,opklaret:rOpklaret,traenslut:rTraenSlut,gangevalg:rGangeValg,gange:rGange,gangeslut:rGangeSlut}[S.screen];
+  app.innerHTML=r();bind();gemS();
+}
+// Gem hvor hun er naaet til (sag eller traening), saa appen kan lukkes og aabnes igen
+function gemS(){try{if(S.screen==='q'||S.screen==='deduk'){const g=Object.assign({},S,{sag:S.sag?S.sag.id:undefined});localStorage.setItem(LS+'_s',JSON.stringify(g))}else localStorage.removeItem(LS+'_s')}catch(e){}}
+function genoptag(){try{const g=JSON.parse(localStorage.getItem(LS+'_s')||'null');if(!g||!g.screen)return;if(g.sag){g.sag=SAGER.find(s=>s.id===g.sag);if(!g.sag)return}if(g.mode==='sag'&&!g.sag)return;S=g}catch(e){}}
+function stjerner(n){return '★'.repeat(n)+'☆'.repeat(3-n)}
+
+function rHjem(){
+  const done=Object.values(P.sager).filter(x=>x.done).length;
+  const st=Object.values(P.sager).reduce((a,x)=>a+(x.stars||0),0);
+  return `
+  <header class="brand"><h1>Detektiv Emilie</h1><small>Detektivbureauet · 4. klasse</small></header>
+  <div class="stats"><div class="stat">Opklarede sager <b>${done}/${SAGER.length}</b></div><div class="stat">Stjerner <b>${st}</b></div><div class="stat">Dage på sagen <b>${P.dage.length}</b></div></div>
+  <section class="sektion"><div class="sektion-h"><h2>Sagsmapper</h2><span>8 opgaver pr. sag</span></div>
+  ${SAGER.map((s,i)=>{const p=P.sager[s.id]||{};const kl=p.done?'done':(p.igang?'igang':'');
+    const status=p.done?`<span class="stjerner">${stjerner(p.stars)}</span>`:(p.igang?'I gang':'Ny sag');
+    return `<button class="mappe ${kl}" data-sag="${s.id}" data-nr="Sag nr. ${i+1}"><h3>${esc(s.titel)}</h3><div class="sted">${esc(s.sted)}</div><div class="status">${status}</div></button>`}).join('')}
+  </section>
+  <section class="sektion"><div class="sektion-h"><h2>Gangetabeller</h2><span>på tid</span></div>
+   <button class="gangeknap" data-go="gangevalg"><div><b>Gangejagten</b><small>Vælg en tabel og svar så hurtigt du kan</small></div><span>→</span></button>
+  </section>
+  <section class="sektion"><div class="sektion-h"><h2>Træning</h2><span>10 opgaver i ét fag</span></div>
+   <div class="fagrad">${Object.entries(FAG).map(([k,f])=>`<button class="fagknap" style="--f:${f.farve}" data-traen="${k}">${f.navn}<small>10 opgaver</small></button>`).join('')}</div>
+  </section>`;
+}
+
+function rIntro(){const s=S.sag;return `
+  <header class="top"><button class="lnk" data-go="hjem">← Sagsmapper</button></header>
+  <div class="intro"><div class="sted">${esc(s.sted)}</div><h2>${esc(s.titel)}</h2><p class="hist">${esc(s.intro)}</p>
+   <div><b>De mistænkte:</b> ${s.mist.map(m=>esc(m.navn)).join(', ')}.</div>
+   <p>Løs 8 opgaver for at samle 3 ledetråde. Så kan du afsløre, hvem det var.</p>
+   <div class="rad"><button class="knap brass" data-start="${s.id}">Start efterforskningen</button></div></div>`;}
+
+function rQ(){const it=S.item,f=FAG[S.fag];const n=S.qs.length;
+  const prog=`<div class="prog">${Array.from({length:n},(_,i)=>`<i class="${i<S.i?'d':(i===S.i?'n':'')}"></i>`).join('')}</div>`;
+  let svar;
+  if(it.type==='mc')svar=`<div class="opts">${it.opts.map((o,i)=>`<button class="opt" data-opt="${esc(o)}" id="opt${i}"><span class="b">${'ABCD'[i]}</span><span>${esc(o)}</span></button>`).join('')}</div>`;
+  else svar=`<form class="ans" id="ansform"><input id="ans" ${it.type==='tal'?'inputmode="numeric"':''} autocomplete="off" placeholder="${it.type==='tid'?'fx 14:35':'Dit svar'}" aria-label="Dit svar"><button class="knap" type="submit">Tjek</button></form>`;
+  return `<header class="top"><button class="lnk" data-go="hjem">← ${S.mode==='sag'?'Sagen':'Træning'}</button>${prog}</header>
+   <span class="fag" style="--f:${f.farve}">${f.navn}</span>
+   <div class="side"><div class="qtext">${it.t?`<span class="tekst">${esc(it.t)}</span>`:''}${esc(it.q)}</div>${svar}</div>
+   <div id="fb"></div>`;}
+
+function rDeduk(){const s=S.sag;return `
+  <header class="top"><button class="lnk" data-go="hjem">← Sagsmapper</button></header>
+  <div class="intro"><div class="sted">${esc(s.titel)}</div><h2>Hvem gjorde det?</h2>
+   <div class="sporliste">${s.spor.map(sp=>`<div class="spor"><span class="lup">Ledetråd</span><span>${esc(sp.tekst)}</span></div>`).join('')}</div>
+   <p>Sammenlign ledetrådene med de mistænkte, og tryk på den, du vil anklage.</p></div>
+  <div class="mist">${s.mist.map((m,i)=>{const ude=S.ude.includes(i);
+    return `<button class="mistk ${ude?'ude':''}" data-mist="${i}" ${ude?'disabled':''}><b>${esc(m.navn)}</b><span class="rolle">${esc(m.rolle)}</span>
+     <div class="traek">${Object.entries(m.t).map(([k,v])=>`<span>${esc(s.labels[k])}: ${esc(v)}</span>`).join('')}</div></button>`}).join('')}</div>
+  <div id="fb"></div>`;}
+
+function rOpklaret(){const s=S.sag,p=P.sager[s.id];return `
+  <div class="opk"><div class="stempel">Opklaret</div><h2>${esc(s.titel)}</h2>
+   <div class="store">${stjerner(p.stars)}</div>
+   <p><b>Det var ${esc(s.skyldig)}.</b></p><p>${esc(s.loesning)}</p>
+   <p class="fork" style="color:var(--muted)">${S.fejl===0?'Ingen fejl. Du er en rigtig mesterdetektiv!':S.fejl===1?'Kun én fejl undervejs. Flot arbejde!':`${S.fejl} fejl undervejs. Sagen er løst alligevel.`}</p>
+   <div class="rad"><button class="knap brass" data-go="hjem">Tilbage til sagsmapperne</button></div></div>`;}
+
+function rTraenSlut(){const f=FAG[S.fag];const r=S.qs.length-S.fejl;return `
+  <div class="opk"><span class="fag" style="--f:${f.farve};align-self:center">${f.navn}</span><h2>Træning færdig</h2>
+   <div class="score">${r} / ${S.qs.length}</div>
+   <p>${r===S.qs.length?'Alle rigtige i første forsøg. Imponerende!':r>=7?'Godt gået. Du har styr på det meste.':'Godt kæmpet. Prøv igen, så sidder det bedre.'}</p>
+   <div class="rad"><button class="knap lys" data-go="hjem">Hjem</button><button class="knap brass" data-traen="${S.fag}">Igen</button></div></div>`;}
+
+// ---------- Opgave-flow ----------
+function startSag(id){const sag=SAGER.find(s=>s.id===id);noterDag();
+  P.sager[id]=P.sager[id]||{};P.sager[id].igang=true;save();
+  const fag=shuffle(['mat','mat','mat','dansk','dansk','dansk','eng','eng']);
+  S={screen:'q',mode:'sag',sag,qs:fag,i:0,fejl:0,forsog:0};nyt();}
+function startTraen(fag){noterDag();S={screen:'q',mode:'traen',fag,qs:Array(10).fill(fag),i:0,fejl:0,forsog:0};nyt();}
+function nyt(){S.fag=S.qs[S.i];S.item=lavSpm(S.fag);S.forsog=0;S.screen='q';render();const inp=document.getElementById('ans');if(inp)inp.focus();}
+
+function norm(v,type){v=String(v).trim().toLowerCase().replace(/\s+/g,'');
+  if(type==='tid'){const m=v.match(/^(\d{1,2})[.:,]?(\d{2})$/);return m?tid(+m[1],+m[2]):v}
+  return v.replace(/\./g,'').replace(',','.')}
+function tjek(svar){const it=S.item;const rigtigt=norm(svar,it.type)===norm(it.svar,it.type);
+  P.spm++;if(rigtigt&&S.forsog===0)P.rigtige++;save();
+  if(rigtigt){vis(true,svar);return}
+  S.forsog++;if(S.forsog===1){S.fejl++;visPrøvIgen(svar)}else vis(false,svar);}
+
+function visPrøvIgen(svar){const fb=document.getElementById('fb');
+  document.querySelectorAll('.opt').forEach(b=>{if(b.dataset.opt===svar){b.classList.add('bad');b.disabled=true}});
+  const inp=document.getElementById('ans');if(inp){inp.classList.add('bad');inp.select()}
+  fb.innerHTML=`<div class="fb bad"><div class="t">Ikke helt. Prøv én gang til!</div></div>`;}
+
+function vis(rigtigt,svar){const it=S.item,fb=document.getElementById('fb');
+  document.querySelectorAll('.opt').forEach(b=>{b.disabled=true;if(b.dataset.opt===it.svar)b.classList.add('ok');else if(b.dataset.opt===svar&&!rigtigt)b.classList.add('bad')});
+  const inp=document.getElementById('ans');if(inp){inp.disabled=true;inp.classList.add(rigtigt?'ok':'bad');document.querySelector('#ansform button').disabled=true}
+  let h='';
+  if(rigtigt)h+=`<div class="t">${pick(['Rigtigt!','Flot!','Præcis!','Godt set, detektiv!','Korrekt!'])}</div>`;
+  else h+=`<div class="t">Det rigtige svar er: ${esc(it.svar)}</div>`;
+  if(it.f)h+=`<div class="fork">${esc(it.f)}</div>`;
+  const sidste=S.i===S.qs.length-1;
+  if(S.mode==='sag'){h+=`<p class="hist">${esc(S.sag.hist[S.i])}</p>`;
+    const k=SPOR_VED.indexOf(S.i);if(k>=0)h+=`<div class="spor"><span class="lup">Ledetråd ${k+1}</span><span>${esc(S.sag.spor[k].tekst)}</span></div>`;}
+  h+=`<div class="rad"><button class="knap brass" id="naeste">${sidste?(S.mode==='sag'?'Afslør den skyldige →':'Se resultat →'):'Næste →'}</button></div>`;
+  fb.innerHTML=`<div class="fb ${rigtigt?'ok':'bad'}">${h}</div>`;
+  const b=document.getElementById('naeste');b.focus();b.scrollIntoView({block:'nearest',behavior:'smooth'});}
+
+function naeste(){S.i++;
+  if(S.i<S.qs.length){nyt();return}
+  if(S.mode==='sag'){S.screen='deduk';S.ude=[];render()}else{S.screen='traenslut';render()}}
+
+function anklag(i){const s=S.sag,m=s.mist[i],fb=document.getElementById('fb');
+  if(m.navn===s.skyldig){const stars=S.fejl<=1?3:(S.fejl<=3?2:1);const p=P.sager[s.id];
+    p.done=true;p.igang=false;p.stars=Math.max(p.stars||0,stars);save();S.screen='opklaret';render();konfetti();return}
+  const sp=s.spor.find(x=>m.t[x.n]!==x.v);S.ude.push(i);
+  render();document.getElementById('fb').innerHTML=`<div class="fb bad"><div class="t">Nej, ${esc(m.navn)} er ikke den skyldige.</div>
+   <div class="fork">${esc(s.labels[sp.n])}: ${esc(m.t[sp.n])}. Men ledetråden siger: "${esc(sp.tekst)}"</div></div>`;
+  document.getElementById('fb').scrollIntoView({behavior:'smooth',block:'nearest'});}
+
+// ---------- Gangejagten ----------
+const TABELLER=[2,3,4,5,6,7,8,9,10];
+function rGangeValg(){return `
+  <header class="top"><button class="lnk" data-go="hjem">← Hjem</button></header>
+  <div class="intro" style="border-left:6px solid var(--gange)"><h2>Gangejagten</h2><p>Vælg en tabel. Du får 15 gangestykker, og uret kører. Slå din egen bedste tid!</p></div>
+  <div class="tabeller">${TABELLER.map(t=>{const b=P.gange[t];return `<button class="tab" data-tab="${t}">${t}-tabel<small>${b?`bedst ${fmt(b.ms)} · ${b.fejl} fejl`:'ny'}</small></button>`}).join('')}
+   <button class="tab bland" data-tab="bland">Blandet 2–10<small>${P.gange.bland?`bedst ${fmt(P.gange.bland.ms)} · ${P.gange.bland.fejl} fejl`:'ny'}</small></button></div>`;}
+function fmt(ms){const s=Math.round(ms/100)/10;return s.toFixed(1).replace('.',',')+' s'}
+let gTimer=null;
+function startGange(tab){noterDag();const n=15;const qs=[];
+  for(let i=0;i<n;i++){const a=tab==='bland'?rnd(2,10):+tab,b=rnd(2,10);qs.push(Math.random()<.5?[a,b]:[b,a])}
+  S={screen:'gange',tab,qs,i:0,fejl:0,inp:'',start:Date.now(),laast:false};render();
+  clearInterval(gTimer);gTimer=setInterval(()=>{const e=document.getElementById('tid');if(e)e.textContent=fmt(Date.now()-S.start);else clearInterval(gTimer)},100);}
+function rGange(){const [a,b]=S.qs[S.i];return `
+  <header class="top"><button class="lnk" data-go="gangevalg">← Afbryd</button><div class="ur"><span class="tid" id="tid">${fmt(Date.now()-S.start)}</span></div></header>
+  <div class="side gspil" style="background-image:none">
+   <div class="ur"><span>${S.tab==='bland'?'Blandet':S.tab+'-tabellen'}</span><span>${S.i+1} / ${S.qs.length} · ${S.fejl} fejl</span></div>
+   <div class="bar"><i style="width:${S.i/S.qs.length*100}%"></i></div>
+   <div class="gq" id="gq">${a} · ${b} = ?</div>
+   <div class="gsvar" id="gsvar">${S.inp||'&nbsp;'}</div>
+   <div class="pad">${[1,2,3,4,5,6,7,8,9].map(d=>`<button data-d="${d}">${d}</button>`).join('')}<button data-d="slet">⌫</button><button data-d="0">0</button><button data-d="ok" class="ok">OK</button></div>
+  </div>`;}
+function gTast(d){if(S.laast)return;
+  if(d==='slet')S.inp=S.inp.slice(0,-1);else if(d==='ok')return gTjek();else if(S.inp.length<3)S.inp+=d;
+  document.getElementById('gsvar').innerHTML=S.inp||'&nbsp;';
+  if(S.inp.length&&+S.inp===S.qs[S.i][0]*S.qs[S.i][1])gTjek();}
+function gTjek(){if(!S.inp)return;const [a,b]=S.qs[S.i];const ok=+S.inp===a*b;const gq=document.getElementById('gq');
+  S.laast=true;
+  if(ok){gq.textContent=`${a} · ${b} = ${a*b}`;gq.classList.add('ok');setTimeout(()=>{S.i++;S.inp='';S.laast=false;if(S.i>=S.qs.length)gSlut();else render()},350)}
+  else{S.fejl++;gq.textContent=`${a} · ${b} = ${a*b}`;gq.classList.add('bad');document.getElementById('gsvar').textContent=S.inp+' ✗';
+    setTimeout(()=>{S.i++;S.inp='';S.laast=false;if(S.i>=S.qs.length)gSlut();else render()},1400)}}
+function gSlut(){clearInterval(gTimer);const ms=Date.now()-S.start+S.fejl*3000;const b=P.gange[S.tab];
+  S.ms=ms;S.ny=!b||ms<b.ms;if(S.ny)P.gange[S.tab]={ms,fejl:S.fejl};save();S.screen='gangeslut';render();if(S.ny&&S.fejl===0)konfetti();}
+function rGangeSlut(){return `
+  <div class="opk" style="border-top:6px solid var(--gange)"><h2>${S.tab==='bland'?'Blandet 2–10':S.tab+'-tabellen'}</h2>
+   <div class="score" style="color:var(--gange)">${fmt(S.ms)}</div>
+   <p>${S.fejl===0?'Ingen fejl!':`${S.fejl} fejl (hver fejl koster 3 sekunder).`} ${S.ny?'Ny rekord!':`Din rekord er ${fmt(P.gange[S.tab].ms)}.`}</p>
+   <div class="rad"><button class="knap lys" data-go="gangevalg">Vælg tabel</button><button class="knap brass" style="background:var(--gange)" data-tab="${S.tab}">Igen</button></div></div>`;}
+
+// ---------- Konfetti ----------
+function konfetti(){if(matchMedia('(prefers-reduced-motion: reduce)').matches)return;
+  const c=document.createElement('canvas');c.className='konf';document.body.appendChild(c);const x=c.getContext('2d');
+  c.width=innerWidth;c.height=innerHeight;const farver=['#a8771f','#b8382f','#1f5fa8','#2f8a4a','#7a3fa0','#e0b24a'];
+  const p=Array.from({length:120},()=>({x:Math.random()*c.width,y:-20-Math.random()*c.height*.5,vx:(Math.random()-.5)*2,vy:2+Math.random()*3,r:4+Math.random()*5,f:pick(farver),a:Math.random()*6}));
+  const t0=performance.now();(function frame(t){x.clearRect(0,0,c.width,c.height);
+    p.forEach(q=>{q.x+=q.vx;q.y+=q.vy;q.a+=.1;x.save();x.translate(q.x,q.y);x.rotate(q.a);x.fillStyle=q.f;x.fillRect(-q.r/2,-q.r/2,q.r,q.r*.6);x.restore()});
+    if(t-t0<2800)requestAnimationFrame(frame);else c.remove()})(t0);}
+
+// ---------- Events ----------
+function bind(){
+  app.querySelectorAll('[data-go]').forEach(b=>b.onclick=()=>{clearInterval(gTimer);const g=b.dataset.go;if(g==='hjem')go({screen:'hjem'});else if(g==='gangevalg')go({screen:'gangevalg'})});
+  app.querySelectorAll('[data-sag]').forEach(b=>b.onclick=()=>go({screen:'intro',sag:SAGER.find(s=>s.id===b.dataset.sag)}));
+  app.querySelectorAll('[data-start]').forEach(b=>b.onclick=()=>startSag(b.dataset.start));
+  app.querySelectorAll('[data-traen]').forEach(b=>b.onclick=()=>startTraen(b.dataset.traen));
+  app.querySelectorAll('[data-tab]').forEach(b=>b.onclick=()=>startGange(b.dataset.tab));
+  app.querySelectorAll('[data-d]').forEach(b=>b.onclick=()=>gTast(b.dataset.d));
+  app.querySelectorAll('.opt').forEach(b=>b.onclick=()=>tjek(b.dataset.opt));
+  app.querySelectorAll('[data-mist]').forEach(b=>b.onclick=()=>anklag(+b.dataset.mist));
+  const f=document.getElementById('ansform');if(f)f.onsubmit=e=>{e.preventDefault();const v=document.getElementById('ans').value;if(v.trim())tjek(v)};
+}
+app.addEventListener('click',e=>{if(e.target.id==='naeste')naeste()});
+document.addEventListener('keydown',e=>{if(S.screen!=='gange')return;if(/^[0-9]$/.test(e.key))gTast(e.key);else if(e.key==='Backspace')gTast('slet');else if(e.key==='Enter')gTast('ok')});
+
+load();genoptag();render();
+</script>
+
+</body>
+</html>
