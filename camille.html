@@ -599,7 +599,7 @@ const MAT3=[
 // kun når der er net - ellers venter det til næste gang.
 const SYNC=window.DETEKTIV_SYNC||null;
 let _syncTimer=null;
-function logSvar(rigtigt){try{P.log=P.log||[];const it=S.item||{};P.log.push({t:new Date().toISOString(),fag:S.fag,q:String(it.q||'').slice(0,90),ok:rigtigt?1:0,forsog:(S.forsog||0)+1,hvor:S.mode==='sag'?(S.sag&&S.sag.titel):'Træning',nr:(S.i||0)+1});if(P.log.length>60)P.log=P.log.slice(-60)}catch(e){}}
+function logSvar(rigtigt){try{P.log=P.log||[];const it=S.item||{};P.log.push({t:new Date().toISOString(),fag:S.fag,q:String(it.q||'').slice(0,90),ok:rigtigt?1:0,forsog:Math.min(2,(S.forsog||0)+1),hvor:S.mode==='sag'?(S.sag&&S.sag.titel):'Træning',nr:(S.i||0)+1});if(P.log.length>60)P.log=P.log.slice(-60)}catch(e){}}
 function brugNoter(rigtigt){try{const d=new Date().toISOString().slice(0,10);P.brug=P.brug||{};
   const b=P.brug[d]||(P.brug[d]={spm:0,rigtige:0,sek:0});b.spm++;if(rigtigt)b.rigtige++;
   if(S.t0){b.sek+=Math.min(300,Math.round((Date.now()-S.t0)/1000));S.t0=Date.now()}}catch(e){}}
