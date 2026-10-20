@@ -1,7 +1,7 @@
 /* Detektiv Emilie og Camille — service worker: hele spillet gemmes paa telefonen, saa det
    virker uden net (fx i flyet). CACHE-navnet skrives af byg.py ud fra filernes indhold,
    saa en ny udgave hentes automatisk, naar der ER net, og den gamle slettes. */
-const CACHE = 'detektiv-1a4c99d5b422';
+const CACHE = 'detektiv-fea3c5dbb642';
 const FILER = [
   './', 'index.html', 'emilie.html', 'camille.html', 'emilie/', 'camille/',
   'manifest-detektiv.webmanifest', 'manifest-emilie.webmanifest', 'manifest-camille.webmanifest',

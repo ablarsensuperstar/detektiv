@@ -110,6 +110,7 @@ button:focus-visible,input:focus-visible{outline:3px solid var(--brass);outline-
 .opt.bad{border-color:var(--bad);background:var(--bad-soft);opacity:.7}
 .opt:disabled{cursor:default}
 .ans{display:flex;gap:10px}
+.ans .pm{padding:10px 14px;font-size:1.3rem;line-height:1;flex:none}
 .ans input{flex:1;min-width:0;font:inherit;font-size:1.3rem;font-weight:700;padding:10px 14px;border-radius:12px;border:2px solid var(--line);background:var(--paper2);color:var(--ink);font-variant-numeric:tabular-nums}
 .ans input.ok{border-color:var(--ok)}
 .ans input.bad{border-color:var(--bad)}
@@ -428,7 +429,257 @@ const SAGER=[
   'En lille billet falder ud. Du læser stationens navn.',
   'Fru Wong ringer til stationen og råber: "Hvem har taget min kuffert?!"',
   'Du snuser til kufferten. Der er en duft, du kender fra et pizzeria …',
-  'Du lægger alle ledetrådene ved siden af hinanden i notesbogen.']}
+  'Du lægger alle ledetrådene ved siden af hinanden i notesbogen.']},
+{id:'hw_lei',titel:'Blomsterkransen der forsvandt',sted:'Hotellet ved Waikiki Beach, Hawaii',
+ intro:'Første morgen på Hawaii får hele familien en lei, en krans af friske blomster, om halsen i hotellets lobby. Emilie hænger sin på stativet ved døren, mens hun spiser morgenmad med udsigt til Waikiki Beach og surferne ude på bølgerne. Da hun kommer tilbage, er kransen væk. Kun tre løse blomsterblade ligger på gulvet, og en gul fjer svæver stille ned fra loftet.',
+ labels:{sted:'Var klokken 7',spor:'Spor',maerke:'Mærker i blomsterne'},
+ mist:[
+  {navn:'Camille',rolle:'lillesøster, elsker blomster',t:{sted:'ved poolen',spor:'våde fodspor',maerke:'fingre'}},
+  {navn:'Mor',rolle:'købte en hat med fjer i går',t:{sted:'i lobbyen',spor:'gule fjer',maerke:'fingre'}},
+  {navn:'Surflærer Kai',rolle:'bor på stranden, siger han',t:{sted:'på stranden',spor:'våde fodspor',maerke:'fingre'}},
+  {navn:'Papegøjen Lulu',rolle:'hotellets grønne og gule papegøje',t:{sted:'i lobbyen',spor:'gule fjer',maerke:'næb'}}],
+ spor:[
+  {tekst:'Ved blomsterstativet ligger små, gule fjer.',n:'spor',v:'gule fjer'},
+  {tekst:'Receptionisten så den skyldige i lobbyen klokken 7.',n:'sted',v:'i lobbyen'},
+  {tekst:'Blomsterbladene på gulvet er nippet af, ikke revet – som med et næb.',n:'maerke',v:'næb'}],
+ skyldig:'Papegøjen Lulu',
+ loesning:'Lulu havde fløjet af sted med kransen og bygget den om til en rede oppe på loftsbjælken. Da hotelchefen hentede en stige, lå der tre blomster og en halv kiks i reden. Emilie fik en ny lei, og Lulu fik lov til at beholde sin rede.',
+ hist:[
+  'Du skriver tidspunktet ned: klokken 7.15. Kransen var der, da I satte jer til bords, og væk, da I rejste jer.',
+  'Camille kommer dryppende fra poolen og sværger, at hun kun har tænkt på vandrutsjebanen. Hendes fødder efterlader våde aftryk på marmorgulvet.',
+  'Du går ned på knæ ved stativet og lyser med lommelygten ind under det. Der ligger noget småt og gult.',
+  'Mor griner og viser sin nye hat frem. Den har en kæmpe gul fjer, som vipper, hver gang hun nikker.',
+  'Surflærer Kai kommer forbi med et bræt under armen. "Blomster? Jeg har kun øje for bølgerne, brah."',
+  'Du spørger receptionisten, om hun så nogen ved stativet. Hun tænker sig om og peger på uret.',
+  'Papegøjen Lulu sidder på sin pind og siger "Aloha!" tre gange. Så kigger hun op mod loftet.',
+  'Du samler blomsterbladene op fra gulvet og lægger dem på en serviet. Kanterne ser mærkelige ud.',
+  'Mor foreslår, at kransen bare er faldet ned bag en plante. Du tjekker alle planterne. Ingen krans.',
+  'Du lægger fjerene, bladene og receptionistens svar ved siden af hinanden i notesbogen. Nu tegner der sig et billede.']},
+{id:'hw_pearl',titel:'Tegnebogen fra Pearl Harbor',sted:'Pearl Harbor, Oahu',
+ intro:'Familien besøger Pearl Harbor, hvor de store krigsskibe lå den morgen i 1941. Det er et stille sted, og alle taler lavt. Emilie har tegnet skibene og mindesmærket i sin tegnebog hele formiddagen. Da I skal med færgen tilbage, er tegnebogen væk fra bænken, hvor hun lagde den. Far siger, at den nok dukker op, men du tager din notesbog frem.',
+ labels:{sted:'Var ved bænken',ting:'Havde på sig',sko:'Sko'},
+ mist:[
+  {navn:'Far',rolle:'tog 400 billeder',t:{sted:'på færgen',ting:'et kamera',sko:'våde sko'}},
+  {navn:'Mr. Nakamura',rolle:'museumsguide med venlige øjne',t:{sted:'ved bænken',ting:'et navneskilt',sko:'blanke sko'}},
+  {navn:'Fru Wong',rolle:'er også på ferie – og stadig sur',t:{sted:'ved bænken',ting:'en vifte',sko:'træsko'}},
+  {navn:'Drengen Noa',rolle:'bor på Oahu og spiller fodbold',t:{sted:'på plænen',ting:'en fodbold',sko:'bare fødder'}}],
+ spor:[
+  {tekst:'Tegnebogen lå på bænken. Den skyldige har været ved bænken.',n:'sted',v:'ved bænken'},
+  {tekst:'På bænken ligger en lille nål, som dem man sætter et navneskilt fast med.',n:'ting',v:'et navneskilt'},
+  {tekst:'I det fine grus ved bænken er der aftryk af blanke, glatte sko.',n:'sko',v:'blanke sko'}],
+ skyldig:'Mr. Nakamura',
+ loesning:'Mr. Nakamura havde fundet tegnebogen og troede, den var glemt. Han afleverede den i museets glemmekasse med en seddel: "Beautiful drawings. Please come back." Han havde tabt nålen fra sit navneskilt, da han bøjede sig ned. Emilie fik bogen igen og tegnede ham som tak.',
+ hist:[
+  'Du ser på bænken, hvor bogen lå. Den står i skyggen under et stort træ, lige ved stien ned til færgen.',
+  'Far bladrer i sine 400 billeder for at se, om bogen er med på et af dem. På billede 312 ligger den stadig på bænken.',
+  'Du spørger dig for ved kiosken. En dame nikker: "Der sad flere ved bænken, mens I var ude på mindesmærket."',
+  'Fru Wong står med sin vifte og klager over varmen. "Tegnebog? Jeg tegner ikke. Jeg bager."',
+  'Noa sparker til sin fodbold ude på plænen. Han har ikke været i nærheden af bænken, siger hans mor.',
+  'Du går tilbage til bænken og undersøger den centimeter for centimeter. Noget lille og skinnende glimter i solen.',
+  'Mr. Nakamura går forbi med en gruppe turister og fortæller roligt om skibene. Hans navneskilt sidder skævt.',
+  'Camille finder en knap i gruset, men den er fra hendes egen jakke. Du skriver det ned alligevel.',
+  'Du kigger ned i gruset foran bænken. Der er aftryk, og de er ikke fra sandaler.',
+  'Færgen fløjter. Du har tre ledetråde og fem minutter. Det er nok for en detektiv.']},
+{id:'hw_delfin',titel:'Delfinbådens hemmelighed',sted:'Båden ud for Waianae-kysten',
+ intro:'Klokken syv om morgenen sejler I ud for at se delfiner. Vandet er helt blåt, og efter en halv time springer tyve spinnerdelfiner op af vandet lige ved båden. Alle råber og tager billeder. Da kaptajnen siger, at I må snorkle, åbner guiden kassen med snorkelmasker. Den er tom. Alle otte masker er væk.',
+ labels:{sted:'Var',spor:'Aftryk på dækket',vane:'Kendt for'},
+ mist:[
+  {navn:'Kaptajn Koa',rolle:'har sejlet her i 30 år',t:{sted:'ved roret',spor:'våde fodspor',vane:'synger sømandssange'}},
+  {navn:'Camille',rolle:'så den første delfin',t:{sted:'i stævnen',spor:'våde fodspor',vane:'glemmer ting'}},
+  {navn:'Guiden Leilani',rolle:'ved alt om delfiner',t:{sted:'ved bænken',spor:'våde fodspor',vane:'fløjter efter delfinerne'}},
+  {navn:'Skipperhunden Moana',rolle:'bådens brune hund',t:{sted:'ved bænken',spor:'våde poteaftryk',vane:'gnaver i alt'}}],
+ spor:[
+  {tekst:'Sporene på dækket fører hen til bænken agter.',n:'sted',v:'ved bænken'},
+  {tekst:'Aftrykkene er poter, ikke fødder.',n:'spor',v:'våde poteaftryk'},
+  {tekst:'Maskernes gummiremme har små bidemærker.',n:'vane',v:'gnaver i alt'}],
+ skyldig:'Skipperhunden Moana',
+ loesning:'Moana havde slæbt alle otte masker hen under bænken, hvor hun har sin kurv. Hun havde gnavet lidt i remmene og lagt sig til at sove ovenpå. Kaptajn Koa grinede: "Hun gør det hver gang, der er delfiner. Hun bliver jaloux." Maskerne blev skyllet, og alle kom i vandet.',
+ hist:[
+  'Du kigger ned i den tomme kasse. Låget har stået åbent, siden I sejlede ud.',
+  'Kaptajn Koa synger en sang om en skildpadde og ryster på hovedet. "Masker forsvinder ikke på min båd."',
+  'Du følger de våde spor på dækket med øjnene. De går alle sammen den samme vej.',
+  'Camille står i stævnen og holder øje med delfinerne. "Jeg har ikke rørt kassen," siger hun uden at vende sig om.',
+  'Leilani viser jer et billede af en delfin, der sover med det ene øje åbent. Hun fløjter, og en delfin springer.',
+  'Du bøjer dig ned over et af aftrykkene på dækket. Det har ikke fem tæer, men fire puder og kløer.',
+  'Moana ligger under bænken og logrer med halen. Hun ser mistænkeligt tilfreds ud.',
+  'En delfin svømmer helt tæt på båden og kigger op. Camille siger, den griner. Du siger, den er vidne.',
+  'Du finder en snorkel, der stikker frem under bænken. Remmen er fugtig og lidt flosset.',
+  'Du stiller dig midt på dækket og ser på sporene, bænken og hunden. Så ved du det.']},
+{id:'hw_vulkan',titel:'Gåden på Diamond Head',sted:'Vulkanen Diamond Head',
+ intro:'I står op klokken fem for at gå op på vulkanen Diamond Head, inden det bliver for varmt. Stien går gennem en tunnel og op ad 99 trappetrin, og fra toppen kan man se hele Honolulu og havet. Far har pakket en pose med ananas, bananer og pølsehorn til at fejre det med. Da I når toppen og åbner rygsækken, er posen væk, og der ligger kun en halv banan tilbage på stien.',
+ labels:{sted:'Var',spor:'Spor i støvet',mad:'Elsker'},
+ mist:[
+  {navn:'Mangusten Mongo',rolle:'en lille, hurtig krabat med lang hale',t:{sted:'i buskene',spor:'små poter',mad:'frugt'}},
+  {navn:'Hr. Schmidt',rolle:'tysk turist med meget store vandrestøvler',t:{sted:'på toppen',spor:'vandrestøvler',mad:'pølser'}},
+  {navn:'Camille',rolle:'gik forrest hele vejen',t:{sted:'på trappen',spor:'sandaler',mad:'ananas'}},
+  {navn:'Guiden Leilani',rolle:'løber op ad vulkanen hver morgen',t:{sted:'på toppen',spor:'løbesko',mad:'frugt'}}],
+ spor:[
+  {tekst:'Der er bidt i bananen og ananassen, men pølsehornene er ikke rørt. Den skyldige elsker frugt.',n:'mad',v:'frugt'},
+  {tekst:'I det røde støv er der små poteaftryk med kløer.',n:'spor',v:'små poter'},
+  {tekst:'Posen ligger inde i buskene ved tunnelen.',n:'sted',v:'i buskene'}],
+ skyldig:'Mangusten Mongo',
+ loesning:'Mangusten Mongo havde snuppet posen, da Far satte rygsækken fra sig for at tage et billede. Manguster blev bragt til Hawaii for længe siden for at fange rotter, men Mongo foretrækker tydeligvis ananas. Pølsehornene fik I tilbage. Bananen var tabt for altid.',
+ hist:[
+  'Du skriver ned, hvornår rygsækken sidst var åben: ved tunnelen, hvor Far tog et billede af solopgangen.',
+  'Camille står på toppen og råber, at hun kan se hotellet. Hun har sand i sandalerne og ikke andet.',
+  'Du går tilbage ned ad trappen og kigger efter spor. Den halve banan ligger på det femte trin.',
+  'Hr. Schmidt puster og stønner og siger "Wunderbar!" om udsigten. Han har kun øje for pølsehorn, siger han.',
+  'Leilani kommer løbende forbi for anden gang i dag. "Frugt? Jeg spiser kun frugt. Men jeg stjæler ikke," griner hun.',
+  'Du undersøger det røde støv ved tunnelen. Der er aftryk, og de er meget små.',
+  'Noget rasler i buskene. En lang hale forsvinder mellem bladene, hurtigere end du kan nå at pege.',
+  'Far finder sit billede fra tunnelen. I baggrunden, helt nede i hjørnet, kigger to små øjne frem.',
+  'Du lyser ind i buskene med lommelygten. Der ligger noget hvidt og krøllet derinde.',
+  'Du har spor, en pose og et billede. Nu mangler du bare at sige navnet højt.']},
+{id:'hw_luau',titel:'Den stumme ukulele',sted:'Luau-aftenen på stranden',
+ intro:'Om aftenen er der luau, en stor hawaiiansk fest med grillet gris, hula-dans og musik under faklerne. Musikeren Keoni skal spille på sin gamle ukulele, som hans bedstefar har bygget. Men da showet skal begynde, er ukulelen væk fra stolen bag scenen. Keoni er ked af det, og hula-danserne venter. Du har et kvarter, før gæsterne begynder at kede sig.',
+ labels:{sted:'Var før showet',spor:'Spor',lyd:'Lyd fra personen'},
+ mist:[
+  {navn:'Hula-danseren Malia',rolle:'danser, siden hun var tre',t:{sted:'bag scenen',spor:'blomsterblade',lyd:'synger'}},
+  {navn:'Kokken Big Mike',rolle:'griller grisen i et hul i jorden',t:{sted:'i køkkenet',spor:'kokosspåner',lyd:'brummer'}},
+  {navn:'Fru Wong',rolle:'sidder på forreste række og er sur',t:{sted:'bag scenen',spor:'pizzakrummer',lyd:'klimprer skævt'}},
+  {navn:'Far',rolle:'har allerede spist tre gange',t:{sted:'ved bordet',spor:'solcreme',lyd:'fløjter'}}],
+ spor:[
+  {tekst:'En hjælper så den skyldige bag scenen, lige før showet skulle starte.',n:'sted',v:'bag scenen'},
+  {tekst:'Fra et telt bag scenen kan man høre skæve, usikre toner.',n:'lyd',v:'klimprer skævt'},
+  {tekst:'På stolen, hvor ukulelen stod, ligger der krummer. Pizzakrummer.',n:'spor',v:'pizzakrummer'}],
+ skyldig:'Fru Wong',
+ loesning:'Fru Wong havde lånt ukulelen for at øve én sang i hemmelighed: en fødselsdagssang til sin mand, som fyldte 60 den aften. Hun spillede den på scenen, skævt og med sammenbidte tænder, og alle klappede. Keoni fik sin ukulele tilbage, og Fru Wong smilede i næsten to sekunder.',
+ hist:[
+  'Du ser på den tomme stol bag scenen. Faklerne blafrer, og det dufter af grillet gris og blomster.',
+  'Keoni fortæller, at ukulelen stod der for ti minutter siden. Han gik kun hen for at hente et glas vand.',
+  'Du spørger hjælperen, der stiller stole op. Han har set nogen gå bag scenen, men det var mørkt.',
+  'Big Mike løfter låget af jordovnen, og en sky af damp stiger op. "Jeg har kun hænderne i grisen, ikke i musikken."',
+  'Malia varmer op med en hula-bevægelse og synger stille for sig selv. Hun kigger nervøst på uret.',
+  'Du går en runde bag teltene. Et sted bagved høres der toner, der ikke rigtig passer sammen.',
+  'Far kommer med en tallerken mere og fløjter. "Måske var det vinden?" Du skriver ikke det ned.',
+  'Du lyser på stolen med lommelygten. Der ligger noget småt og sprødt på sædet.',
+  'Fru Wong er pludselig ikke på forreste række længere. Hendes taske står der stadig.',
+  'Du lægger krummerne, de skæve toner og hjælperens svar sammen. Så går du hen til det bagerste telt.']},
+{id:'hw_honu',titel:'Muren om skildpadden',sted:'Hanauma Bay',
+ intro:'Ved solopgang ligger en stor havskildpadde, en honu, og sover i sandet ved Hanauma Bay. Rundt om den har nogen bygget en lav mur af sand med små pinde i, så ingen træder på den. Livredderen vil gerne vide, hvem der har passet så godt på skildpadden, for personen skal have en tak. Ingen melder sig. Det er en sag for en detektiv, selv om der ikke er nogen skurk.',
+ labels:{spor:'Fodspor',sted:'Var ved solopgang',ting:'Havde med'},
+ mist:[
+  {navn:'Livredder Ikaika',rolle:'holder øje fra tårnet',t:{spor:'store fodspor',sted:'i tårnet',ting:'en fløjte'}},
+  {navn:'Camille',rolle:'stod op før alle andre',t:{spor:'små fodspor',sted:'på stranden',ting:'en spand'}},
+  {navn:'Auntie Pua',rolle:'frivillig, der passer på skildpadderne',t:{spor:'sandaler',sted:'ved skiltet',ting:'et skilt'}},
+  {navn:'Drengen Noa',rolle:'bor lige om hjørnet',t:{spor:'små fodspor',sted:'på parkeringspladsen',ting:'en fodbold'}}],
+ spor:[
+  {tekst:'Fodsporene rundt om muren er små.',n:'spor',v:'små fodspor'},
+  {tekst:'Muren blev bygget ved solopgang, og kun én af de mistænkte var på stranden så tidligt.',n:'sted',v:'på stranden'},
+  {tekst:'Sandet i muren har runde former – det er formet i en spand.',n:'ting',v:'en spand'}],
+ skyldig:'Camille',
+ loesning:'Det var Camille. Hun var vågnet klokken fem, havde set skildpadden og var bange for, at nogen skulle træde på den. Så byggede hun muren med sin spand og satte pinde i som advarsel. Livredder Ikaika gav hende et mærke med en skildpadde på, og honuen sov videre uden at ane noget.',
+ hist:[
+  'Du ser på muren. Den er lav, jævn og bygget med omhu. Pindene står med lige stor afstand.',
+  'Livredder Ikaika kommer ned fra sit tårn. "Jeg så den først klokken syv. Da var muren der allerede."',
+  'Du måler fodsporene rundt om muren med din lineal. De er kortere end din egen fod.',
+  'Auntie Pua sætter et skilt op: "Honu sover – hold afstand." Hun har sandaler på og siger, hun lige er kommet.',
+  'Noa kommer cyklende til parkeringspladsen med en fodbold under armen. Han gaber. Han er lige stået op.',
+  'Du spørger alle, hvornår de kom til stranden. Kun én svarer "før solen stod op".',
+  'Camille kigger ud over vandet og siger ingenting. Det er usædvanligt for Camille.',
+  'Skildpadden bevæger en luffe i søvne. Alle holder vejret. Så sover den videre.',
+  'Du kigger nærmere på sandet i muren. Det har runde buer, som var det hældt ud af noget.',
+  'Du har små fodspor, et tidspunkt og en spand. Du ved godt, hvem det er. Spørgsmålet er, om hun vil indrømme det.']},
+{id:'hw_shaveice',titel:'Den smeltede regnbue',sted:'Shave ice-boden i Haleiwa',
+ intro:'I den lille by Haleiwa på nordkysten står folk i kø for shave ice: en bjergtop af fint knust is med sirup i alle regnbuens farver. Emilie får en med blå øverst, så rød, så gul. Hun stiller den på bordet for at hente servietter, og da hun vender sig om, er bægeret tomt. Kun en blå plet på bordet og et sugerør er tilbage.',
+ labels:{sted:'Var',haender:'Hænder',tunge:'Tunge'},
+ mist:[
+  {navn:'Mynafuglen',rolle:'fræk fugl, der stjæler pommes frites',t:{sted:'på bordet',haender:'næb',tunge:'ingen tunge at se'}},
+  {navn:'Far',rolle:'påstår, han ikke er sulten',t:{sted:'ved bordet',haender:'klistrede fingre',tunge:'blå'}},
+  {navn:'Is-sælgeren Mo',rolle:'har solgt shave ice i 20 år',t:{sted:'ved boden',haender:'klistrede fingre',tunge:'almindelig'}},
+  {navn:'Camille',rolle:'fik en med jordbær',t:{sted:'ved bordet',haender:'rene hænder',tunge:'rød'}}],
+ spor:[
+  {tekst:'På bordet er der klistrede fingeraftryk af sirup.',n:'haender',v:'klistrede fingre'},
+  {tekst:'Den skyldige sad ved bordet, ikke oppe på det eller ved boden.',n:'sted',v:'ved bordet'},
+  {tekst:'Det øverste lag var blåt – den skyldige har blå tunge.',n:'tunge',v:'blå'}],
+ skyldig:'Far',
+ loesning:'Far havde spist hele regnbuen på under et minut. "Jeg troede, det var min!" sagde han med knaldblå tunge. Det var det ikke. Han købte en ny til Emilie, en til Camille og én mere til sig selv. Mo grinede og gav ham ekstra sirup.',
+ hist:[
+  'Du ser på det tomme bæger. Isen var så høj som en knytnæve for to minutter siden.',
+  'Mynafuglen lander på nabobordet og kigger på dig med skæve øjne. Den har pommes frites i næbbet, ikke is.',
+  'Du kigger på bordpladen med lommelygten. Der er aftryk af fingre, og de glinser af sirup.',
+  'Mo tørrer hænderne i et viskestykke. "Jeg laver 300 om dagen. Jeg har sirup overalt, men jeg spiser dem ikke."',
+  'Camille rækker tunge. Den er knaldrød af jordbær. Hun har ikke rørt noget blåt.',
+  'Du spørger, hvem der sad ved bordet, mens du hentede servietter. Alle peger på hinanden.',
+  'Far kigger væk og bliver meget optaget af et skilt om parkering.',
+  'Mynafuglen flyver væk med sine pommes frites. Den er renset for mistanke.',
+  'Du beder alle om at række tunge. Mo griner. Camille er rød. Far siger, han har tandpine.',
+  'Du har klistrede fingre, en plads ved bordet og et spørgsmål om tungefarve. Så ved du det.']},
+{id:'hw_surf',titel:'Surfbrættet der sejlede væk',sted:'Waikiki Beach',
+ intro:'Emilie har sin første surftime hos Kai. Hun står op på brættet fire gange og falder i vandet syv. Bagefter stiller hun det lange, blå lejebræt i sandet ved parasollen og løber ud for at skylle sig. Da hun kommer tilbage, er brættet væk. Ude på vandet er der tyve blå brætter, og ingen af dem er hendes.',
+ labels:{sted:'Var',spor:'Spor',ting:'Havde'},
+ mist:[
+  {navn:'Surflærer Kai',rolle:'passer på brætterne som var de hans børn',t:{sted:'i surfskuret',spor:'voks på fingrene',ting:'nøglen til skuret'}},
+  {navn:'Camille',rolle:'surfede på et boogieboard',t:{sted:'i vandet',spor:'sand på knæene',ting:'et boogieboard'}},
+  {navn:'Fru Wong',rolle:'ligger i skyggen og brokker sig over solen',t:{sted:'under parasollen',spor:'solcreme',ting:'en bog'}},
+  {navn:'Far',rolle:'filmede alle syv fald',t:{sted:'i surfskuret',spor:'solcreme',ting:'et kamera'}}],
+ spor:[
+  {tekst:'Et langt slæbespor i sandet går fra parasollen hen mod surfskuret.',n:'sted',v:'i surfskuret'},
+  {tekst:'Der, hvor brættet stod, ligger en klat surfvoks.',n:'spor',v:'voks på fingrene'},
+  {tekst:'Skuret er låst, og kun én person har nøglen.',n:'ting',v:'nøglen til skuret'}],
+ skyldig:'Surflærer Kai',
+ loesning:'Kai havde taget brættet med ind i skuret for at give det ny voks, så Emilie bedre kunne stå fast. "Du faldt syv gange. Brættet var for glat, ikke dig," sagde han. Næste time stod hun op ni gange og faldt kun to. Far filmede begge dele.',
+ hist:[
+  'Du kigger på hullet i sandet, hvor brættet stod. Der er en lang stribe væk fra det, som om noget er blevet trukket.',
+  'Camille kommer op af vandet med sit boogieboard og sand på knæene. "Jeg var ude ved bølgerne hele tiden."',
+  'Du følger striben i sandet. Den går forbi parasollerne og videre op mod skuret.',
+  'Fru Wong ser op fra sin bog. "Et bræt? Jeg hader sand. Jeg rører ikke noget herude."',
+  'Far viser dig sin film. På det sidste klip ses brættet i sandet, og i baggrunden går nogen mod skuret.',
+  'Du undersøger stedet, hvor brættet stod. Der sidder noget blødt og klistret fast i sandet.',
+  'Kai vinker fra skuret med en klud i hånden. Hans fingre glinser.',
+  'Du prøver døren til skuret. Den er låst. Du spørger, hvem der har nøglen.',
+  'Far siger, at han kun gik hen til skuret for at finde en vandflaske, og at døren var låst.',
+  'Du har et slæbespor, en klat voks og en låst dør. Det er en meget kort liste over mistænkte nu.']},
+{id:'hw_fly',titel:'Hovedtelefonerne i flyet',sted:'Flyet hjem fra Honolulu',
+ intro:'Efter to uger på Hawaii sidder familien i flyet hjem. Det tager ni timer bare til Californien, så Emilie har planlagt tre film. Hun lægger sine hovedtelefoner i sædelommen og går på toilettet. Da hun kommer tilbage, er lommen tom. Rundt om hende sover halvdelen af flyet, og den anden halvdel ser film.',
+ labels:{raekke:'Sad',spor:'Spor ved sædet',ting:'Havde'},
+ mist:[
+  {navn:'Stewardessen Grace',rolle:'serverer juice med et smil',t:{raekke:'i gangen',spor:'duft af parfume',ting:'en vogn'}},
+  {navn:'Camille',rolle:'sidder ved vinduet',t:{raekke:'række 14',spor:'kiks-krummer',ting:'en iPad uden lyd'}},
+  {navn:'Manden i 14C',rolle:'læser avis og sover',t:{raekke:'række 14',spor:'avispapir',ting:'egne hovedtelefoner'}},
+  {navn:'Far',rolle:'sover med åben mund',t:{raekke:'række 15',spor:'kiks-krummer',ting:'en bog'}}],
+ spor:[
+  {tekst:'Der er en stribe kiks-krummer fra Emilies sædelomme og hen over sædet ved siden af.',n:'spor',v:'kiks-krummer'},
+  {tekst:'Ingen har forladt række 14 i de minutter, Emilie var væk.',n:'raekke',v:'række 14'},
+  {tekst:'Nogen i nærheden ser film på en iPad uden lyd – og uden hovedtelefoner.',n:'ting',v:'en iPad uden lyd'}],
+ skyldig:'Camille',
+ loesning:'Camille havde lånt hovedtelefonerne, fordi hendes egne var gået i stykker midt i en film. Hun ville spørge, men Emilie var på toilettet, og filmen var lige blevet spændende. De delte hovedtelefonerne resten af vejen, én ørepude hver, og så den samme film.',
+ hist:[
+  'Du kigger i sædelommen. Der er et sikkerhedskort, en pose kiks og ingen hovedtelefoner.',
+  'Stewardessen Grace kommer forbi med sin vogn og dufter af parfume. "Jeg har ikke set nogen hovedtelefoner, honey."',
+  'Du finder krummer på dit sæde og følger dem med fingeren. De fortsætter over på nabosædet.',
+  'Manden i 14C vågner, folder sin avis sammen og sætter sine egne store hovedtelefoner på. De er sorte, ikke hvide.',
+  'Far snorker i række 15 med en bog på maven. Han har krummer på trøjen, men han har ikke flyttet sig.',
+  'Du spørger Grace, om nogen har forladt række 14. Hun ryster på hovedet. Hun har stået i gangen hele tiden.',
+  'Camille sidder helt stille og ser en film på sin iPad. Hun griner af noget, men der kommer ingen lyd.',
+  'Du kigger på Camilles iPad. Den viser en film, og lydstregen står på fuld styrke.',
+  'Camille trækker hætten op over hovedet. Under hætten stikker en hvid ledning frem.',
+  'Du har krummer, en række uden udgang og en iPad uden lyd. Sagen er lige ved siden af dig.']},
+{id:'hw_ananas',titel:'Kortet i ananaslabyrinten',sted:'Dole Plantation',
+ intro:'På Dole Plantation ligger verdens største labyrint, bygget af 14.000 planter midt i ananasmarkerne. Man får et kort og skal finde otte stempelstationer. Familien har fundet fem, da kortet pludselig er væk fra Emilies hånd. Uden kort er labyrinten bare grønne vægge, og solen står højt. Far siger, at I kan følge lyden fra traktoren. Du siger, at I kan finde kortet.',
+ labels:{sted:'Var',spor:'Spor på stien',ting:'Havde med'},
+ mist:[
+  {navn:'Camille',rolle:'ville hellere have ananas-is',t:{sted:'ved udgangen',spor:'små fodspor',ting:'en ananas-is'}},
+  {navn:'Traktorføreren Kimo',rolle:'kører rundt om labyrinten hele dagen',t:{sted:'på traktoren',spor:'olieplet',ting:'et nøglebundt'}},
+  {navn:'Fru Wong',rolle:'ville være først ud af labyrinten',t:{sted:'inde i labyrinten',spor:'træsko-spor',ting:'et kompas'}},
+  {navn:'Mangusten Mongo',rolle:'bor i ananasmarken – det er ham igen',t:{sted:'inde i labyrinten',spor:'små poter',ting:'en ananas-top'}}],
+ spor:[
+  {tekst:'Kortet forsvandt midt i labyrinten, mellem station 5 og 6.',n:'sted',v:'inde i labyrinten'},
+  {tekst:'På stien er der aftryk af træsko.',n:'spor',v:'træsko-spor'},
+  {tekst:'Ved station 5 ligger et lille kompas, som nogen har glemt.',n:'ting',v:'et kompas'}],
+ skyldig:'Fru Wong',
+ loesning:'Fru Wong havde snuppet kortet for at komme først ud og slå rekorden. Men hun læste det på hovedet og for vild i to timer. Til sidst måtte Kimo hente hende med traktoren. Hun var sur. Emilie fandt de sidste tre stationer uden kort og fik en gratis ananas-is for rekorden.',
+ hist:[
+  'Du stopper op mellem de høje, grønne vægge og tænker efter. Kortet var i din hånd ved station 5.',
+  'Camille foreslår at råbe på hjælp. Du foreslår at kigge på jorden først. Stien er rød og støvet.',
+  'Lyden af traktoren kører rundt om labyrinten. Kimo vinker oppe fra sædet og råber "Aloha!"',
+  'Du finder jeres egne fodspor i støvet. Men der er også andre spor, og de er ikke fra sandaler.',
+  'Camille står og drømmer om ananas-is ved udgangen. Hun har slet ikke været ved station 6.',
+  'En lang hale forsvinder ind i ananasplanterne. Mongo igen? Men han kan ikke læse kort.',
+  'Du går tilbage mod station 5 og kigger ned. Noget rundt og blankt ligger i støvet.',
+  'Et sted langt inde i labyrinten råber en sur stemme: "Det her kort passer ikke!"',
+  'Kimo stopper traktoren. "Der er en dame derinde, som har gået i ring i en time."',
+  'Du har et sted, et sæt træsko-spor og et kompas uden ejer. Du kender også den sure stemme.']}
 ];
 const SPOR_VED=[3,6,9]; // efter spørgsmål 4, 7 og 10 afsløres en ledetråd
 const FAGMIX=['mat','mat','mat','mat','dansk','dansk','dansk','eng','eng','eng'];
@@ -850,7 +1101,7 @@ function rQ(){const it=S.item,f=FAG[S.fag];const n=S.qs.length;
   const prog=`<div class="prog">${Array.from({length:n},(_,i)=>`<i class="${i<S.i?'d':(i===S.i?'n':'')}"></i>`).join('')}</div>`;
   let svar;
   if(it.type==='mc')svar=`<div class="opts">${it.opts.map((o,i)=>`<button class="opt" data-opt="${esc(o)}" id="opt${i}"><span class="b">${'ABCD'[i]}</span><span>${esc(o)}</span></button>`).join('')}</div>`;
-  else svar=`<form class="ans" id="ansform"><input id="ans" ${it.type==='tal'?'inputmode="numeric"':(it.type==='dec'?'inputmode="decimal"':'')} autocomplete="off" placeholder="${it.type==='tid'?'fx 14:35':(it.type==='dec'?'fx 4,5':'Dit svar')}" aria-label="Dit svar"><button class="knap" type="submit">Tjek</button></form>`;
+  else svar=`<form class="ans" id="ansform">${it.type==='tal'?'<button type="button" class="knap lys pm" id="pm" aria-label="Skift fortegn">±</button>':''}<input id="ans" ${it.type==='tal'?'inputmode="numeric"':(it.type==='dec'?'inputmode="decimal"':'')} autocomplete="off" placeholder="${it.type==='tid'?'fx 14:35':(it.type==='dec'?'fx 4,5':'Dit svar')}" aria-label="Dit svar"><button class="knap" type="submit">Tjek</button></form>`;
   return `<header class="top"><button class="lnk" data-go="hjem">← ${S.mode==='sag'?'Sagen':'Træning'}</button>${prog}</header>
    <span class="fag" style="--f:${f.farve}">${f.navn}</span>
    <div class="side"><div class="qtext">${it.t?`<span class="tekst">${esc(it.t)}</span>`:''}${esc(it.q)}</div>${svar}</div>
@@ -987,6 +1238,7 @@ function bind(){
   app.querySelectorAll('.opt').forEach(b=>b.onclick=()=>tjek(b.dataset.opt));
   app.querySelectorAll('[data-mist]').forEach(b=>b.onclick=()=>anklag(+b.dataset.mist));
   const f=document.getElementById('ansform');if(f)f.onsubmit=e=>{e.preventDefault();const v=document.getElementById('ans').value;if(v.trim())tjek(v)};
+  const pm=document.getElementById('pm');if(pm)pm.onclick=()=>{const i=document.getElementById('ans');if(i.disabled)return;i.value=i.value.startsWith('-')?i.value.slice(1):'-'+i.value;i.focus()};
 }
 app.addEventListener('click',e=>{if(e.target.id==='naeste')naeste()});
 document.addEventListener('keydown',e=>{if(S.screen!=='gange')return;if(/^[0-9]$/.test(e.key))gTast(e.key);else if(e.key==='Backspace')gTast('slet');else if(e.key==='Enter')gTast('ok')});

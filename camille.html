@@ -106,6 +106,7 @@ button:focus-visible,input:focus-visible{outline:3px solid var(--brass);outline-
 .opt.bad{border-color:var(--bad);background:var(--bad-soft);opacity:.7}
 .opt:disabled{cursor:default}
 .ans{display:flex;gap:10px}
+.ans .pm{padding:10px 14px;font-size:1.3rem;line-height:1;flex:none}
 .ans input{flex:1;min-width:0;font:inherit;font-size:1.5rem;font-weight:700;padding:10px 14px;border-radius:12px;border:2px solid var(--line);background:var(--paper2);color:var(--ink);font-variant-numeric:tabular-nums}
 .ans input.ok{border-color:var(--ok)}
 .ans input.bad{border-color:var(--bad)}
@@ -321,7 +322,147 @@ const SAGER=[
   {tekst:'Først var der lydløse skridt, så et dunk.',n:'lyd',v:'lydløse skridt'}],
  skyldig:'Katten Misse',
  loesning:'Det var Misse! Hun havde væltet en kasse med julepynt på loftet. Yrsa og Camille grinede så meget, at Morfar vågnede.',
- hist:['Du tager din lommelygte. Yrsa holder dig i hånden.','Dunk! Der er det igen.','Du lytter ved loftstrappen.','Morfar Finn snorker inde fra soveværelset.','Du lyser på trappen med lommelygten.','Yrsa hvisker: "Jeg fniser, men jeg er ikke på loftet!"','Du lytter en gang til. Helt stille … og så dunk.','Du kravler op ad trappen med lygten.']}
+ hist:['Du tager din lommelygte. Yrsa holder dig i hånden.','Dunk! Der er det igen.','Du lytter ved loftstrappen.','Morfar Finn snorker inde fra soveværelset.','Du lyser på trappen med lommelygten.','Yrsa hvisker: "Jeg fniser, men jeg er ikke på loftet!"','Du lytter en gang til. Helt stille … og så dunk.','Du kravler op ad trappen med lygten.']},
+{id:'hw_hula',titel:'Hula-skørtet der forsvandt',sted:'Hotellet på Hawaii',
+ intro:'Camille skal danse hula til aften-showet. Men hendes skørt af blade er væk fra altanen! Hvem har taget det?',
+ labels:{sted:'Var',spor:'Spor',ting:'Elsker'},
+ mist:[
+  {navn:'Emilie',rolle:'storesøster, læste på altanen',t:{sted:'på altanen',spor:'sand',ting:'bøger'}},
+  {navn:'Papegøjen Lulu',rolle:'hotellets grønne og gule papegøje',t:{sted:'på altanen',spor:'gule fjer',ting:'blomster'}},
+  {navn:'Hula-læreren Malia',rolle:'danser hula hver aften',t:{sted:'på scenen',spor:'blomsterblade',ting:'musik'}}],
+ spor:[
+  {tekst:'Skørtet lå på altanen.',n:'sted',v:'på altanen'},
+  {tekst:'Der ligger gule fjer på altanen.',n:'spor',v:'gule fjer'},
+  {tekst:'Blomsterne er plukket af skørtet.',n:'ting',v:'blomster'}],
+ skyldig:'Papegøjen Lulu',
+ loesning:'Lulu havde fløjet af sted med skørtet for at få blomsterne. Hun sad på taget og spiste dem én ad gangen. Camille fik et nyt skørt og dansede alligevel.',
+ hist:['Du kigger på altanen. Skørtet er væk, men stolen står der.','Emilie læser videre i sin bog. "Jeg har ikke set noget."','Du lyser rundt på altanen med din lup.','Malia øver sig på scenen. "Skørt? Jeg har mit eget."','Du kigger på gulvet. Der ligger noget gult og let.','Lulu siger "Aloha!" oppe fra taget.','Du finder tre blomster uden blade.','Du samler alle sporene i din notesbog.']},
+{id:'hw_honu',titel:'Muren om skildpadden',sted:'Stranden ved Hanauma Bay',
+ intro:'En stor havskildpadde sover i sandet. Nogen har bygget en lille mur rundt om den, så ingen træder på den. Hvem var så sød?',
+ labels:{spor:'Fodspor',sted:'Var tidligt',ting:'Havde med'},
+ mist:[
+  {navn:'Emilie',rolle:'stod op før alle andre',t:{spor:'små fodspor',sted:'på stranden',ting:'en spand'}},
+  {navn:'Livredder Ikaika',rolle:'holder øje fra tårnet',t:{spor:'store fodspor',sted:'i tårnet',ting:'en fløjte'}},
+  {navn:'Drengen Noa',rolle:'bor lige ved stranden',t:{spor:'små fodspor',sted:'på parkeringspladsen',ting:'en fodbold'}}],
+ spor:[
+  {tekst:'Fodsporene om muren er små.',n:'spor',v:'små fodspor'},
+  {tekst:'Muren blev bygget tidligt på stranden.',n:'sted',v:'på stranden'},
+  {tekst:'Sandet er formet i en spand.',n:'ting',v:'en spand'}],
+ skyldig:'Emilie',
+ loesning:'Det var Emilie! Hun stod op klokken fem og byggede muren, så skildpadden kunne sove i fred. Livredderen gav hende et skildpadde-mærke.',
+ hist:['Du ser på muren. Den er fin og lige.','Ikaika kommer ned fra tårnet. "Den var der, da jeg kom."','Du måler fodsporene med din lineal.','Noa kommer cyklende. Han er lige stået op.','Du spørger, hvem der var på stranden tidligt.','Emilie kigger ud over vandet og siger ingenting.','Skildpadden bevæger en luffe i søvne.','Du kigger på sandet i muren. Det er rundt som en spand.']},
+{id:'hw_delfin',titel:'Hatten på delfinbåden',sted:'Båden ude hos delfinerne',
+ intro:'Delfinerne springer rundt om båden! Camille jubler. Men da hun vil tage sin hat på, er den væk. Hvem har taget den?',
+ labels:{sted:'Var',spor:'Spor på dækket',vane:'Vane'},
+ mist:[
+  {navn:'Kaptajn Koa',rolle:'styrer båden og synger',t:{sted:'ved roret',spor:'våde fodspor',vane:'synger'}},
+  {navn:'Skipperhunden Moana',rolle:'bådens brune hund',t:{sted:'under bænken',spor:'våde poter',vane:'gemmer ting'}},
+  {navn:'Emilie',rolle:'ledte efter sine solbriller',t:{sted:'under bænken',spor:'våde fodspor',vane:'tager billeder'}}],
+ spor:[
+  {tekst:'Hatten lå under bænken.',n:'sted',v:'under bænken'},
+  {tekst:'Der er poteaftryk på dækket.',n:'spor',v:'våde poter'},
+  {tekst:'Den skyldige gemmer ting.',n:'vane',v:'gemmer ting'}],
+ skyldig:'Skipperhunden Moana',
+ loesning:'Moana havde gemt hatten i sin kurv under bænken. Hun lå ovenpå og sov. Kaptajn Koa grinede: "Hun gemmer alt, der er blødt."',
+ hist:['Du kigger på bænken. Hatten lå der for lidt siden.','Kaptajn Koa synger om en skildpadde.','Du følger de våde spor på dækket.','Emilie finder sine solbriller under bænken.','En delfin springer helt tæt på båden!','Du kigger på et af aftrykkene. Det har kløer.','Moana logrer og ser meget tilfreds ud.','Du kigger ned i Moanas kurv.']},
+{id:'hw_ananas',titel:'Den forsvundne ananas',sted:'Morgenbordet på hotellet',
+ intro:'Der lå seks stykker ananas på Camilles tallerken. Nu er der nul! Hvem har spist dem?',
+ labels:{sted:'Var',haender:'Hænder',mund:'Om munden'},
+ mist:[
+  {navn:'Mynafuglen',rolle:'fræk fugl, der stjæler mad',t:{sted:'på bordet',haender:'næb',mund:'ingenting'}},
+  {navn:'Far',rolle:'siger, han ikke er sulten',t:{sted:'ved bordet',haender:'klistrede fingre',mund:'ananassaft'}},
+  {navn:'Emilie',rolle:'spiste pandekager',t:{sted:'ved bordet',haender:'rene hænder',mund:'sirup'}}],
+ spor:[
+  {tekst:'Den skyldige sad ved bordet.',n:'sted',v:'ved bordet'},
+  {tekst:'Der er klistrede fingeraftryk på tallerkenen.',n:'haender',v:'klistrede fingre'},
+  {tekst:'Den skyldige har ananassaft om munden.',n:'mund',v:'ananassaft'}],
+ skyldig:'Far',
+ loesning:'Far havde spist alle seks stykker. "De så så gode ud," sagde han med saft på hagen. Han hentede en hel ny tallerken til Camille.',
+ hist:['Du kigger på den tomme tallerken.','Mynafuglen lander på nabobordet med en pomfrit.','Du spørger, hvem der sad ved bordet.','Emilie viser sine hænder. De er rene.','Du kigger på tallerkenen med din lup.','Far bliver meget optaget af at læse menukortet.','Du beder alle om at vise munden.','Far tørrer sig på hagen. For sent.']},
+{id:'hw_pearl',titel:'Det lille flag',sted:'Pearl Harbor',
+ intro:'Ved Pearl Harbor kan man se de gamle skibe. Camille får et lille papirflag. Hun lægger det på bænken, og så er det væk!',
+ labels:{sted:'Var',spor:'Fodspor',ting:'Havde med'},
+ mist:[
+  {navn:'Mr. Nakamura',rolle:'guide på museet',t:{sted:'ved skibet',spor:'blanke sko',ting:'et navneskilt'}},
+  {navn:'Emilie',rolle:'tog billeder',t:{sted:'ved bænken',spor:'sandaler',ting:'et kamera'}},
+  {navn:'Drengen Noa',rolle:'spiller fodbold på plænen',t:{sted:'ved bænken',spor:'bare fødder',ting:'en fodbold'}}],
+ spor:[
+  {tekst:'Flaget lå på bænken.',n:'sted',v:'ved bænken'},
+  {tekst:'Der er spor af bare fødder.',n:'spor',v:'bare fødder'},
+  {tekst:'Der ligger en fodbold ved bænken.',n:'ting',v:'en fodbold'}],
+ skyldig:'Drengen Noa',
+ loesning:'Noa troede, flaget var glemt, og tog det med for at give det til guiden. Han kom løbende tilbage med det og sagde "Sorry!" Nu er de venner.',
+ hist:['Du kigger på bænken. Flaget er væk.','Mr. Nakamura fortæller om skibene ved vandet.','Du spørger, hvem der var ved bænken.','Emilie viser sine billeder. Flaget er med på et af dem.','Du kigger ned i gruset. Der er aftryk uden sko.','Noa løber forbi uden sko på.','Du finder en fodbold ved bænken.','Du samler sporene i notesbogen.']},
+{id:'hw_gecko',titel:'Geckoen på væggen',sted:'Hotelværelset',
+ intro:'Der sidder en lille grøn gecko på væggen i badeværelset! Hvordan kom den ind? Nogen har åbnet en dør.',
+ labels:{doer:'Døren',sted:'Var',ting:'Glemte'},
+ mist:[
+  {navn:'Rengøringsdamen Ana',rolle:'gør rent hver morgen',t:{doer:'lukkede døren',sted:'i gangen',ting:'en klud'}},
+  {navn:'Emilie',rolle:'ville se solnedgangen',t:{doer:'åbnede altandøren',sted:'på altanen',ting:'solbriller'}},
+  {navn:'Far',rolle:'tog et billede af havet',t:{doer:'åbnede altandøren',sted:'ved poolen',ting:'et kamera'}}],
+ spor:[
+  {tekst:'Altandøren stod åben.',n:'doer',v:'åbnede altandøren'},
+  {tekst:'Nogen var på altanen i aftes.',n:'sted',v:'på altanen'},
+  {tekst:'Der ligger solbriller på altanen.',n:'ting',v:'solbriller'}],
+ skyldig:'Emilie',
+ loesning:'Emilie havde åbnet altandøren for at se solnedgangen og glemt at lukke den. Geckoen hedder nu Gekko og bor hos jer resten af ferien. Den spiser myg!',
+ hist:['Du kigger på geckoen. Den kigger tilbage.','Ana ryster på hovedet. "Jeg lukker altid døren."','Du kigger på altandøren. Den står på klem.','Far viser sit billede af havet. Han stod ved poolen.','Du går ud på altanen og kigger dig om.','Emilie siger: "Den er sød! Må vi beholde den?"','Du finder noget på altanbordet.','Du ved, hvem der glemte at lukke.']},
+{id:'hw_saft',titel:'Den blå tunge',sted:'Shave ice-boden',
+ intro:'Camille har købt shave ice med blå sirup. Hun stiller den på bordet et øjeblik. Nu er den væk! Hvem har spist den?',
+ labels:{sted:'Var',tunge:'Tunge',ting:'Havde'},
+ mist:[
+  {navn:'Emilie',rolle:'ville også have is',t:{sted:'ved bordet',tunge:'blå',ting:'et sugerør'}},
+  {navn:'Far',rolle:'badede i havet',t:{sted:'ved bordet',tunge:'almindelig',ting:'et håndklæde'}},
+  {navn:'Mynafuglen',rolle:'stjæler alt',t:{sted:'på bordet',tunge:'ingen at se',ting:'et næb'}}],
+ spor:[
+  {tekst:'Den skyldige sad ved bordet.',n:'sted',v:'ved bordet'},
+  {tekst:'Den skyldige har blå tunge.',n:'tunge',v:'blå'},
+  {tekst:'Et sugerør er væk fra boden.',n:'ting',v:'et sugerør'}],
+ skyldig:'Emilie',
+ loesning:'Emilie havde spist isen. "Den smeltede jo!" sagde hun med blå tunge. Hun købte en ny til Camille med dobbelt sirup.',
+ hist:['Du kigger på det tomme bæger.','Mynafuglen flyver væk med en pomfrit.','Du spørger, hvem der sad ved bordet.','Far kommer dryppende fra havet.','Du beder alle om at række tunge.','Emilie holder munden lukket.','Du finder et sugerør i Emilies lomme.','Du ved, hvem det var.']},
+{id:'hw_board',titel:'Boogieboardet der forsvandt',sted:'Waikiki Beach',
+ intro:'Camille har surfet på sit boogieboard hele dagen. Hun lægger det i sandet og henter en is. Nu er det væk!',
+ labels:{sted:'Var',spor:'Spor',ting:'Havde'},
+ mist:[
+  {navn:'Surflærer Kai',rolle:'passer på alle brætter',t:{sted:'i surfskuret',spor:'voks på fingrene',ting:'en nøgle'}},
+  {navn:'Emilie',rolle:'ledte efter sin snorkel',t:{sted:'i surfskuret',spor:'sand på knæene',ting:'en snorkel'}},
+  {navn:'Fru Wong',rolle:'er på ferie og sur',t:{sted:'under parasollen',spor:'solcreme',ting:'en bog'}}],
+ spor:[
+  {tekst:'Sporet i sandet går mod surfskuret.',n:'sted',v:'i surfskuret'},
+  {tekst:'Der er voks på brættets plads.',n:'spor',v:'voks på fingrene'},
+  {tekst:'Skuret er låst. Kun én har nøglen.',n:'ting',v:'en nøgle'}],
+ skyldig:'Surflærer Kai',
+ loesning:'Kai havde taget brættet ind for at give det ny voks. "Så glider du bedre på bølgerne!" Camille surfede den højeste bølge bagefter.',
+ hist:['Du kigger på hullet i sandet. Brættet lå her.','Fru Wong sukker under sin parasol.','Du følger sporet i sandet.','Emilie kommer ud af skuret med sin snorkel.','Du kigger på sandet. Noget klistret ligger der.','Kai vinker fra skuret med en klud.','Du prøver døren. Den er låst.','Du spørger, hvem der har nøglen.']},
+{id:'hw_vulkan',titel:'Madpakken på vulkanen',sted:'Vulkanen Diamond Head',
+ intro:'I går op ad vulkanen tidligt om morgenen. På toppen skal I spise madpakke. Men posen er væk! Kun en halv banan ligger på stien.',
+ labels:{sted:'Var',spor:'Spor',mad:'Elsker'},
+ mist:[
+  {navn:'Mangusten Mongo',rolle:'et lille dyr med lang hale',t:{sted:'i buskene',spor:'små poter',mad:'frugt'}},
+  {navn:'Emilie',rolle:'gik forrest',t:{sted:'på trappen',spor:'sandaler',mad:'frugt'}},
+  {navn:'Hr. Schmidt',rolle:'turist med store støvler',t:{sted:'på toppen',spor:'støvler',mad:'pølser'}}],
+ spor:[
+  {tekst:'Bananen er bidt i, men pølsen er ikke rørt.',n:'mad',v:'frugt'},
+  {tekst:'Der er små poteaftryk i støvet.',n:'spor',v:'små poter'},
+  {tekst:'Posen ligger i buskene.',n:'sted',v:'i buskene'}],
+ skyldig:'Mangusten Mongo',
+ loesning:'Det var Mongo! Han snuppede posen, da Far tog et billede. Han elsker frugt. Pølserne fik I tilbage.',
+ hist:['Du kigger på den halve banan på stien.','Hr. Schmidt puster og siger "Wunderbar!"','Du kigger på, hvad der er spist.','Emilie står på toppen og vinker.','Du kigger ned i det røde støv.','Noget rasler i buskene. En hale!','Du lyser ind i buskene med lygten.','Du ved, hvem der tog posen.']},
+{id:'hw_fly',titel:'Bamsen i flyet',sted:'Flyet hjem fra Hawaii',
+ intro:'Camille sover i flyet med sin bamse. Da hun vågner, er bamsen væk! Flyet er stort og mørkt. Hvor er den?',
+ labels:{sted:'Var',spor:'Spor',ting:'Havde'},
+ mist:[
+  {navn:'Stewardessen Grace',rolle:'deler juice ud',t:{sted:'i gangen',spor:'duft af parfume',ting:'en vogn'}},
+  {navn:'Emilie',rolle:'så film ved siden af',t:{sted:'på sit sæde',spor:'krummer',ting:'en iPad'}},
+  {navn:'Manden i 14C',rolle:'læste avis',t:{sted:'på sit sæde',spor:'duft af parfume',ting:'en avis'}}],
+ spor:[
+  {tekst:'Det dufter af parfume ved Camilles sæde.',n:'spor',v:'duft af parfume'},
+  {tekst:'Den skyldige gik i gangen, mens Camille sov.',n:'sted',v:'i gangen'},
+  {tekst:'Bamsen lå på en vogn.',n:'ting',v:'en vogn'}],
+ skyldig:'Stewardessen Grace',
+ loesning:'Grace havde taget bamsen op fra gulvet, da den faldt ned. Hun lagde den på sin vogn, så den ikke blev trådt på. Camille fik bamsen tilbage med en lille pilot-nål på.',
+ hist:['Du kigger under sædet. Ingen bamse.','Emilie ser film og har ikke set noget.','Du snuser. Det dufter af noget sødt.','Manden i 14C sover med sin avis.','Du spørger Grace, om nogen gik i gangen.','Grace smiler og ser hemmelighedsfuld ud.','Du kigger på vognen med juice.','Oven på vognen stikker et brunt øre frem.']}
 ];
 
 
@@ -688,7 +829,7 @@ function rQ(){const it=S.item,f=FAG[S.fag];const n=S.qs.length;
   const prog=`<div class="prog">${Array.from({length:n},(_,i)=>`<i class="${i<S.i?'d':(i===S.i?'n':'')}"></i>`).join('')}</div>`;
   let svar;
   if(it.type==='mc')svar=`<div class="opts">${it.opts.map((o,i)=>`<button class="opt" data-opt="${esc(o)}" id="opt${i}"><span class="b">${'ABCD'[i]}</span><span>${esc(o)}</span></button>`).join('')}</div>`;
-  else svar=`<form class="ans" id="ansform"><input id="ans" inputmode="numeric" autocomplete="off" placeholder="Skriv tallet" aria-label="Dit svar"><button class="knap" type="submit">Tjek</button></form>`;
+  else svar=`<form class="ans" id="ansform"><button type="button" class="knap lys pm" id="pm" aria-label="Skift fortegn">±</button><input id="ans" inputmode="numeric" autocomplete="off" placeholder="Skriv tallet" aria-label="Dit svar"><button class="knap" type="submit">Tjek</button></form>`;
   return `<header class="top"><button class="lnk" data-go="hjem">← ${S.mode==='sag'?'Sagen':'Træning'}</button>${prog}</header>
    <span class="fag" style="--f:${f.farve}">${f.navn}</span>
    <div class="side"><div class="qtext">${it.t?`<span class="tekst">${esc(it.t)}</span>`:''}${esc(it.q)}</div>${svar}</div>
@@ -818,6 +959,7 @@ function bind(){
   app.querySelectorAll('.opt').forEach(b=>b.onclick=()=>tjek(b.dataset.opt));
   app.querySelectorAll('[data-mist]').forEach(b=>b.onclick=()=>anklag(+b.dataset.mist));
   const f=document.getElementById('ansform');if(f)f.onsubmit=e=>{e.preventDefault();const v=document.getElementById('ans').value;if(v.trim())tjek(v)};
+  const pm=document.getElementById('pm');if(pm)pm.onclick=()=>{const i=document.getElementById('ans');if(i.disabled)return;i.value=i.value.startsWith('-')?i.value.slice(1):'-'+i.value;i.focus()};
 }
 app.addEventListener('click',e=>{if(e.target.id==='naeste')naeste()});
 document.addEventListener('keydown',e=>{if(S.screen!=='gange')return;if(/^[0-9]$/.test(e.key))gTast(e.key);else if(e.key==='Backspace')gTast('slet');else if(e.key==='Enter')gTast('ok')});
